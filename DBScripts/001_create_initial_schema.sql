@@ -1,4 +1,4 @@
-
+use demo_project;
 create table users(
     id int not null IDENTITY(1,1) primary key,
     name varchar(100),
@@ -15,3 +15,5 @@ insert into users(name, email, password) VALUES ('Md. E', 'e@gmail.com', '11aa')
 
 
 insert into _changelog(applied_at, created_by, filename) VALUES (GETDATE(), 'nishat', '001_create_initial_schema.sql');
+
+
