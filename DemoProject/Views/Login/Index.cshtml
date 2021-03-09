@@ -2,6 +2,24 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Log in</title>
+</head>
+<body>
+    <p>Enter email and password</p>
+    <form action="Home" method="post">
+        <p id='email'>
+            <label>Email</label>
+            <input type='email' name="email" required/>
+        </p>
+        <p id='password'>
+            <label>Password</label>
+            <input type='password' name="password" required />
+        </p>
+        <input type='submit' value="Log in"/>
+    </form>
 
-<p>Hello from our View Template!</p>
+</body>
+</html>

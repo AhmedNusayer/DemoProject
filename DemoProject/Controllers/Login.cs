@@ -9,20 +9,13 @@ namespace DemoProject.Controllers
 {
     public class Login : Controller
     {
-        // 
-        // GET: /HelloWorld/
+
+        // GET: /Login/
 
         public IActionResult Index()
         {
             return View();
         }
 
-        // 
-        // GET: /HelloWorld/Welcome/ 
-
-        public string Welcome()
-        {
-            return "This is the Welcome action method...";
-        }
     }
 }
