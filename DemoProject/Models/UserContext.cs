@@ -8,6 +8,8 @@ namespace DemoProject.Models
 {
     public class UserContext : DbContext
     {
+        private DbContextOptionsBuilder<UserContext> options;
+
         public UserContext(DbContextOptions<UserContext> options)
             : base(options)
         {
