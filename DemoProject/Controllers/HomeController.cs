@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DemoProject.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,19 @@ namespace DemoProject.Controllers
 {
     public class HomeController : Controller
     {
+
+        private readonly UserContext _context;
+
+        public HomeController(UserContext context)
+        {
+            _context = context;
+
+        }
         public IActionResult Index(string email, string password)
         {
-            if (password == "a")
+            User user = _context.Users.Where(c => c.email == email).First();
+
+            if (user.password == password)
             {
                 return View();
             }
