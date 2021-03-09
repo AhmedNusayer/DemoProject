@@ -1,4 +1,5 @@
 using DemoProject;
+using DemoProject.Models;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using System.Linq;
@@ -15,15 +16,18 @@ namespace TestDemoProject
         [Test]
         public void Test1()
         {
-            Userdb db = new Userdb();
-            DbSet<Users> users = db.Users;
-            Users row = users.First();
-            string name = row.Name;
+            var options = new DbContextOptionsBuilder<UserContext>()
+             .UseSqlServer("Server=localhost;Database=demo_project;Trusted_Connection=True;MultipleActiveResultSets=true")
+             .Options;
+            UserContext db = new UserContext(options);
+            DbSet<User> users = db.Users;
+            User row = users.First();
+            string name = row.name;
 
-            Assert.AreEqual("a@gmail.com",row.Email);
-            Assert.AreEqual("Md. A", row.Name);
-            Assert.AreEqual(1, row.Id);
-            Assert.AreEqual("1234", row.Password);
+            Assert.AreEqual("a@gmail.com",row.email);
+            Assert.AreEqual("Md. A", row.name);
+            Assert.AreEqual(1, row.id);
+            Assert.AreEqual("1234", row.password);
         }
     }
 }
