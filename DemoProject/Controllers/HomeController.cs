@@ -19,17 +19,18 @@ namespace DemoProject.Controllers
         }
         public IActionResult Index(string email, string password)
         {
-            User user = _context.Users.Where(c => c.email == email).First();
+            var users = _context.Users.Where(c => c.email == email);
 
-            if (user.password == password)
+            if (users.Count() != 0)
             {
-                return View();
+                User user = users.First();
+                if (user !=null && user.password == password)
+                {
+                    return View();
+                }
             }
-            else
-            {
-                return View("Views/Login/Index.cshtml");
-            }
-            
+
+            return View("Views/Login/Index.cshtml");
         }
     }
 }
