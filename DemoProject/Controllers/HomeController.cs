@@ -17,20 +17,16 @@ namespace DemoProject.Controllers
             _context = context;
 
         }
-        public IActionResult Index(string email, string password)
+
+        public IActionResult Privacy()
         {
-            var users = _context.Users.Where(c => c.email == email);
-
-            if (users.Count() != 0)
-            {
-                User user = users.First();
-                if (user !=null && user.password == password)
-                {
-                    return View();
-                }
-            }
-
-            return View("Views/Login/Index.cshtml");
+            return View();
         }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
     }
 }
