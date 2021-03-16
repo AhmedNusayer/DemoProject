@@ -55,9 +55,19 @@ namespace DemoProject.Controllers
                         Directory.CreateDirectory(newPath);
                     }
 
-                    ProfilePicture profilePicture = new ProfilePicture();
-                    profilePicture.UserProfile = user;
-                    profilePicture.ProfilePicturePath = "Images\\" + user.Id + "_" + fileName;
+                    var entity = _context.profilePictures.Where(item => item.UserProfile.Id == user.Id).FirstOrDefault();
+
+                    if (entity != null)
+                    {
+                        entity.ProfilePicturePath = "Images/" + user.Id + "_" + fileName;
+                    }
+                    else
+                    {
+                        ProfilePicture profilePicture = new ProfilePicture();
+                        profilePicture.UserProfile = user;
+                        profilePicture.ProfilePicturePath = "Images/" + user.Id + "_" + fileName;
+                        _context.profilePictures.Add(profilePicture);
+                    }
 
                     string fullPath = Path.Combine(newPath, user.Id + "_" + fileName);
 
@@ -70,14 +80,11 @@ namespace DemoProject.Controllers
                     {
                         await file.CopyToAsync(stream);
                     }
-
-                    _context.profilePictures.Add(profilePicture);
                     _context.SaveChanges();
 
                 }
-                return View();
             }
-            return RedirectToAction("Index", "Dashboard");
+            return View();
         }
 
     }
