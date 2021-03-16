@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DemoProject.Models
 {
-    public class UserContext : IdentityDbContext
+    public class UserContext : IdentityDbContext<ApplicationUser>
     {
         public UserContext(DbContextOptions<UserContext> options)
             : base(options)

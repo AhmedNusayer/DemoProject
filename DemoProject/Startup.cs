@@ -36,7 +36,7 @@ namespace DemoProject
             services.AddMvcCore();
             services.AddControllersWithViews();
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<UserContext>();
 
             services.Configure<IdentityOptions>(options =>
