@@ -46,13 +46,18 @@ namespace DemoProject.Controllers
                     ModelState.AddModelError("", error.Description);
                 }
             }
-            return View();
+            return View(model);
         }
 
 
         [HttpGet]
+        
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
             return View();
         }
 
@@ -81,7 +86,7 @@ namespace DemoProject.Controllers
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("Register", "Account");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
