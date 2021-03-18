@@ -31,7 +31,8 @@ namespace DemoProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                /*.Substring(0, model.Email.IndexOf("@"))*/
+                var user = new ApplicationUser {UserName = model.Email, Email = model.Email };
                 var result = await userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -76,7 +77,12 @@ namespace DemoProject.Controllers
                 }
 
                 ModelState.AddModelError("", "Invalid Login Attempt");
-               
+                
+
+            }
+            else
+            {
+                return RedirectToAction("Update", "Profile");
             }
             return View(model);
         }
