@@ -31,9 +31,14 @@ namespace InfrastructureProject.Data
             return entity;
         }
 
-        public void AddRange(IEnumerable<T> entities)
+        public async Task AddRange(IEnumerable<T> entities)
         {
-            _context.Set<T>().AddRange(entities);
+            foreach (var entity in entities)
+            {
+                _context.Set<T>().Add(entity);
+            }
+            await _context.SaveChangesAsync();
+            //_context.Set<T>().AddRange(entities);
         }
 
         public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
@@ -41,14 +46,20 @@ namespace InfrastructureProject.Data
             return _context.Set<T>().Where(expression);
         }
 
-        public void Remove(T entity)
+        public async Task Remove(T entity)
         {
             _context.Set<T>().Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public void RemoveRange(IEnumerable<T> entities)
+        public async Task RemoveRange(IEnumerable<T> entities)
         {
-            _context.Set<T>().RemoveRange(entities);
+            foreach (var entity in entities)
+            {
+                _context.Set<T>().Remove(entity);
+            }
+            await _context.SaveChangesAsync();
+            //_context.Set<T>().RemoveRange(entities);
         }
 
         public async Task<List<T>> GetAll()
