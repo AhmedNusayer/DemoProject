@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DemoProject.Models
+namespace WebProject.Models
 {
-    public class LoginModel
+    public class LoginModel : IViewModel
     {
         [Required]
         [EmailAddress]

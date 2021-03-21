@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DemoProject.Models
+namespace WebProject.Models
 {
-    public class RegisterModel
+    public class RegisterModel: IViewModel
     {
         [Required]
         [EmailAddress]

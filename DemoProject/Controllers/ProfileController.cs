@@ -1,4 +1,4 @@
-﻿using DemoProject.Models;
+﻿using WebProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,16 +9,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
+using EntityProject;
+using InfrastructureProject;
 
-namespace DemoProject.Controllers
+namespace WebProject.Controllers
 {
     public class ProfileController : Controller
     {
-        private readonly UserContext _context;
+        private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _hostingEnv;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ProfileController(UserContext context, IWebHostEnvironment hostingEnv, UserManager<ApplicationUser> userManager)
+        public ProfileController(AppDbContext context, IWebHostEnvironment hostingEnv, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _hostingEnv = hostingEnv;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DemoProject.Migrations
+namespace WebProject.Migrations
 {
     public partial class ProfilePictureTableAdded : Migration
     {

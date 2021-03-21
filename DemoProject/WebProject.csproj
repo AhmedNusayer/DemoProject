@@ -28,5 +28,10 @@
     <Folder Include="Scripts\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EntityProject\EntityProject.csproj" />
+    <ProjectReference Include="..\InfrastructureProject\InfrastructureProject.csproj" />
+  </ItemGroup>
+
 
 </Project>

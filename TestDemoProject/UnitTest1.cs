@@ -1,8 +1,9 @@
-using DemoProject;
-using DemoProject.Models;
+using WebProject;
+using WebProject.Models;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using System.Linq;
+using InfrastructureProject;
 
 namespace TestDemoProject
 {
@@ -16,10 +17,10 @@ namespace TestDemoProject
         [Test]
         public void Test1()
         {
-            var options = new DbContextOptionsBuilder<UserContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
              .UseSqlServer("Server=localhost;Database=demo_project;Trusted_Connection=True;MultipleActiveResultSets=true")
              .Options;
-            UserContext db = new UserContext(options);
+            AppDbContext db = new AppDbContext(options);
             //DbSet<User> users = db.Users;
             //User row = users.First();
             /*string name = row.name;

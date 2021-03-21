@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DemoProject.Migrations
+namespace WebProject.Migrations
 {
     public partial class ExtendIdentityUser : Migration
     {

@@ -1,4 +1,5 @@
-﻿using DemoProject.Models;
+﻿using WebProject.Models;
+using EntityProject;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DemoProject.Controllers
+namespace WebProject.Controllers
 {
     public class AccountController : Controller
     {
