@@ -11,20 +11,23 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using EntityProject;
 using InfrastructureProject;
+using InfrastructureProject.Data;
 
 namespace WebProject.Controllers
 {
     public class ProfileController : Controller
     {
-        private readonly AppDbContext _context;
+        //private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _hostingEnv;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ProfilePictureRepository _repository;
 
-        public ProfileController(AppDbContext context, IWebHostEnvironment hostingEnv, UserManager<ApplicationUser> userManager)
+        public ProfileController(IWebHostEnvironment hostingEnv, UserManager<ApplicationUser> userManager, ProfilePictureRepository repository)
         {
-            _context = context;
+            //_context = context;
             _hostingEnv = hostingEnv;
             _userManager = userManager;
+            _repository = repository;
         }
 
         [Authorize]
@@ -71,7 +74,8 @@ namespace WebProject.Controllers
                             Directory.CreateDirectory(newPath);
                         }
 
-                        var entity = _context.profilePictures.Where(item => item.UserProfile.Id == user.Id).FirstOrDefault();
+                        //var entity = _context.profilePictures.Where(item => item.UserProfile.Id == user.Id).FirstOrDefault();
+                        var entity = _repository.Find(item => item.UserProfile.Id == user.Id).FirstOrDefault();
                         if (entity != null)
                         {
                             var path = Path.Combine(webRootPath, entity.ProfilePicturePath);
@@ -80,13 +84,15 @@ namespace WebProject.Controllers
                                 System.IO.File.Delete(path);
                             }
                             entity.ProfilePicturePath = "Images/" + user.Id + "_" + fileName;
+                            await _repository.Update(entity);
                         }
                         else
                         {
                             ProfilePicture profilePicture = new ProfilePicture();
                             profilePicture.UserProfile = user;
                             profilePicture.ProfilePicturePath = "Images/" + user.Id + "_" + fileName;
-                            _context.profilePictures.Add(profilePicture);
+                            //_context.profilePictures.Add(profilePicture);
+                            await _repository.Add(profilePicture);
                         }
 
                         string fullPath = Path.Combine(newPath, user.Id + "_" + fileName);
@@ -100,7 +106,7 @@ namespace WebProject.Controllers
                         {
                             await file.CopyToAsync(stream);
                         }
-                        _context.SaveChanges();
+                        //_context.SaveChanges();
 
                     }
                 }

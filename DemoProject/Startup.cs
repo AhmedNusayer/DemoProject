@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using InfrastructureProject.Data;
 
 namespace WebProject
 {
@@ -40,6 +41,8 @@ namespace WebProject
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
+
+            services.AddScoped<ProfilePictureRepository>();
 
             services.Configure<IdentityOptions>(options =>
             {
