@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace InfrastructureProject.Data
 {
-    public abstract class GenericRepository<T> : IRepository<T> where T : class, IEntity
+    public class GenericRepository<T> : IRepository<T> where T : class, IEntity
     {
-        protected readonly DbContext _context;
+        protected readonly AppDbContext _context;
 
-        public GenericRepository(DbContext context)
+        public GenericRepository(AppDbContext context)
         {
             _context = context;
         }
@@ -41,7 +41,7 @@ namespace InfrastructureProject.Data
             //_context.Set<T>().AddRange(entities);
         }
 
-        public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
+        public IQueryable<T> Find(Expression<Func<T, bool>> expression)
         {
             return _context.Set<T>().Where(expression);
         }

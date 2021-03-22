@@ -20,14 +20,15 @@ namespace WebProject.Controllers
         //private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _hostingEnv;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ProfilePictureRepository _repository;
+        private readonly IRepository<ProfilePicture> _repository;
 
-        public ProfileController(IWebHostEnvironment hostingEnv, UserManager<ApplicationUser> userManager, ProfilePictureRepository repository)
+        public ProfileController(IWebHostEnvironment hostingEnv, UserManager<ApplicationUser> userManager, AppDbContext context)
         {
             //_context = context;
             _hostingEnv = hostingEnv;
             _userManager = userManager;
-            _repository = repository;
+            _repository = new GenericRepository<ProfilePicture>(context);
+
         }
 
         [Authorize]

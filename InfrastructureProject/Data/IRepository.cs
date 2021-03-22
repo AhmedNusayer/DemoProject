@@ -1,6 +1,7 @@
 ﻿using EntityProject;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace InfrastructureProject.Data
 
         Task<T> Update(T entity);
 
-        IEnumerable<T> Find(Expression<Func<T, bool>> expression);
+        IQueryable<T> Find(Expression<Func<T, bool>> expression);
         
         Task AddRange(IEnumerable<T> entities);
 

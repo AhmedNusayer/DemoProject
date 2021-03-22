@@ -42,7 +42,8 @@ namespace WebProject
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
-            services.AddScoped<ProfilePictureRepository>();
+            //services.AddScoped<ProfilePictureRepository>();
+            //services.AddScoped<GenericRepository<ProfilePicture>(AppDbContext)>();
 
             services.Configure<IdentityOptions>(options =>
             {
