@@ -12,14 +12,18 @@
     <title>@ViewData["Title"] - DemoProject</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
+    <!-- Including the fontawesome CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Demo Project</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Web Project</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -28,10 +32,10 @@
                     @*<partial name="_LoginPartial" />*@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         @*<ul class="navbar-nav ml-auto">
                                 <li class="nav-item">
@@ -42,28 +46,38 @@
                                 </li>
                             </ul>*@
 
-                        <ul class="navbar-nav ml-auto">
-                            @if (SignInManager.IsSignedIn(User))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index" title="Manage">Hello @User.Identity.Name!</a>
-                                </li>
-                                <li class="nav-item">
-                                    <form class="form-inline" asp-area="" asp-controller="Account" asp-action="Logout">
-                                        <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                                    </form>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
-                                </li>
-                            }
-                        </ul>
+                    <ul class="navbar-nav ml-auto ml-auto">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Profile" asp-action="Index" title="Manage">Hello @User.Identity.Name!</a>
+                            </li>
+                            <li class="nav-item">
+                                <form class="form-inline" asp-area="" asp-controller="Account" asp-action="Logout">
+                                    <button type="submit" class="nav-link btn btn-link text-light">Sign Out</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                        <li class="nav-item">
+                            <a class="nav-link text-light btn btn-outline-secondary mr-1" asp-area="" asp-controller="Account" asp-action="Register">
+                            <i class="fas fa-user-plus"></i>
+                            Sign Up
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light btn btn-outline-secondary mr-1" asp-area="" asp-controller="Account" asp-action="Login">
+                                <i class="fas fa-user"></i>
+                                Sign In
+                            </a>
+                        </li>
+                        //for employers action will be set later
+                        <li class="nav-item">
+                            <a class="nav-link text-light btn btn-outline-secondary" asp-area="" asp-controller="Account" asp-action="Register">For Employers</a>
+                        </li>
+                        }
+                    </ul>
 
                     </ul>
                 </div>
@@ -79,7 +93,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - Demo project - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - Web project - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 
