@@ -3,27 +3,88 @@
 @{
     ViewBag.Title = "User Registration";
 }
-
-<div>
-    <p>Enter email and password</p>
+@*
+<div class="text-center">
+    <p>Please sign up for Job Portal</p>
     <form action="Register" method="post">
+        
+        <p id="firstname">
+            <label>First Name</label>
+            <input type="text" name="FirstName" required />
+        </p>
+        
+        <p id="lasttname">
+            <label>Last Name</label>
+            <input type="text" name="LastName" required />
+        </p>
+
         <p id='email'>
             <label>Email</label>
             <input type='email' name="Email" required />
         </p>
+        
         <p id='password'>
             <label>Password</label>
             <input type='password' name="Password" required />
         </p>
+        
         <p id='confirm-password'>
             <label>Confirm Password</label>
             <input type='password' name="ConfirmPassword" required />
         </p>
+        
         <input type='submit' value="Register" />
     </form>
+</div>*@
+
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="w-50">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Please sign up for Job Portal</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form" action="Register" method="post">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="FirstName" id="first_name" class="form-control input-sm" placeholder="First Name" required>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="LastName" id="last_name" class="form-control input-sm" placeholder="Last Name" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" name="Email" id="email" class="form-control input-sm" placeholder="Email Address" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="password" name="Password" id="password" class="form-control input-sm" placeholder="Password" required>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="password" name="ConfirmPassword" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="submit" value="Register" class="btn btn-info btn-block">
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
 
 @*<div class="row">
     <div class="col-md-12">

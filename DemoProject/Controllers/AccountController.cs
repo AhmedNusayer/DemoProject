@@ -33,7 +33,7 @@ namespace WebProject.Controllers
             if (ModelState.IsValid)
             {
                 /*.Substring(0, model.Email.IndexOf("@"))*/
-                var user = new ApplicationUser {UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser {UserName = model.Email, Email = model.Email, Name = model.FirstName.Trim() + " " + model.LastName.Trim() };
                 var result = await userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
