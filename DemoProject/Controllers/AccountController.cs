@@ -39,7 +39,7 @@ namespace WebProject.Controllers
                 if (result.Succeeded)
                 {
                     await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index","Dashboard");
+                    return RedirectToAction("Index","Home");
                 }
                
                 
@@ -58,7 +58,7 @@ namespace WebProject.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Dashboard");
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }
@@ -74,7 +74,7 @@ namespace WebProject.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Dashboard");
+                    return RedirectToAction("Index", "Home");
                 }
 
                 ModelState.AddModelError("", "Invalid Login Attempt");

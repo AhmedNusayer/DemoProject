@@ -22,7 +22,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
-            <div class="container">
+            <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Web Project</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -30,23 +30,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     @*<partial name="_LoginPartial" />*@
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        @*<ul class="navbar-nav ml-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
-                                </li>
-                            </ul>*@
-
-                    <ul class="navbar-nav ml-auto ml-auto">
+                    <ul class="navbar-nav nav ml-auto">
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
@@ -60,25 +44,33 @@
                         }
                         else
                         {
-                        <li class="nav-item">
-                            <a class="nav-link text-light btn btn-outline-secondary mr-1" asp-area="" asp-controller="Account" asp-action="Register">
-                            <i class="fas fa-user-plus"></i>
-                            Sign Up
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light btn btn-outline-secondary mr-1" asp-area="" asp-controller="Account" asp-action="Login">
-                                <i class="fas fa-user"></i>
-                                Sign In
-                            </a>
-                        </li>
-                        //for employers action will be set later
-                        <li class="nav-item">
-                            <a class="nav-link text-light btn btn-outline-secondary" asp-area="" asp-controller="Account" asp-action="Register">For Employers</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light btn btn-outline-secondary mr-1" asp-area="" asp-controller="Account" asp-action="Register">
+                                    <i class="fas fa-user-plus"></i>
+                                    Sign Up
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light btn btn-outline-secondary mr-1" asp-area="" asp-controller="Account" asp-action="Login">
+                                    <i class="fas fa-user"></i>
+                                    Sign In
+                                </a>
+                            </li>
+                            //for employers action will be set later
+                            <li class="nav-item">
+                                <a class="nav-link text-light btn btn-outline-secondary" asp-area="" asp-controller="Account" asp-action="Register">For Employers</a>
+                            </li>
                         }
                     </ul>
 
+
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-light btn" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light btn" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
                     </ul>
                 </div>
             </div>
