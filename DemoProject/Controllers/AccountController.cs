@@ -125,5 +125,34 @@ namespace WebProject.Controllers
             }
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult RegisterCompany()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public Task<IActionResult> RegisterCompany(RegisterCompanyModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                /*.Substring(0, model.Email.IndexOf("@"))*//*
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.FirstName.Trim() + " " + model.LastName.Trim() };
+                var result = await userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    await signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Index", "Home");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }*/
+            }
+            return null;
+        }
     }
 }

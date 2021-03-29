@@ -12,12 +12,6 @@ namespace WebProject.Models
 
         [Required]
         public string CompanyName { get; set; }
-        
-        [Required]
-        public string CompanyAddress { get; set; }
-
-        [Required]
-        public string CompanyType { get; set; }
 
         [Required]
         [EmailAddress]

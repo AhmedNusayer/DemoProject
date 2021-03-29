@@ -17,6 +17,8 @@ namespace InfrastructureProject
 
         public DbSet<ProfilePicture> profilePictures { get; set; }
 
+        public DbSet<Company> companies { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
