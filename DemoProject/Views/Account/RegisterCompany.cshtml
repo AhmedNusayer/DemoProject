@@ -3,15 +3,20 @@
     ViewBag.Title = "Company Registration";
 }
 
-
 <div class="container">
     <div class="row d-flex justify-content-center">
         <div class="w-50">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Register your company to get started</h3>
+            <div class="card text-center">
+                <div class="card-header">
+                    Job Portal
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
+                    <h5 class="card-title">Register your company to get started</h5>
+                    <p class="card-text text-secondary">
+                        Find, hire and manage employees with Job Portal's
+                        employer software & tools in recruiting solutions.
+                    </p>
+
                     <form role="form" action="RegisterCompany" method="post">
                         <div class="form-group">
                             <input type="text" name="CompanyName" id="companyname" class="form-control input-sm" placeholder="Company Name" required>
@@ -37,7 +42,14 @@
 
                     </form>
                 </div>
+                <div class="card-footer text-muted">
+                    Already have your company registered? <a asp-controller="Account" asp-action="RegisterEmployer">Sign Up(Employer)</a>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
+
+
+

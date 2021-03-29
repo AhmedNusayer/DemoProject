@@ -38,7 +38,7 @@
 </div>*@
 
 
-<div class="container">
+@*<div class="container">
     <div class="row d-flex justify-content-center">
         <div class="w-50">
             <div class="panel panel-default">
@@ -79,12 +79,15 @@
 
                         <input type="submit" value="Register" class="btn btn-info btn-block">
 
+                        <div class="d-flex justify-content-center">
+                            <p>Already have an account? <a asp-controller="Account" asp-action="Login">Sign In</a></p>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 @*<div class="row">
     <div class="col-md-12">
@@ -109,3 +112,63 @@
         </form>
     </div>
 </div>*@
+
+
+
+
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="w-50">
+            <div class="card text-center">
+                <div class="card-header">
+                    Job Portal
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Create an account</h5>
+                    <p class="card-text text-secondary">Create an account to get recommended jobs that 
+                    matches your resume and apply to multiple jobs in seconds!</p>
+
+                    <form role="form" action="Register" method="post">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="FirstName" id="first_name" class="form-control input-sm" placeholder="First Name" required>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="LastName" id="last_name" class="form-control input-sm" placeholder="Last Name" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" name="Email" id="email" class="form-control input-sm" placeholder="Email Address" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="password" name="Password" id="password" class="form-control input-sm" placeholder="Password" required>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="password" name="ConfirmPassword" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="submit" value="Register" class="btn btn-info btn-block">
+                    </form>
+                </div>
+                <div class="card-footer text-muted">
+                    Already have an account? <a asp-controller="Account" asp-action="Login">Sign In</a>
+                    <br/>
+                    Are you an employer? <a asp-controller="Account" asp-action="RegisterEmployer">Sign Up(Employer)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
