@@ -1,8 +1,43 @@
-﻿@{
+﻿@model RegisterCompanyModel
+@{
     ViewBag.Title = "Company Registration";
 }
 
 
-<div>
-    Hello, Register your Company!!
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="w-50">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Register your company to get started</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form" action="RegisterCompany" method="post">
+                        <div class="form-group">
+                            <input type="text" name="CompanyName" id="companyname" class="form-control input-sm" placeholder="Company Name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" name="CompanyLocation" id="companylocation" class="form-control input-sm" placeholder="Company Location" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" name="CompanyAddress" id="companyaddress" class="form-control input-sm" placeholder="Company Address" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" name="CompanyType" id="companytype" class="form-control input-sm" placeholder="Company Type" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" name="CompanyEmail" id="companyemail" class="form-control input-sm" placeholder="Company Email" required>
+                        </div>
+
+                        <input type="submit" value="Register" class="btn btn-info btn-block">
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
