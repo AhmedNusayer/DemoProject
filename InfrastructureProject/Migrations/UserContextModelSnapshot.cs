@@ -120,6 +120,21 @@ namespace InfrastructureProject.Migrations
                     b.ToTable("companies");
                 });
 
+            modelBuilder.Entity("EntityProject.Employer", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("CompanyInfoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyInfoId");
+
+                    b.ToTable("employers");
+                });
+
             modelBuilder.Entity("EntityProject.ProfilePicture", b =>
                 {
                     b.Property<int>("PhotoId")
@@ -269,6 +284,23 @@ namespace InfrastructureProject.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("EntityProject.Employer", b =>
+                {
+                    b.HasOne("EntityProject.Company", "CompanyInfo")
+                        .WithMany()
+                        .HasForeignKey("CompanyInfoId");
+
+                    b.HasOne("EntityProject.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CompanyInfo");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EntityProject.ProfilePicture", b =>

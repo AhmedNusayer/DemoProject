@@ -16,6 +16,7 @@ namespace WebProject.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IRepository<Company> _repository;
+        private readonly IRepository<Employer> _employerRepository;
 
         public AccountController(UserManager<ApplicationUser> userManager,
                                  SignInManager<ApplicationUser> signInManager,
@@ -24,6 +25,7 @@ namespace WebProject.Controllers
             this.userManager = userManager;
             this.signInManager = signInManager;
             _repository = new GenericRepository<Company>(context);
+            _employerRepository = new GenericRepository<Employer>(context);
         }
 
 
@@ -94,7 +96,7 @@ namespace WebProject.Controllers
             return View(model);
         }
 
-
+        [HttpGet]
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
@@ -118,13 +120,17 @@ namespace WebProject.Controllers
 
             if (ModelState.IsValid)
             {
-                /*.Substring(0, model.Email.IndexOf("@"))*/
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.FirstName.Trim() + " " + model.LastName.Trim() };
                 var result = await userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
+                    var companyinfo = await _repository.Get(int.Parse(model.CompanyName));
+                    var employer = new Employer() { User = user, CompanyInfo = companyinfo };
+
                     await signInManager.SignInAsync(user, isPersistent: false);
+                    await _employerRepository.Add(employer);
+
                     return RedirectToAction("Index", "Home");
                 }
 
