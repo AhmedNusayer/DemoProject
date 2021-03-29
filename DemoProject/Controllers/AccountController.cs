@@ -95,5 +95,10 @@ namespace WebProject.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult EmployerRegister()
+        {
+            return View();
+        }
     }
 }
