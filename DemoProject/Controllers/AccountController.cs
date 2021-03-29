@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InfrastructureProject;
+using InfrastructureProject.Data;
 
 namespace WebProject.Controllers
 {
@@ -13,12 +15,15 @@ namespace WebProject.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly IRepository<Company> _repository;
 
         public AccountController(UserManager<ApplicationUser> userManager,
-                                 SignInManager<ApplicationUser> signInManager)
+                                 SignInManager<ApplicationUser> signInManager,
+                                 AppDbContext context)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            _repository = new GenericRepository<Company>(context);
         }
 
 
@@ -98,14 +103,19 @@ namespace WebProject.Controllers
         }
 
         [HttpGet]
-        public IActionResult RegisterEmployer()
+        public async Task<IActionResult> RegisterEmployer()
         {
+            var company = await _repository.GetAll();
+            ViewBag.data = company;
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> RegisterEmployer(RegisterEmployerModel model)
         {
+            var company = await _repository.GetAll();
+            ViewBag.data = company;
+
             if (ModelState.IsValid)
             {
                 /*.Substring(0, model.Email.IndexOf("@"))*/
@@ -133,26 +143,25 @@ namespace WebProject.Controllers
         }
 
         [HttpPost]
-        public Task<IActionResult> RegisterCompany(RegisterCompanyModel model)
+        public async Task<IActionResult> RegisterCompany(RegisterCompanyModel model)
         {
             if (ModelState.IsValid)
             {
-                /*.Substring(0, model.Email.IndexOf("@"))*//*
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.FirstName.Trim() + " " + model.LastName.Trim() };
-                var result = await userManager.CreateAsync(user, model.Password);
-
-                if (result.Succeeded)
+                Company company = new Company()
                 {
-                    await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
-                }
+                    CompanyName = model.CompanyName,
+                    CompanyAddress = model.CompanyAddress,
+                    CompanyEmail = model.CompanyEmail,
+                    CompanyLocation = model.CompanyLocation,
+                    CompanyType = model.CompanyType
+                };
 
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }*/
+                await _repository.Add(company);
+
+                return RedirectToAction("RegisterEmployer", "Account");
             }
-            return null;
+
+            return View();
         }
     }
 }

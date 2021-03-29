@@ -16,7 +16,7 @@ namespace TestDemoProject
 {
     class RepositoryTestClass
     {
-        TestClassRepository repository;
+        /*TestClassRepository repository;
         [SetUp]
         public void Setup()
         {
@@ -26,7 +26,7 @@ namespace TestDemoProject
             TestDbContext db = new TestDbContext(options);
             repository = new TestClassRepository(db);
         }
-
+*/
 
 
         /*[Test]
@@ -140,12 +140,12 @@ namespace TestDemoProject
 
     }
 
-    class TestClassRepository : GenericRepository<TestClass1>
+    /*class TestClassRepository : GenericRepository<TestClass1>
     {
         public TestClassRepository(DbContext context) : base(context)
         {
         }
-    }
+    }*/
 
     class TestDbContext : DbContext
     {
