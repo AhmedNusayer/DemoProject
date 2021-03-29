@@ -20,6 +20,8 @@ namespace WebProject.Controllers
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
+
+
         [HttpGet]
         public IActionResult Register()
         {
@@ -53,7 +55,6 @@ namespace WebProject.Controllers
 
 
         [HttpGet]
-        
         public IActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
@@ -96,9 +97,33 @@ namespace WebProject.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult EmployerRegister()
+        [HttpGet]
+        public IActionResult RegisterEmployer()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RegisterEmployer(RegisterEmployerModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                /*.Substring(0, model.Email.IndexOf("@"))*/
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.FirstName.Trim() + " " + model.LastName.Trim() };
+                var result = await userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    await signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Index", "Home");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+            return View(model);
         }
     }
 }
