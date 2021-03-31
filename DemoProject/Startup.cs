@@ -43,7 +43,7 @@ namespace WebProject
                 .AddEntityFrameworkStores<AppDbContext>();
 
             //services.AddScoped<ProfilePictureRepository>();
-            //services.AddScoped<GenericRepository<ProfilePicture>(AppDbContext)>();
+            services.AddScoped<GenericRepository<ProfilePicture>>();
 
             services.Configure<IdentityOptions>(options =>
             {

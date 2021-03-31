@@ -1,8 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using EntityProject
+@using InfrastructureProject.Data
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-
+@inject GenericRepository<ProfilePicture> repository
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,14 +33,37 @@
                     <ul class="navbar-nav nav ml-auto">
                         @if (SignInManager.IsSignedIn(User))
                         {
+                            var user = await UserManager.GetUserAsync(User);
+                            var picture = repository.Find(c => c.UserProfile.Id == user.Id).FirstOrDefault();
                             <li class="nav-item">
                                 <a class="nav-link text-light btn mr-1" asp-area="" asp-controller="Profile" asp-action="Index" title="Manage">Hello @User.Identity.Name!</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light btn" asp-area="" asp-controller="Account" asp-action="Logout">
+                                <a class="nav-link text-light btn mr-1" asp-area="" asp-controller="Account" asp-action="Logout">
                                     Sign Out
                                 </a>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link btn" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                    @{
+                                        if (picture != null)
+                                        {
+                                            <img src="~/@picture.ProfilePicturePath" title="@user.Name &#013; @user.Email" height="30" width="30" class="rounded-circle">
+                                        }
+                                        else
+                                        {
+                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar7.png" title="@user.Name &#013; @user.Email" style="background-color:white" width="30" height="30" class="rounded-circle border border-white">
+                                        }
+                                    }
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="#">Profile</a>
+                                    <a class="dropdown-item" href="#">Edit Profile</a>
+                                    <a class="dropdown-item" href="#">Log Out</a>
+                                </div>
+                            </li>
+
                         }
                         else
                         {
