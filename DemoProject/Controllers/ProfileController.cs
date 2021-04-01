@@ -41,9 +41,9 @@ namespace WebProject.Controllers
         [Authorize]
         public async Task<IActionResult> Index(UpdateModel model)
         {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+            
             if (ModelState.IsValid) {
-
-                ApplicationUser user = await _userManager.GetUserAsync(User);
                 user.Name = model.Name;
                 user.PhoneNumber = model.PhoneNumber;
                 user.Address = model.Address;
@@ -76,7 +76,7 @@ namespace WebProject.Controllers
                         }
 
                         //var entity = _context.profilePictures.Where(item => item.UserProfile.Id == user.Id).FirstOrDefault();
-                        var entity = _repository.Find(item => item.UserProfile.Id == user.Id).FirstOrDefault();
+                        ProfilePicture entity = _repository.Find(item => item.UserProfile.Id == user.Id).FirstOrDefault();
                         if (entity != null)
                         {
                             var path = Path.Combine(webRootPath, entity.ProfilePicturePath);
@@ -112,7 +112,13 @@ namespace WebProject.Controllers
                     }
                 }
             }
+            var picture = _repository.Find(item => item.UserProfile.Id == user.Id).FirstOrDefault();
+            if (picture != null)
+            {
+                ViewBag.ProfilePicturePath = picture.ProfilePicturePath;
+            }
             
+            ViewBag.user = user;
             return View();
         }
 

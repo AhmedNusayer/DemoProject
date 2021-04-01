@@ -1,54 +1,30 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using EntityProject
-@using InfrastructureProject
-@inject UserManager<ApplicationUser> UserManager
-@inject AppDbContext _context
-@using System.Linq;
-
-@{
-    ApplicationUser user = await UserManager.GetUserAsync(User);
-    var picture = _context.profilePictures.Where(c => c.UserProfile.Id == user.Id).FirstOrDefault();
-}
-
-
+﻿
 @{
     ViewBag.Title = "Profile";
 }
 
-<div class="row">
-    <div class="col-md-5">
+<profile-info inline-template picpath="@ViewBag.ProfilePicturePath" 
+              name="@ViewBag.user.Name" username="@ViewBag.user.UserName" 
+              email="@ViewBag.user.Email" phonenumber="@ViewBag.user.PhoneNumber"
+              address="@ViewBag.user.Address" dateofbirth="@ViewBag.user.DateofBirth">
+    <div class="row">
+        <div class="col-md-5">
+            <div>
+                <img v-if="picturePath" :src="'/' + picturePath" height="260" width="260" class="rounded-circle" data-original-title="Usuario">
+                <img v-if="!picturePath" alt="" height="260" width="260" title="" class="rounded-circle"
+                     src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                     data-original-title="Usuario">
 
-        <div>
-            @{
-                if (picture != null)
-                {
-                    <img src="@picture.ProfilePicturePath" height="320" width="320">
-                }
-            }
-            <h1>Hello @user.Name</h1>
-            <p>User Name : @user.UserName</p>
-            <p> Email : @user.Email</p>
-            <p>Phone Number : @user.PhoneNumber</p>
-            <p>Address : @user.Address</p>
-            <p>Date of Birth : @user.DateofBirth</p>
-            <form method="post" asp-controller="Profile" asp-action="Update">
-                <input type='submit' value="Update Profile" />
-            </form>
+                <h1>Hello {{Name}}</h1>
+                <p>User Name : {{UserName}}</p>
+                <p> Email : {{Email}}</p>
+                <p>Phone Number : {{PhoneNumber}}</p>
+                <p>Address : {{Address}}</p>
+                <p>Date of Birth : {{DateofBirth}}</p>
+                <form method="post" asp-controller="Profile" asp-action="Update">
+                    <input type='submit' value="Update Profile" />
+                </form>
+            </div>
         </div>
-
-        @*<form method="post" enctype="multipart/form-data" asp-controller="Profile" asp-action="Create">
-            <div class="form-group">
-                <div class="col-md-10">
-                    <p>Upload profile picture</p>
-                    <input class="form-control" name="file" type="file" />
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-10">
-                    <input class="btn btn-success" type="submit" value="Upload" />
-                </div>
-            </div>
-        </form>*@
     </div>
-</div>
-
+</profile-info>
