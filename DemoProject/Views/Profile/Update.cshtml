@@ -1,174 +1,153 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using EntityProject
-@using InfrastructureProject
-@inject UserManager<ApplicationUser> UserManager
-@inject AppDbContext _context
-@using System.Linq;
+﻿<profile-info inline-template picpath="@ViewBag.ProfilePicturePath"
+              name="@ViewBag.user.Name" username="@ViewBag.user.UserName"
+              email="@ViewBag.user.Email" phonenumber="@ViewBag.user.PhoneNumber"
+              address="@ViewBag.user.Address" dateofbirth="@ViewBag.user.DateofBirth.ToString("yyyy-MM-dd")">
+    <form method="post" enctype="multipart/form-data" asp-controller="Profile" asp-action="Index">
+        <div class="container bootstrap snippets bootdey">
+            <div class="panel-body inf-content">
+                <div class="row">
 
-@{
-    ApplicationUser user = await UserManager.GetUserAsync(User);
-    var picture = _context.profilePictures.Where(c => c.UserProfile.Id == user.Id).FirstOrDefault();
-}
+                    <div class="col-md-4">
+                        <img v-if="picturePath" :src="'/' + picturePath" height="260" width="260" class="rounded-circle" data-original-title="Usuario">
+                        <img v-if="!picturePath" alt="" height="260" width="260" title="" class="rounded-circle"
+                             src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                             data-original-title="Usuario">
 
-@{
-    ViewBag.Title = "Profile";
-}
+                        <div class="card">
+                            <div class="card-header">
+                                Intro
+                                <a class="btn btn-sm justify-content-end" onclick="document.getElementById('exampleFormControlTextarea1').focus()">
+                                    <i class="fas fa-plus-circle text-right btn"></i>
+                                </a>
+                            </div>
+                        </div>
 
-<form method="post" enctype="multipart/form-data" asp-controller="Profile" asp-action="Index">
-    <div class="container bootstrap snippets bootdey">
-        <div class="panel-body inf-content">
-            <div class="row">
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Example textarea</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" name="Intro" rows="3"></textarea>
+                        </div>
 
-                <div class="col-md-4">
-                    @{
-                        if (picture != null)
-                        {
-                            <img alt="" height="260" width="260" title="" class="rounded-circle"
-                                 src="~/@picture.ProfilePicturePath"
-                                 data-original-title="Usuario">
-                        }
-                        else
-                        {
-                            <img alt="" height="260" width="260" title="" class="rounded-circle"
-                                 src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                                 data-original-title="Usuario">
-                        }
-                    }
-
-                    <div class="card">
+                    </div>
+                    <div class="col-md-6 card" style="background-color:#FFF">
                         <div class="card-header">
-                            Intro
-                            <a class="btn btn-sm justify-content-end" onclick="document.getElementById('exampleFormControlTextarea1').focus()">
-                                <i class="fas fa-plus-circle text-right btn"></i>
-                            </a>
+                            Update Profile
                         </div>
-                    </div>
+                        <div class="table-responsive">
+                            @*<form method="post" enctype="multipart/form-data" asp-controller="Profile" asp-action="Index">*@
+                            <table class="table table-user-information">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-user text-primary"></span>
+                                                Name
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            <p id='name'>
+                                                <input type='text' size="40" name="Name" :value=Name />
+                                            </p>
+                                        </td>
+                                    </tr>
 
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Example textarea</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" name="Intro" rows="3"></textarea>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-bookmark text-primary"></span>
+                                                Username
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            <p id='email'>
+                                                <input type='text' size="40" name="UserName" :value="UserName" />
+                                            </p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-envelope text-primary"></span>
+                                                Email
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            <p id='email'>
+                                                <input type='text' size="40" name="Email" :value="Email" />
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                                Phone No
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            <p id='phone-number'>
+                                                <input type='number' size="40" name="PhoneNumber" :value="PhoneNumber" />
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                                Adderss
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            <p id='present-address'>
+                                                <input type='text' size="40" name="Address" :value="Address" />
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-eye-open text-primary"></span>
+                                                Date of Birth
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            <p id='date-of-birth'>
+                                                <input type='date' size="40" name="DateofBirth" :value="DateofBirth" />
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-eye-open text-primary"></span>
+                                                Password
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            <p id='password'>
+                                                <input type='password' size="40" name="Password" required />
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <p>Upload profile picture</p>
+                                    <input class="form-control" name="File" type="file" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <input class="btn btn-success" type="submit" value="Update" />
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
 
                 </div>
-                <div class="col-md-6 card" style="background-color:#FFF">
-                    <div class="card-header">
-                        Update Profile
-                    </div>
-                    <div class="table-responsive">
-                        @*<form method="post" enctype="multipart/form-data" asp-controller="Profile" asp-action="Index">*@
-                        <table class="table table-user-information">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <strong>
-                                            <span class="glyphicon glyphicon-user text-primary"></span>
-                                            Name
-                                        </strong>
-                                    </td>
-                                    <td class="text-primary">
-                                        <p id='name'>
-                                            <input type='text' size="40" name="Name" value="@user.Name" />
-                                        </p>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <strong>
-                                            <span class="glyphicon glyphicon-bookmark text-primary"></span>
-                                            Username
-                                        </strong>
-                                    </td>
-                                    <td class="text-primary">
-                                        <p id='email'>
-                                            <input type='text' size="40" name="UserName" value="@user.UserName" />
-                                        </p>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <strong>
-                                            <span class="glyphicon glyphicon-envelope text-primary"></span>
-                                            Email
-                                        </strong>
-                                    </td>
-                                    <td class="text-primary">
-                                        <p id='email'>
-                                            <input type='text' size="40" name="Email" value="@user.Email" />
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>
-                                            <span class="glyphicon glyphicon-calendar text-primary"></span>
-                                            Phone No
-                                        </strong>
-                                    </td>
-                                    <td class="text-primary">
-                                        <p id='phone-number'>
-                                            <input type='number' size="40" name="PhoneNumber" value="@user.PhoneNumber" />
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>
-                                            <span class="glyphicon glyphicon-calendar text-primary"></span>
-                                            Adderss
-                                        </strong>
-                                    </td>
-                                    <td class="text-primary">
-                                        <p id='present-address'>
-                                            <input type='text' size="40" name="Address" value="@user.Address" />
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>
-                                            <span class="glyphicon glyphicon-eye-open text-primary"></span>
-                                            Date of Birth
-                                        </strong>
-                                    </td>
-                                    <td class="text-primary">
-                                        <p id='date-of-birth'>
-                                            <input type='date' size="40" name="DateofBirth" value="@user.DateofBirth.ToString("yyyy-MM-dd")" />
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>
-                                            <span class="glyphicon glyphicon-eye-open text-primary"></span>
-                                            Password
-                                        </strong>
-                                    </td>
-                                    <td class="text-primary">
-                                        <p id='password'>
-                                            <input type='password' size="40" name="Password" required />
-                                        </p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="form-group">
-                            <div class="col-md-10">
-                                <p>Upload profile picture</p>
-                                <input class="form-control" name="File" type="file" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-10">
-                                <input class="btn btn-success" type="submit" value="Update" />
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
             </div>
         </div>
-    </div>
-</form>
+    </form>
+</profile-info>

@@ -32,8 +32,16 @@ namespace WebProject.Controllers
         }
 
         [Authorize]
-        public ActionResult Update()
+        public async Task<IActionResult> Update()
         {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+            var picture = _repository.Find(item => item.UserProfile.Id == user.Id).FirstOrDefault();
+            if (picture != null)
+            {
+                ViewBag.ProfilePicturePath = picture.ProfilePicturePath;
+            }
+
+            ViewBag.user = user;
             return View();
         }
 
