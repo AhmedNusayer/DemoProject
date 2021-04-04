@@ -18,5 +18,8 @@ namespace WebProject.Models
 
         [Required]
         public string CompanyEmail { get; set; }
+
+        [Required]
+        public string VerificationCode { get; set; }
     }
 }

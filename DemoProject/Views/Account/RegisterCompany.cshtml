@@ -3,21 +3,48 @@
     ViewBag.Title = "Company Registration";
 }
 
-<div class="container">
-    <div class="row d-flex justify-content-center">
-        <div class="col-lg-6">
-            <div class="card text-center">
-                <div class="card-header">
-                    Job Portal
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Register your company to get started</h5>
-                    <p class="card-text text-secondary">
-                        Find, hire and manage employees with Job Portal's
-                        employer software & tools in recruiting solutions.
-                    </p>
+<script>
+    var isClicked = function () {
+        sendEmail()
+        toggleDiv()
+    }
 
-                    <form role="form" action="RegisterCompany" method="post">
+    var toggleDiv = function () {
+        var mydiv = document.getElementById('toggle');
+        var mydiv2 = document.getElementById("exampleModalCenter")
+        if (mydiv.style.display === 'block' || mydiv.style.display === '') {
+            mydiv.style.display = 'none';
+            mydiv2.style.display = 'block'
+        }
+        else {
+            mydiv2.style.display = 'none'
+            mydiv.style.display = 'block'
+        }
+    }
+
+    var sendEmail = function () {
+        var email = $('#companyemail').val();
+        location.href = '@Url.Action("Verify", "Account")/?email=' + email
+    }
+
+</script>
+
+<form role="form" action="RegisterCompany" method="post">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-6">
+                <div class="card text-center">
+                    <div class="card-header">
+                        Job Portal
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Register your company to get started</h5>
+                        <p class="card-text text-secondary">
+                            Find, hire and manage employees with Job Portal's
+                            employer software & tools in recruiting solutions.
+                        </p>
+
+
                         <div class="form-group">
                             <input type="text" name="CompanyName" id="companyname" class="form-control input-sm" placeholder="Company Name" required>
                         </div>
@@ -38,18 +65,46 @@
                             <input type="email" name="CompanyEmail" id="companyemail" class="form-control input-sm" placeholder="Company Email" required>
                         </div>
 
+                        <button type="button" id="x" onclick="isClicked()" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                            Register
+                        </button>
+
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Enter Verification Code</h5>
+                                        <button type="button" class="close" onclick="toggleDiv()" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label> Please check your email for getting the verification code.</label>
+                                        <input type="text" name="VerificationCode" placeholder="Verification Code" />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="submit" value="Register" class="btn btn-info btn-block">
+                                        <a onclick="sendEmail()" class="btn btn-info btn-block">Resend Email</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <input type="submit" value="Register" class="btn btn-info btn-block">
 
-                    </form>
-                </div>
-                <div class="card-footer text-muted">
-                    Already have your company registered? <a asp-controller="Account" asp-action="RegisterEmployer">Sign Up(Employer)</a>
-                </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Already have your company registered? <a asp-controller="Account" asp-action="RegisterEmployer">Sign Up(Employer)</a>
+                    </div>
 
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form>
 
 
 
