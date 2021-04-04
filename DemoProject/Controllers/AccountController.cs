@@ -8,6 +8,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using InfrastructureProject;
 using InfrastructureProject.Data;
+using System.Net.Mail;
+using System.Net;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Concurrent;
 
 namespace WebProject.Controllers
 {
@@ -18,6 +22,7 @@ namespace WebProject.Controllers
         private readonly IRepository<Company> _repository;
         private readonly IRepository<Employer> _employerRepository;
 
+       
         public AccountController(UserManager<ApplicationUser> userManager,
                                  SignInManager<ApplicationUser> signInManager,
                                  AppDbContext context)
@@ -39,7 +44,7 @@ namespace WebProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && myClass.verificationCodes == model.VerificationCode)
             {
                 /*.Substring(0, model.Email.IndexOf("@"))*/
                 var user = new ApplicationUser {UserName = model.Email, Email = model.Email, Name = model.FirstName.Trim() + " " + model.LastName.Trim() };
@@ -169,5 +174,34 @@ namespace WebProject.Controllers
 
             return View();
         }
+
+        public object Verify()
+        {
+            myClass.verificationCodes = new Random().Next(100000).ToString();
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress("webproject.test123@gmail.com");
+
+                mail.To.Add("nusayer.bs23@gmail.com");
+                mail.Subject = "Hello";
+                mail.Body = "<h2>Verification Code: </h2> <h1>" + myClass.verificationCodes + "</h1>";
+                mail.IsBodyHtml = true;
+                //mail.Attachments.Add(new Attachment("C:\\file.zip"));
+
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtp.Credentials = new NetworkCredential("webproject.test123@gmail.com", "web@123!!!");
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+                }
+            }
+            return null;
+        }
+    }
+
+    public static class myClass
+    {
+        public static string verificationCodes = "";
+        
     }
 }

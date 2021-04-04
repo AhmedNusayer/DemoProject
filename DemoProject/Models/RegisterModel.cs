@@ -26,5 +26,8 @@ namespace WebProject.Models
         [Display(Name ="Confirm Password")]
         [Compare("Password", ErrorMessage ="Password and confirmation password do not match")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        public string VerificationCode { get; set; }
     }
 }

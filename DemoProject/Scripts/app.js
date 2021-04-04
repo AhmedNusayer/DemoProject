@@ -18,9 +18,16 @@ Vue.component("profile-info", {
 new Vue({
     el: "#app",
     data: {
+        isTrue: true,
         num1: 0,
         num2: 0,
         picked: "Summation",
+    },
+
+    methods: {
+        change: function () {
+            this.isTrue = !this.isTrue
+        }
     },
 
     computed: {
