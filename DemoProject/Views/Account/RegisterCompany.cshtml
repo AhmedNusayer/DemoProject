@@ -33,7 +33,7 @@
     <div class="container">
         <div class="row d-flex justify-content-center">
             <div class="col-lg-6">
-                <div class="card text-center">
+                <div class="card text-center" id="toggle">
                     <div class="card-header">
                         Job Portal
                     </div>
@@ -65,41 +65,39 @@
                             <input type="email" name="CompanyEmail" id="companyemail" class="form-control input-sm" placeholder="Company Email" required>
                         </div>
 
-                        <button type="button" id="x" onclick="isClicked()" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                        <button type="button" id="x" onclick="isClicked()" class="btn btn-info btn-block" data-toggle="modal" data-target="#exampleModalCenter">
                             Register
                         </button>
 
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Enter Verification Code</h5>
-                                        <button type="button" class="close" onclick="toggleDiv()" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <label> Please check your email for getting the verification code.</label>
-                                        <input type="text" name="VerificationCode" placeholder="Verification Code" />
-                                    </div>
-                                    <div class="modal-footer">
-                                        <input type="submit" value="Register" class="btn btn-info btn-block">
-                                        <a onclick="sendEmail()" class="btn btn-info btn-block">Resend Email</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <input type="submit" value="Register" class="btn btn-info btn-block">
+                        @*<input type="submit" value="Register" class="btn btn-info btn-block">*@
 
                     </div>
                     <div class="card-footer text-muted">
                         Already have your company registered? <a asp-controller="Account" asp-action="RegisterEmployer">Sign Up(Employer)</a>
                     </div>
 
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Enter Verification Code</h5>
+                                <button type="button" class="close" onclick="toggleDiv()" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <label> Please check your email for getting the verification code.</label>
+                                <input type="text" name="VerificationCode" placeholder="Verification Code" />
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="Register" class="btn btn-info btn-block">
+                                <a onclick="sendEmail()" class="btn btn-info btn-block">Resend Email</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -11,7 +11,7 @@ namespace WebProject.Models
         public string LastName { get; set; }
 
         [Required]
-        public string CompanyName { get; set; }
+        public string CompanyId { get; set; }
 
         [Required]
         [EmailAddress]
@@ -25,5 +25,11 @@ namespace WebProject.Models
         [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "Password and confirmation password do not match")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        public string VerificationCode { get; set; }
+
+        [Required]
+        public string CompanyVerificationCode { get; set; }
     }
 }

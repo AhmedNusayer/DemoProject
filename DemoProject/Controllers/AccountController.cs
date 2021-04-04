@@ -55,7 +55,6 @@ namespace WebProject.Controllers
                     await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index","Home");
                 }
-               
                 
                 foreach(var error in result.Errors)
                 {
@@ -91,8 +90,6 @@ namespace WebProject.Controllers
                 }
 
                 ModelState.AddModelError("", "Invalid Login Attempt");
-                
-
             }
             else
             {
@@ -123,14 +120,14 @@ namespace WebProject.Controllers
             var company = await _repository.GetAll();
             ViewBag.data = company;
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && VerificationCode.verificationCode == model.VerificationCode && VerificationCode.verificationCodeCompany == model.CompanyVerificationCode)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.FirstName.Trim() + " " + model.LastName.Trim() };
                 var result = await userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
-                    var companyinfo = await _repository.Get(int.Parse(model.CompanyName));
+                    var companyinfo = await _repository.Get(int.Parse(model.CompanyId));
                     var employer = new Employer() { User = user, CompanyInfo = companyinfo };
 
                     await signInManager.SignInAsync(user, isPersistent: false);
@@ -175,29 +172,59 @@ namespace WebProject.Controllers
             return View();
         }
 
-        public object Verify(string email)
+        public object Verify(string email = null, string companyid = null)
         {
-            VerificationCode.verificationCode = new Random().Next(100000).ToString();
-            using (MailMessage mail = new MailMessage())
+            if(companyid != null)
             {
-                mail.From = new MailAddress("webproject.test123@gmail.com");
-
-                mail.To.Add(email);
-                mail.Subject = "Verify your email for Job Portal";
-                mail.Body = "<p>To finish setting up your Job Portal account, we just need to make sure " +
-                    "this email address is yours. <br> To verify your email address use this verification code: </p>" +
-                    " <b style='color: #2672ec; font-size: 35px'>" + VerificationCode.verificationCode + "</b>" + 
-                    "<p>If you didn't request this" +
-                    " code, you can safely ignore this email. Someone else might have " +
-                    "typed your email address by mistake. <br> <br> Thanks, <br> The Job Portal account team";
-                mail.IsBodyHtml = true;
-                //mail.Attachments.Add(new Attachment("C:\\file.zip"));
-
-                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                var companyEmail = _repository.Get(int.Parse(companyid)).Result.CompanyEmail;
+                VerificationCode.verificationCodeCompany = new Random().Next(100000).ToString();
+                using (MailMessage mail = new MailMessage())
                 {
-                    smtp.Credentials = new NetworkCredential("webproject.test123@gmail.com", "web@123!!!");
-                    smtp.EnableSsl = true;
-                    smtp.Send(mail);
+                    mail.From = new MailAddress("webproject.test123@gmail.com");
+
+                    mail.To.Add(companyEmail);
+                    mail.Subject = "Verify your email for Job Portal";
+                    mail.Body = "<p>To finish setting up your Job Portal account, we just need to make sure " +
+                        "that you are a representative of this company. <br> To verify your company use this verification code: </p>" +
+                        " <b style='color: #2672ec; font-size: 35px'>" + VerificationCode.verificationCodeCompany + "</b>" +
+                        "<p>If you didn't request this" +
+                        " code, you can safely ignore this email. Someone else might have " +
+                        "select your company by mistake. <br> <br> Thanks, <br> The Job Portal account team";
+                    mail.IsBodyHtml = true;
+                    //mail.Attachments.Add(new Attachment("C:\\file.zip"));
+
+                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtp.Credentials = new NetworkCredential("webproject.test123@gmail.com", "web@123!!!");
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                    }
+                }
+            }
+            if (email != null)
+            {
+                VerificationCode.verificationCode = new Random().Next(100000).ToString();
+                using (MailMessage mail = new MailMessage())
+                {
+                    mail.From = new MailAddress("webproject.test123@gmail.com");
+
+                    mail.To.Add(email);
+                    mail.Subject = "Verify your email for Job Portal";
+                    mail.Body = "<p>To finish setting up your Job Portal account, we just need to make sure " +
+                        "this email address is yours. <br> To verify your email address use this verification code: </p>" +
+                        " <b style='color: #2672ec; font-size: 35px'>" + VerificationCode.verificationCode + "</b>" + 
+                        "<p>If you didn't request this" +
+                        " code, you can safely ignore this email. Someone else might have " +
+                        "typed your email address by mistake. <br> <br> Thanks, <br> The Job Portal account team";
+                    mail.IsBodyHtml = true;
+                    //mail.Attachments.Add(new Attachment("C:\\file.zip"));
+
+                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtp.Credentials = new NetworkCredential("webproject.test123@gmail.com", "web@123!!!");
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                    }
                 }
             }
             return null;
@@ -207,6 +234,7 @@ namespace WebProject.Controllers
     public static class VerificationCode
     {
         public static string verificationCode = "";
-        
+
+        public static string verificationCodeCompany = "";
     }
 }
