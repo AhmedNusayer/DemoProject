@@ -44,7 +44,7 @@ namespace WebProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterModel model)
         {
-            if (ModelState.IsValid && myClass.verificationCodes == model.VerificationCode)
+            if (ModelState.IsValid && VerificationCode.verificationCode == model.VerificationCode)
             {
                 /*.Substring(0, model.Email.IndexOf("@"))*/
                 var user = new ApplicationUser {UserName = model.Email, Email = model.Email, Name = model.FirstName.Trim() + " " + model.LastName.Trim() };
@@ -175,16 +175,21 @@ namespace WebProject.Controllers
             return View();
         }
 
-        public object Verify()
+        public object Verify(string email)
         {
-            myClass.verificationCodes = new Random().Next(100000).ToString();
+            VerificationCode.verificationCode = new Random().Next(100000).ToString();
             using (MailMessage mail = new MailMessage())
             {
                 mail.From = new MailAddress("webproject.test123@gmail.com");
 
-                mail.To.Add("nusayer.bs23@gmail.com");
-                mail.Subject = "Hello";
-                mail.Body = "<h2>Verification Code: </h2> <h1>" + myClass.verificationCodes + "</h1>";
+                mail.To.Add(email);
+                mail.Subject = "Verify your email for Job Portal";
+                mail.Body = "<p>To finish setting up your Job Portal account, we just need to make sure " +
+                    "this email address is yours. <br> To verify your email address use this verification code: </p>" +
+                    " <b style='color: #2672ec; font-size: 35px'>" + VerificationCode.verificationCode + "</b>" + 
+                    "<p>If you didn't request this" +
+                    " code, you can safely ignore this email. Someone else might have " +
+                    "typed your email address by mistake. <br> <br> Thanks, <br> The Job Portal account team";
                 mail.IsBodyHtml = true;
                 //mail.Attachments.Add(new Attachment("C:\\file.zip"));
 
@@ -199,9 +204,9 @@ namespace WebProject.Controllers
         }
     }
 
-    public static class myClass
+    public static class VerificationCode
     {
-        public static string verificationCodes = "";
+        public static string verificationCode = "";
         
     }
 }

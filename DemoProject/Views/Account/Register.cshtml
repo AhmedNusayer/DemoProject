@@ -32,16 +32,28 @@
 
 <script>
     var isClicked = function () {
-        location.href = '@Url.Action("Verify", "Account")'
+        sendEmail()
+        toggleDiv()
+    }
+
+    var toggleDiv = function () {
         var mydiv = document.getElementById('toggle');
         var mydiv2 = document.getElementById("exampleModalCenter")
         if (mydiv.style.display === 'block' || mydiv.style.display === '') {
             mydiv.style.display = 'none';
             mydiv2.style.display = 'block'
         }
-        else
+        else {
+            mydiv2.style.display = 'none'
             mydiv.style.display = 'block'
+        }
     }
+
+    var sendEmail = function () {
+        var email = $('#email').val();
+        location.href = '@Url.Action("Verify", "Account")/?email=' + email
+    }
+
 </script>
 
 <form role="form" action="Register" method="post">
@@ -116,16 +128,17 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLongTitle">Enter Verification Code</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" onclick="toggleDiv()" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <label>Enter Verification Code</label>
-                                <input type="text" name="VerificationCode"/>
+                                <label> Please check your email for getting the verification code.</label>
+                                <input type="text" name="VerificationCode" placeholder="Verification Code" />                               
                             </div>
                             <div class="modal-footer">
                                 <input type="submit" value="Register" class="btn btn-info btn-block">
+                                <a onclick="sendEmail()" class="btn btn-info btn-block">Resend Email</a>
                             </div>
                         </div>
                     </div>
