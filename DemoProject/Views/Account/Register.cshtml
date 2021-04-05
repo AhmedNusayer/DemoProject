@@ -51,7 +51,7 @@
 
     var sendEmail = function () {
         var email = $('#email').val();
-        location.href = '@Url.Action("Verify", "Account")/?email=' + email
+        location.href = '@Url.Action("SendMail", "Account")/?actions=verifyuser&address=' + email
     }
 
 </script>

@@ -23,15 +23,10 @@
         }
     }
 
-    var sendEmail = function () {
-        var email = $('#email').val();
-        location.href = '@Url.Action("Verify", "Account")/?email=' + email
-    }
-
     var sendCompanyEmail = function () {
         var companyid = $('#company').val()
         var email = $('#email').val()
-        location.href = '@Url.Action("Verify", "Account")/?companyid=' + companyid + '&email=' + email
+        location.href = '@Url.Action("SendMail", "Account")/?actions=verifyemployer&address=' + email + '&companyid=' + companyid
     }
 
 </script>
