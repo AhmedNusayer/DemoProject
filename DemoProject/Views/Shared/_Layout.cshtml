@@ -36,9 +36,9 @@
                             var user = await UserManager.GetUserAsync(User);
                             var picture = repository.Find(c => c.UserProfile.Id == user.Id).FirstOrDefault();
                             @*<li class="nav-item">
-                                <a class="nav-link text-light btn mr-1" asp-area="" asp-controller="Profile" asp-action="Index" title="Manage">Hello @User.Identity.Name!</a>
-                            </li>*@
-                            
+                                    <a class="nav-link text-light btn mr-1" asp-area="" asp-controller="Profile" asp-action="Index" title="Manage">Hello @User.Identity.Name!</a>
+                                </li>*@
+
                             <li class="nav-item dropdown">
                                 <a class="nav-link btn" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
@@ -112,7 +112,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    <script src="~/Scripts/app.js" type="text/javascript" language="javascript"></script>
+    <script src="~/Scripts/app.js" type="module" language="javascript"></script>
 
     @RenderSection("Scripts", required: false)
 </body>
