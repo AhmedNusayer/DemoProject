@@ -5,18 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using EntityProject;
 
 namespace WebProject.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly UserManager<ApplicationUser> userManager;
 
-        private readonly AppDbContext _context;
-
-        public HomeController(AppDbContext context)
+        public HomeController(UserManager<ApplicationUser> userManager)
         {
-            _context = context;
-
+            this.userManager = userManager;
         }
 
         public IActionResult Privacy()
@@ -24,8 +24,15 @@ namespace WebProject.Controllers
             return View();
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+
+            var user =  await userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                var a = await userManager.GetRolesAsync(user);
+                ViewBag.rolename = a.FirstOrDefault();
+            }
             return View();
         }
 

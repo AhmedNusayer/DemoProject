@@ -1,7 +1,13 @@
 ﻿
-<home-page inline-template>
+<home-page inline-template role="@ViewBag.rolename">
     <div class="text-center">
         <h1 class="display-4">Welcome to the Job Portal</h1>
+        <div v-if="isuser">
+            Hello User
+        </div>
+        <div v-if="isemployer">
+            Hello Employee
+        </div>
     </div>
 </home-page>
 
