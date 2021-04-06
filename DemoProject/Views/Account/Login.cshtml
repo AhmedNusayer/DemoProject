@@ -1,52 +1,37 @@
-﻿@model LoginModel
-
-@{
+﻿@{
     ViewBag.Title = "User Login";
 }
 
-@*<div>
-        <p>Enter email and password</p>
-        <form action="Login" method="post">
-            <p id='email'>
-                <label>Email</label>
-                <input type='email' name="Email" required />
-            </p>
-            <p id='password'>
-                <label>Password</label>
-                <input type='password' name="Password" required />
-            </p>
-            <input type='submit' value="Log in" />
-        </form>
-    </div>*@
 
+<signin-user inline-template>
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-6">
+                <div class="card text-center">
+                    <div class="card-header">
+                        Job Portal
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Welcome to Job Portal</h5>
+                        <p class="card-text text-secondary">Sign in and explore the world of opportunities.</p>
 
-<div class="container">
-    <div class="row d-flex justify-content-center">
-        <div class="col-lg-6">
-            <div class="card text-center">
-                <div class="card-header">
-                    Job Portal
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Welcome to Job Portal</h5>
-                    <p class="card-text text-secondary">Sign in and explore the world of opportunities.</p>
+                        <form role="form" action="Login" method="post">
+                            <div class="form-group">
+                                <input type="email" name="Email" v-model="Email" id="email" class="form-control input-sm" placeholder="Email Address" required>
+                            </div>
 
-                    <form role="form" action="Login" method="post">
-                        <div class="form-group">
-                            <input type="email" name="Email" id="email" class="form-control input-sm" placeholder="Email Address" required>
-                        </div>
+                            <div class="form-group">
+                                <input type="password" name="Password" v-model="Password" id="password" class="form-control input-sm" placeholder="Password" required>
+                            </div>
 
-                        <div class="form-group">
-                            <input type="password" name="Password" id="password" class="form-control input-sm" placeholder="Password" required>
-                        </div>
-
-                        <input type="submit" value="Sign In" class="btn btn-info btn-block">
-                    </form>
-                </div>
-                <div class="card-footer text-muted">
-                    Don't have an account? <a asp-controller="Account" asp-action="Register">Sign Up</a>
+                            <input type="submit" value="Sign In" class="btn btn-info btn-block">
+                        </form>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Don't have an account? <a asp-controller="Account" asp-action="Register">Sign Up</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</signin-user>
