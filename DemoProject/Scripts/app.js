@@ -3,6 +3,7 @@ import "./profile-info.js"
 import "./register-employer.js"
 import "./home-page.js"
 import "./privacy-page.js"
+import "./register-user.js"
 
 new Vue({
     el: "#app",
