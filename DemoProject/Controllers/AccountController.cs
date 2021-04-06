@@ -21,8 +21,8 @@ namespace WebProject.Controllers
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IRepository<Company> _repository;
         private readonly IRepository<Employer> _employerRepository;
-
        
+
         public AccountController(UserManager<ApplicationUser> userManager,
                                  SignInManager<ApplicationUser> signInManager,
                                  AppDbContext context)
@@ -52,6 +52,7 @@ namespace WebProject.Controllers
 
                 if (result.Succeeded)
                 {
+                    await userManager.AddToRoleAsync(user, "User");
                     await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index","Home");
                 }
@@ -129,6 +130,8 @@ namespace WebProject.Controllers
                 {
                     var companyinfo = await _repository.Get(int.Parse(model.CompanyId));
                     var employer = new Employer() { User = user, CompanyInfo = companyinfo };
+
+                    await userManager.AddToRoleAsync(user, "Employer");
 
                     await signInManager.SignInAsync(user, isPersistent: false);
                     await _employerRepository.Add(employer);
