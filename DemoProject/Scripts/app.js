@@ -1,5 +1,6 @@
 import "./register-company.js"
 import "./profile-info.js"
+import "./register-employer.js"
 
 new Vue({
     el: "#app",

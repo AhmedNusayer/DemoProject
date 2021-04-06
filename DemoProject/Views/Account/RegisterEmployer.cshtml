@@ -4,119 +4,91 @@
     ViewBag.Title = "Employer Registration";
 }
 
-<script>
-    var isClicked = function () {
-        sendCompanyEmail()
-        toggleDiv()
-    }
+<register-employer inline-template>
+    <form role="form" action="RegisterEmployer" method="post">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card text-center" v-show='toggle'>
+                        <div class="card-header">
+                            Job Portal
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Welcome to Job Portal</h5>
+                            <p class="card-text text-secondary">Sign in and explore the world of opportunities.</p>
 
-    var toggleDiv = function () {
-        var mydiv = document.getElementById('toggle');
-        var mydiv2 = document.getElementById("exampleModalCenter")
-        if (mydiv.style.display === 'block' || mydiv.style.display === '') {
-            mydiv.style.display = 'none';
-            mydiv2.style.display = 'block'
-        }
-        else {
-            mydiv2.style.display = 'none'
-            mydiv.style.display = 'block'
-        }
-    }
-
-    var sendCompanyEmail = function () {
-        var companyid = $('#company').val()
-        var email = $('#email').val()
-        location.href = '@Url.Action("SendMail", "Account")/?actions=verifyemployer&address=' + email + '&companyid=' + companyid
-    }
-
-</script>
-
-<form role="form" action="RegisterEmployer" method="post">
-    <div class="container">
-        <div class="row d-flex justify-content-center">
-            <div class="col-lg-6">
-                <div class="card text-center" id="toggle">
-                    <div class="card-header">
-                        Job Portal
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Welcome to Job Portal</h5>
-                        <p class="card-text text-secondary">Sign in and explore the world of opportunities.</p>
-
-
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                <div class="form-group">
-                                    <input type="text" name="FirstName" id="first_name" class="form-control input-sm" placeholder="First Name" required>
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" v-model="FirstName" name="FirstName" id="first_name" class="form-control input-sm" placeholder="First Name" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" v-model="LastName" name="LastName" id="last_name" class="form-control input-sm" placeholder="Last Name" required>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                <div class="form-group">
-                                    <input type="text" name="LastName" id="last_name" class="form-control input-sm" placeholder="Last Name" required>
+
+                            <div class="form-group">
+                                @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.data, "Id", "CompanyName"), "Select Company", htmlAttributes: new { @class = "form-control", @id = "company", @v_model = "CompanyId", @name = "CompanyId", required = "required" })
+                            </div>
+
+                            <div class="form-group">
+                                <input type="email" v-model="Email" name="Email" id="email" class="form-control input-sm" placeholder="Email Address" required>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="password" v-model="Password" name="Password" id="password" class="form-control input-sm" placeholder="Password" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="password" v-model="ConfirmPassword" name="ConfirmPassword" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password" required>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @*<input type="text" name="CompanyName" id="companyname" class="form-control input-sm" placeholder="Company Name" required>*@
-                            @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.data, "Id", "CompanyName"), "Select Company", htmlAttributes: new { @class = "form-control", @id = "company", @name = "CompanyId", required = "required" })
-                        </div>
+                            <button type="button" id="verifybtn" v-on:click="isClicked" :disabled="isDisabled" class="btn btn-info btn-block" data-toggle="modal" data-target="#exampleModalCenter">
+                                Register
+                            </button>
 
-                        <div class="form-group">
-                            <input type="email" name="Email" id="email" class="form-control input-sm" placeholder="Email Address" required>
                         </div>
-
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                <div class="form-group">
-                                    <input type="password" name="Password" id="password" class="form-control input-sm" placeholder="Password" required>
-                                </div>
-                            </div>
-                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                <div class="form-group">
-                                    <input type="password" name="ConfirmPassword" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password" required>
-                                </div>
-                            </div>
+                        <div class="card-footer text-muted">
+                            Can't find your company? <a asp-controller="Account" asp-action="RegisterCompany">Register Your Company</a>
+                            <br />
+                            Already have an account? <a asp-controller="Account" asp-action="Login">Sign In</a>
                         </div>
-
-                        <button type="button" id="verifybtn" onclick="isClicked()" class="btn btn-info btn-block" data-toggle="modal" data-target="#exampleModalCenter">
-                            Register
-                        </button>
 
                     </div>
-                    <div class="card-footer text-muted">
-                        Can't find your company? <a asp-controller="Account" asp-action="RegisterCompany">Register Your Company</a>
-                        <br />
-                        Already have an account? <a asp-controller="Account" asp-action="Login">Sign In</a>
-                    </div>
 
-                </div>
-
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Enter Verification Code</h5>
-                                <button type="button" class="close" onclick="toggleDiv()" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <label> Please check your email for getting the verification code.</label>
-                                <input type="text" name="VerificationCode" placeholder="Verification Code" />
-                                <label> Please check your company email for getting the company verification code.</label>
-                                <input type="text" name="CompanyVerificationCode" placeholder="Company Verification Code" />
-                            </div>
-                            <div class="modal-footer">
-                                <input type="submit" value="Register" class="btn btn-info btn-block">
-                                <a onclick="sendCompanyEmail()" class="btn btn-info btn-block">Resend Email</a>
+                    <!-- Modal -->
+                    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Enter Verification Code</h5>
+                                    <button type="button" class="close" v-on:click="toggle = !toggle" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label> Please check your email for getting the verification code.</label>
+                                    <input type="text" v-model="VerificationCode" name="VerificationCode" placeholder="Verification Code" />
+                                    <label> Please check your company email for getting the company verification code.</label>
+                                    <input type="text" v-model="CompanyVerificationCode" name="CompanyVerificationCode" placeholder="Company Verification Code" />
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" value="Register" class="btn btn-info btn-block">
+                                    <a v-on:click="sendMail" class="btn btn-info btn-block">Resend Email</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-    </div>
-</form>
+    </form>
+</register-employer>
