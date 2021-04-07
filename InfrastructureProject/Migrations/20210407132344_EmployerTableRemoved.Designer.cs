@@ -4,14 +4,16 @@ using InfrastructureProject;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InfrastructureProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class UserContextModelSnapshot : ModelSnapshot
+    [Migration("20210407132344_EmployerTableRemoved")]
+    partial class EmployerTableRemoved
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,28 +120,6 @@ namespace InfrastructureProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("companies");
-                });
-
-            modelBuilder.Entity("EntityProject.Employer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CompanyInfoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyInfoId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("employers");
                 });
 
             modelBuilder.Entity("EntityProject.JobPost", b =>
@@ -337,21 +317,6 @@ namespace InfrastructureProject.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("EntityProject.Employer", b =>
-                {
-                    b.HasOne("EntityProject.Company", "CompanyInfo")
-                        .WithMany()
-                        .HasForeignKey("CompanyInfoId");
-
-                    b.HasOne("EntityProject.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("CompanyInfo");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EntityProject.JobPost", b =>

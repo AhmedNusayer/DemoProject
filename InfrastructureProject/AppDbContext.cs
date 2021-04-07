@@ -21,6 +21,8 @@ namespace InfrastructureProject
 
         public DbSet<Employer> employers { get; set; }
 
+        public DbSet<JobPost> jobposts { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

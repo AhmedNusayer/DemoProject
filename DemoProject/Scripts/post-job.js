@@ -14,8 +14,8 @@
     computed: {
         isDisabled() {
             if (this.JobTitle.length != 0 && this.JobLocation.length != 0 && this.NoOfPosts > 0 &&
-                this.JobDescription.length != 0 && this.SalaryRangeEnd >= this.SalaryRangeStart
-                && this.SalaryRangeStart >= 0 && this.SalaryRangeEnd >= 0) {
+                this.JobDescription.length != 0 && parseInt(this.SalaryRangeEnd) >= parseInt(this.SalaryRangeStart)
+                && parseInt(this.SalaryRangeStart) >= 0 && parseInt(this.SalaryRangeEnd) >= 0) {
                 return false;
             } else {
                 return true;

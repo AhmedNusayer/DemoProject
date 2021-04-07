@@ -4,14 +4,16 @@ using InfrastructureProject;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InfrastructureProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class UserContextModelSnapshot : ModelSnapshot
+    [Migration("20210407115444_JobPostsTableAdded")]
+    partial class JobPostsTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,22 +124,15 @@ namespace InfrastructureProject.Migrations
 
             modelBuilder.Entity("EntityProject.Employer", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("CompanyInfoId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyInfoId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("employers");
                 });
@@ -347,7 +342,9 @@ namespace InfrastructureProject.Migrations
 
                     b.HasOne("EntityProject.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CompanyInfo");
 
