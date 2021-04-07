@@ -36,5 +36,10 @@ namespace WebProject.Controllers
             return View();
         }
 
+        public IActionResult PostJob()
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }

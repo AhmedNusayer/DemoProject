@@ -5,6 +5,7 @@ import "./home-page.js"
 import "./privacy-page.js"
 import "./register-user.js"
 import "./signin-user.js"
+import "./post-job.js"
 
 new Vue({
     el: "#app",

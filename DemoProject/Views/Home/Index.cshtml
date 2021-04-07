@@ -5,8 +5,78 @@
         <div v-if="isuser">
             Hello User
         </div>
-        <div v-if="isemployer">
-            Hello Employee
+        <div class="container" v-if="isemployer">
+            <post-job inline-template>
+
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <div style="float: left; width: 150px; font-size: 20px;">
+                                    Hello Employer
+                                </div>
+
+                                <button class="btn btn-success" style="float: right; width: 150px;" data-toggle="collapse" href="#collapseExample" role="button"
+                                        aria-expanded="false" aria-controls="collapseExample">
+                                    Post A Job
+                                </button>
+                            </div>
+                            <form role="form" asp-action="PostJob" asp-controller="Home" method="post">
+                                <div class="collapse" id="collapseExample">
+                                    <div class="card card-body">
+
+                                        <div class="form-group">
+                                            <input type="text" name="JobTitle" v-model="JobTitle" id="job_title" class="form-control input-sm" placeholder="Job Title" required>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <input type="text" name="JobLocation" v-model="JobLocation" id="job_location" class="form-control input-sm" placeholder="Job Location" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <input type="text" name="JobType" v-model="JobType" id="job_type" class="form-control input-sm" placeholder="Job Type">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <label style="float: left;">Salary Range From</label>
+                                                    <input type="number" min="0" name="SalaryRangeStart" v-model="SalaryRangeStart" id="salary_range_start" class="form-control input-sm" placeholder="Salary Range Start">
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <label style="float: left;">Salary Range To</label>
+                                                    <input type="number" min="0" name="SalaryRangeEnd" v-model="SalaryRangeEnd" id="salary_range_end" class="form-control input-sm" placeholder="Salary Range End">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label style="float: left;">No of Posts Available</label>
+                                            <input type="number" min="1" name="NoOfPosts" v-model="NoOfPosts" id="no_of_posts" class="form-control input-sm" placeholder="No of Posts" required>
+                                        </div>
+
+                                        <textarea class="form-control" name="JobDescription" v-model="JobDescription" id="job_description" rows="3" placeholder="Enter your job description" required></textarea>
+
+                                        <div class="card-footer text-muted">
+                                            <button type="submit" id="x" :disabled="isDisabled" class="btn btn-info btn-block" data-toggle="modal" data-target="#exampleModalCenter">
+                                                Post
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </post-job>
         </div>
     </div>
 </home-page>
