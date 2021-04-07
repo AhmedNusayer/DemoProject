@@ -3,6 +3,7 @@
     data: function () {
         return {
             picturePath: this.picpath,
+            dpPlaceholder: "/Images/dp_placeholder.png",
             Name: this.name,
             UserName: this.username,
             Email: this.email,

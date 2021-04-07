@@ -3,14 +3,14 @@
               email="@ViewBag.user.Email" phonenumber="@ViewBag.user.PhoneNumber"
               address="@ViewBag.user.Address" dateofbirth="@ViewBag.user.DateofBirth.ToString("yyyy-MM-dd")">
     <form method="post" enctype="multipart/form-data" asp-controller="Profile" asp-action="Index">
-        <div class="container bootstrap snippets bootdey">
+        <div class="container">
             <div class="panel-body inf-content">
                 <div class="row">
 
                     <div class="col-md-4">
                         <img v-if="picturePath" :src="'/' + picturePath" height="260" width="260" class="rounded-circle" data-original-title="Usuario">
                         <img v-if="!picturePath" alt="" height="260" width="260" title="" class="rounded-circle"
-                             src="https://www.bootdey.com/img/Content/avatar/avatar7.png"
+                             :src="dpPlaceholder"
                              data-original-title="Usuario">
 
                         <div class="card">

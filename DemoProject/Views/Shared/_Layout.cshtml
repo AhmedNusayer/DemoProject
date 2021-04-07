@@ -17,7 +17,7 @@
     <!-- Including the fontawesome CDN -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="~/js/vue.js"></script>
 
 </head>
 <body>
@@ -35,9 +35,6 @@
                         {
                             var user = await UserManager.GetUserAsync(User);
                             var picture = repository.Find(c => c.UserProfile.Id == user.Id).FirstOrDefault();
-                            @*<li class="nav-item">
-                                    <a class="nav-link text-light btn mr-1" asp-area="" asp-controller="Profile" asp-action="Index" title="Manage">Hello @User.Identity.Name!</a>
-                                </li>*@
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link btn" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -49,7 +46,7 @@
                                         }
                                         else
                                         {
-                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar7.png" title="@user.Name &#013; @user.Email" style="background-color:white" width="30" height="30" class="rounded-circle border border-white">
+                                            <img src="~/Images/dp_placeholder.png" title="@user.Name &#013; @user.Email" style="background-color:white" width="30" height="30" class="rounded-circle border border-white">
                                         }
                                     }
                                 </a>
