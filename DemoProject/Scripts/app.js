@@ -6,6 +6,7 @@ import "./privacy-page.js"
 import "./register-user.js"
 import "./signin-user.js"
 import "./post-job.js"
+import "./jobpost-card.js"
 
 new Vue({
     el: "#app",

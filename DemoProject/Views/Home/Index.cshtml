@@ -78,6 +78,30 @@
                 </div>
             </post-job>
         </div>
+
+
+        <jobpost-card inline-template jobpost="@ViewBag.posts">
+            <div style="float: left; width: 50%; padding: 0 10px;">
+                <div v-for="job in JobPost" :key="job.Id" class="card mt-5">
+                        <div class="card-header">
+                            {{job.JobTitle}}
+                        </div>
+                        
+                        <div class="card-body">
+                            <h5 class="card-title">{{job.JobLocation}}</h5>
+                            <p class="card-text text-secondary">{{job.TimeOfPost}}</p>
+                            <p> {{job.JobDescription}}</p>
+                        </div>
+                        <div class="card-footer text-muted">
+                            {{job.CompanyInfo.CompanyName}}
+                        </div>
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </jobpost-card>
+
+
     </div>
 </home-page>
 

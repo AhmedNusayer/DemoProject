@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using EntityProject;
 using InfrastructureProject.Data;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 namespace WebProject.Controllers
 {
@@ -45,6 +46,12 @@ namespace WebProject.Controllers
                 var a = await userManager.GetRolesAsync(user);
                 ViewBag.rolename = a.FirstOrDefault();
             }
+
+            var posts = await _jobRepository.GetAll(new string[] { "CompanyInfo", "PostAuthor" });
+            string jsonString = JsonConvert.SerializeObject(posts);
+
+            ViewBag.posts = jsonString;
+
             return View();
         }
 
