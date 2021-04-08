@@ -85,7 +85,7 @@
                     <div v-for="job in JobPost" :key="job.Id" class="card shadow-lg mt-5">
                         <div class="card-header">
                             <h2>{{job.JobTitle}}</h2>
-                            <h6>{{new Date(job.TimeofPost).toUTCString()}}</h6>
+                            <p class="text-secondary">{{new Date(job.TimeofPost).toUTCString()}}</p>
                         </div>
 
                         <div class="card-body">
@@ -95,8 +95,8 @@
                             <span v-if="job.SalaryRangeEnd"> Salary Range: ${{job.SalaryRangeStart}} to ${{job.SalaryRangeEnd}}</span>
                             </p>
                        
-                            
-                            <p> {{job.JobDescription.slice(0,500)}}</p>
+                            <p v-if="job.JobDescription.length>500"> {{job.JobDescription.slice(0,500)}}...</p>
+                            <p v-else> {{job.JobDescription.slice(0,500)}}</p>
                         </div>
                         <div class="card-footer text-muted">
                             <button style="float:right" class="btn btn-info">View Details</button>
