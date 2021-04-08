@@ -2,7 +2,7 @@
 <home-page inline-template role="@ViewBag.rolename">
     <div class="row d-flex justify-content-center">
         <h1 class="display-4">Welcome to the Job Portal</h1>
-        <div v-if="isuser">
+        <div class="container d-flex justify-content-center" v-if="isuser">
             Hello User
         </div>
         <div class="container" v-if="isemployer">
