@@ -48,7 +48,8 @@ namespace WebProject.Controllers
             }
 
             var posts = await _jobRepository.GetAll(new string[] { "CompanyInfo", "PostAuthor" });
-            string jsonString = JsonConvert.SerializeObject(posts);
+            var orderdPost = posts.OrderByDescending(x => x.TimeofPost);
+            string jsonString = JsonConvert.SerializeObject(orderdPost);
 
             ViewBag.posts = jsonString;
 
@@ -81,6 +82,19 @@ namespace WebProject.Controllers
                 await _jobRepository.Add(jobpost);
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult JobDetails(int id)
+        {
+            ViewBag.PostId = id;
+
+            var post = _jobRepository.Find(x =>x.Id == id, new string[] { "CompanyInfo", "PostAuthor" }).FirstOrDefault();
+            if(post != null)
+            {
+                string jsonString = JsonConvert.SerializeObject(post);
+                ViewBag.PostDetails = jsonString;
+            }
+            return View();
         }
     }
 }

@@ -99,7 +99,7 @@
                             <p v-else> {{job.JobDescription.slice(0,500)}}</p>
                         </div>
                         <div class="card-footer text-muted">
-                            <button style="float:right" class="btn btn-info">View Details</button>
+                            <a style="float:right; color:white" class="btn btn-primary" v-on:click="Redirect(job.Id)">View Details</a>
                         </div>
                         <br />
                         <br />
