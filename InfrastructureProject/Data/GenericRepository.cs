@@ -68,12 +68,21 @@ namespace InfrastructureProject.Data
                 _context.Set<T>().Remove(entity);
             }
             await _context.SaveChangesAsync();
-            //_context.Set<T>().RemoveRange(entities);
         }
 
         public async Task<List<T>> GetAll()
         {
             return await _context.Set<T>().ToListAsync();
+        }
+
+        public Task<List<T>> GetAll(string[] include)
+        {
+            var query = _context.Set<T>().Include(include[0]);
+            for (int i = 1; i < include.Length; i++)
+            {
+                query = query.Include(include[i]);
+            }
+            return query.ToListAsync();
         }
 
         public async Task<T> Get(int id)

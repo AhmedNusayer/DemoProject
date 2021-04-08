@@ -11,6 +11,8 @@ namespace InfrastructureProject.Data
     {
         Task<List<T>> GetAll();
 
+        Task<List<T>> GetAll(string[] include);
+
         Task<T> Get(int id);
 
         Task<T> Delete(int id);        
