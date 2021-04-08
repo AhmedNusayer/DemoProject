@@ -1,6 +1,6 @@
 ﻿
 <home-page inline-template role="@ViewBag.rolename">
-    <div class="text-center">
+    <div class="row d-flex justify-content-center">
         <h1 class="display-4">Welcome to the Job Portal</h1>
         <div v-if="isuser">
             Hello User
@@ -79,29 +79,34 @@
             </post-job>
         </div>
 
-
         <jobpost-card inline-template jobpost="@ViewBag.posts">
-            <div style="float: left; width: 50%; padding: 0 10px;">
-                <div v-for="job in JobPost" :key="job.Id" class="card mt-5">
+            <div class="container d-flex justify-content-center">
+                <div class="col-lg-8">
+                    <div v-for="job in JobPost" :key="job.Id" class="card shadow-lg mt-5">
                         <div class="card-header">
-                            {{job.JobTitle}}
+                            <h2>{{job.JobTitle}}</h2>
+                            <h6>{{new Date(job.TimeofPost).toUTCString()}}</h6>
                         </div>
-                        
+
                         <div class="card-body">
-                            <h5 class="card-title">{{job.JobLocation}}</h5>
-                            <p class="card-text text-secondary">{{job.TimeOfPost}}</p>
-                            <p> {{job.JobDescription}}</p>
+                            @*<h4>{{job.CompanyInfo.CompanyName}} <span v-if="job.JobType"> | {{job.JobType}}</span> </h4>*@
+                            <p class="card-text text-secondary">{{job.CompanyInfo.CompanyName}} | {{job.CompanyInfo.CompanyLocation}}
+                                <span v-if="job.JobType"> | {{job.JobType}}</span> <br />
+                            <span v-if="job.SalaryRangeEnd"> Salary Range: ${{job.SalaryRangeStart}} to ${{job.SalaryRangeEnd}}</span>
+                            </p>
+                       
+                            
+                            <p> {{job.JobDescription.slice(0,500)}}</p>
                         </div>
                         <div class="card-footer text-muted">
-                            {{job.CompanyInfo.CompanyName}}
+                            <button style="float:right" class="btn btn-info">View Details</button>
                         </div>
-                    <br />
-                    <br />
+                        <br />
+                        <br />
+                    </div>
                 </div>
             </div>
         </jobpost-card>
-
-
     </div>
 </home-page>
 
