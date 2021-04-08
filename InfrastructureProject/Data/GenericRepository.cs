@@ -38,12 +38,21 @@ namespace InfrastructureProject.Data
                 _context.Set<T>().Add(entity);
             }
             await _context.SaveChangesAsync();
-            //_context.Set<T>().AddRange(entities);
         }
 
         public IQueryable<T> Find(Expression<Func<T, bool>> expression)
         {
             return _context.Set<T>().Where(expression);
+        }
+
+        public IQueryable<T> Find(Expression<Func<T, bool>> expression, string[] include)
+        {
+            var query = _context.Set<T>().Include(include[0]);
+            for (int i = 1; i < include.Length; i++)
+            {
+                query = query.Include(include[i]);
+            }
+            return query.Where(expression);
         }
 
         public async Task Remove(T entity)

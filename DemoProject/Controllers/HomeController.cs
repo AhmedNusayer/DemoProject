@@ -54,8 +54,7 @@ namespace WebProject.Controllers
             if (ModelState.IsValid)
             {
                 var user = await userManager.GetUserAsync(User);
-                var employer = _employerRepository.Find(item => item.User.Id == user.Id).FirstOrDefault();
-                //var employer2 = Context.employers.Where(item => item.User.Id == user.Id).FirstOrDefault();
+                var employer = _employerRepository.Find(item => item.User == user, new string[] { "CompanyInfo" }).FirstOrDefault();
                 var company = employer.CompanyInfo;
 
                 var jobpost = new JobPost()

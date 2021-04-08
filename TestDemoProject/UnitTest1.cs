@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using System.Linq;
 using InfrastructureProject;
+using InfrastructureProject.Data;
+using EntityProject;
 
 namespace TestDemoProject
 {
@@ -21,6 +23,11 @@ namespace TestDemoProject
              .UseSqlServer("Server=localhost;Database=demo_project;Trusted_Connection=True;MultipleActiveResultSets=true")
              .Options;
             AppDbContext db = new AppDbContext(options);
+            //var a = db.employers.Include("CompanyInfo").Include("User").FirstOrDefault();
+            GenericRepository<Employer> repo = new GenericRepository<Employer>(db);
+            var b = repo.Find(item => item.Id == 1, new string[] { "CompanyInfo", "User" }).FirstOrDefault();
+            Assert.AreEqual("Google", b.CompanyInfo.CompanyName);
+
             //DbSet<User> users = db.Users;
             //User row = users.First();
             /*string name = row.name;
