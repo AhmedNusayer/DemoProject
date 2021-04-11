@@ -1,7 +1,59 @@
 ﻿<job-details inline-template postid="@ViewBag.PostId" postdetails="@ViewBag.PostDetails">
     <div>
-        Hello
-        {{PostId}}
-        {{PostDetails}}
+        <div class="card text-center">
+            <ul class="nav nav-tabs">
+                <li class="nav-item active">
+                    <a class="active nav-link" data-toggle="tab" href="#job">Job</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#company">Company</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="job" class="tab-pane active jumbotron lead">
+                    <h3>{{PostDetails.JobTitle}}</h3>
+                    <hr class="my-4">
+                    <p style="text-align: left">{{PostDetails.JobDescription}}</p>
+                </div>
+                <div id="company" class="tab-pane">
+                    <h3 class="display-4">{{PostDetails.CompanyInfo.CompanyName}}</h3>
+                    <hr class="my-4">
+
+                    <dl class="row">
+                        <dd class="col-sm-1">  </dd>
+                        <dt class="col-sm-5 text-left">Company Location</dt>
+                        <dd class="col-sm-6 text-left">{{PostDetails.CompanyInfo.CompanyLocation}}</dd>
+
+                        <dd class="col-sm-1">  </dd>
+                        <dt class="col-sm-5 text-left">Company Address</dt>
+                        <dd class="col-sm-6 text-left">
+                            {{PostDetails.CompanyInfo.CompanyAddress}}
+                        </dd>
+
+                        <dd class="col-sm-1">  </dd>
+                        <dt class="col-sm-5 text-left">Company Type</dt>
+                        <dd class="col-sm-6 text-left">{{PostDetails.CompanyInfo.CompanyType}}</dd>
+                    </dl>
+
+                    <p class="lead">
+                        For any query contact us at <a :href="'mailto:'+PostDetails.CompanyInfo.CompanyEmail">{{PostDetails.CompanyInfo.CompanyEmail}}</a>
+                    </p>
+
+                    <address>
+                        Written by <a href="mailto:webmaster@example.com">Jon Doe</a>.<br>
+                        Visit us at:<br>
+                        Example.com<br>
+                        Box 564, Disneyland<br>
+                        USA
+                    </address>
+
+                </div>
+                <div id="menu2" class="tab-pane fade">
+                    <h3>Menu 2</h3>
+                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </job-details>
