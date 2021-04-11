@@ -62,8 +62,22 @@
                                             <input type="number" min="1" name="NoOfPosts" v-model="NoOfPosts" id="no_of_posts" class="form-control input-sm" placeholder="No of Posts" required>
                                         </div>
 
-                                        <textarea class="form-control" name="JobDescription" v-model="JobDescription" id="job_description" rows="3" placeholder="Enter your job description" required></textarea>
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item active">
+                                                <a class="active nav-link" data-toggle="tab" href="#edit">Edit Post</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#preview">Preview Changes</a>
+                                            </li>
+                                        </ul>
 
+                                        <div class="tab-content">
+                                            <div id="edit" class="tab-pane active">
+                                                <textarea class="form-control" name="JobDescription" v-model="JobDescription" id="job_description" rows="3" placeholder="Enter your job description" required></textarea>
+                                            </div>
+                                            <div id="preview" class="tab-pane" v-html="JobDescription">
+                                            </div>
+                                        </div>
                                         <div class="card-footer text-muted">
                                             <button type="submit" id="x" :disabled="isDisabled" class="btn btn-info btn-block" data-toggle="modal" data-target="#exampleModalCenter">
                                                 Post
@@ -71,8 +85,8 @@
                                         </div>
 
                                     </div>
-                                </div>
-                            </form>
+                                        </div>
+</form>
                         </div>
                     </div>
                 </div>
@@ -95,8 +109,8 @@
                             <span v-if="job.SalaryRangeEnd"> Salary Range: ${{job.SalaryRangeStart}} to ${{job.SalaryRangeEnd}}</span>
                             </p>
                        
-                            <p v-if="job.JobDescription.length>500"> {{job.JobDescription.slice(0,500)}}...</p>
-                            <p v-else> {{job.JobDescription.slice(0,500)}}</p>
+                            <div v-if="job.JobDescription.length>500" v-html="job.JobDescription.slice(0,500)+'...'"></div>
+                            <div v-else v-html="job.JobDescription.slice(0,500)"></div>
                         </div>
                         <div class="card-footer text-muted">
                             <a style="float:right; color:white" class="btn btn-primary" v-on:click="Redirect(job.Id)">View Details</a>

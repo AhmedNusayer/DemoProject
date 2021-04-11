@@ -1,57 +1,77 @@
 ﻿<job-details inline-template postid="@ViewBag.PostId" postdetails="@ViewBag.PostDetails">
-    <div>
-        <div class="card text-center">
-            <ul class="nav nav-tabs">
-                <li class="nav-item active">
-                    <a class="active nav-link" data-toggle="tab" href="#job">Job</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#company">Company</a>
-                </li>
-            </ul>
+    <div class="row d-flex justify-content-center">
+        <div class="col-lg-10">
+            <div class="card text-center">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item active">
+                        <a class="active nav-link" data-toggle="tab" href="#job">Job</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#company">Company</a>
+                    </li>
+                </ul>
 
-            <div class="tab-content">
-                <div id="job" class="tab-pane active jumbotron lead">
-                    <h3>{{PostDetails.JobTitle}}</h3>
-                    <hr class="my-4">
-                    <p style="text-align: left">{{PostDetails.JobDescription}}</p>
-                </div>
-                <div id="company" class="tab-pane">
-                    <h3 class="display-4">{{PostDetails.CompanyInfo.CompanyName}}</h3>
-                    <hr class="my-4">
+                <div class="tab-content">
+                    <div id="job" class="tab-pane active jumbotron lead">
+                        <h3>{{PostDetails.JobTitle}}</h3>
+                        <p class="text-secondary">{{new Date(PostDetails.TimeofPost).toUTCString()}}</p>
+                        <hr class="my-4">
 
-                    <dl class="row">
-                        <dd class="col-sm-1">  </dd>
-                        <dt class="col-sm-5 text-left">Company Location</dt>
-                        <dd class="col-sm-6 text-left">{{PostDetails.CompanyInfo.CompanyLocation}}</dd>
+                        <dl class="row">
+                            @*<dd class="col-sm-1">  </dd>*@
+                            <dt v-if="PostDetails.JobType" class="col-sm-5 text-left">Job Type</dt>
+                            <dd v-if="PostDetails.JobType" class="col-sm-6 text-left lead">{{PostDetails.JobType}}</dd>
 
-                        <dd class="col-sm-1">  </dd>
-                        <dt class="col-sm-5 text-left">Company Address</dt>
-                        <dd class="col-sm-6 text-left">
-                            {{PostDetails.CompanyInfo.CompanyAddress}}
-                        </dd>
+                            @*<dd class="col-sm-1">  </dd>*@
+                            <dt class="col-sm-5 text-left">Job Location</dt>
+                            <dd class="col-sm-6 text-left lead">
+                                {{PostDetails.JobLocation}}
+                            </dd>
 
-                        <dd class="col-sm-1">  </dd>
-                        <dt class="col-sm-5 text-left">Company Type</dt>
-                        <dd class="col-sm-6 text-left">{{PostDetails.CompanyInfo.CompanyType}}</dd>
-                    </dl>
+                            @*<dd class="col-sm-1">  </dd>*@
+                            <dt class="col-sm-5 text-left">No of Posts</dt>
+                            <dd class="col-sm-6 text-left lead">{{PostDetails.NoOfPosts}}</dd>
 
-                    <p class="lead">
-                        For any query contact us at <a :href="'mailto:'+PostDetails.CompanyInfo.CompanyEmail">{{PostDetails.CompanyInfo.CompanyEmail}}</a>
-                    </p>
+                            @*<dd class="col-sm-1">  </dd>*@
+                            <dt v-if="PostDetails.SalaryRangeStart > 0" class="col-sm-5 text-left">Salary Range</dt>
+                            <dd v-if="PostDetails.SalaryRangeStart > 0" class="col-sm-6 text-left lead">${{PostDetails.SalaryRangeStart}} to ${{PostDetails.SalaryRangeEnd}}</dd>
 
-                    <address>
-                        Written by <a href="mailto:webmaster@example.com">Jon Doe</a>.<br>
-                        Visit us at:<br>
-                        Example.com<br>
-                        Box 564, Disneyland<br>
-                        USA
-                    </address>
 
-                </div>
-                <div id="menu2" class="tab-pane fade">
-                    <h3>Menu 2</h3>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                        </dl>
+
+                        <div v-html="PostDetails.JobDescription" style="text-align: left"></div>
+                    </div>
+
+
+                    <div id="company" class="tab-pane lead jumbotron">
+                        <h3 class="display-4">{{PostDetails.CompanyInfo.CompanyName}}</h3>
+                        <hr class="my-4">
+
+                        <dl class="row">
+                            <dd class="col-sm-1">  </dd>
+                            <dt class="col-sm-5 text-left">Company Location</dt>
+                            <dd class="col-sm-6 text-left lead">{{PostDetails.CompanyInfo.CompanyLocation}}</dd>
+
+                            <dd class="col-sm-1">  </dd>
+                            <dt class="col-sm-5 text-left">Company Address</dt>
+                            <dd class="col-sm-6 text-left lead">
+                                {{PostDetails.CompanyInfo.CompanyAddress}}
+                            </dd>
+
+                            <dd class="col-sm-1">  </dd>
+                            <dt class="col-sm-5 text-left">Company Type</dt>
+                            <dd class="col-sm-6 text-left lead">{{PostDetails.CompanyInfo.CompanyType}}</dd>
+                        </dl>
+
+                        <p class="lead">
+                            For any query contact us at <a :href="'mailto:'+PostDetails.CompanyInfo.CompanyEmail">{{PostDetails.CompanyInfo.CompanyEmail}}</a>
+                        </p>
+
+                    </div>
+                    <div id="menu2" class="tab-pane fade">
+                        <h3>Menu 2</h3>
+                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                    </div>
                 </div>
             </div>
         </div>
