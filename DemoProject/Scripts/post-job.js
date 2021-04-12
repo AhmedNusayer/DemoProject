@@ -1,4 +1,5 @@
 ﻿Vue.component("post-job", {
+    props: ["user"],
     data: function () {
         return {
             JobTitle: "",
@@ -7,7 +8,8 @@
             NoOfPosts: 1,
             SalaryRangeStart: 0,
             SalaryRangeEnd: 0,
-            JobDescription: ""
+            JobDescription: "",
+            User: JSON.parse(this.user)
         }
     },
 

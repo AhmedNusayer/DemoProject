@@ -45,6 +45,7 @@ namespace WebProject.Controllers
             {
                 var a = await userManager.GetRolesAsync(user);
                 ViewBag.rolename = a.FirstOrDefault();
+                ViewBag.user = JsonConvert.SerializeObject(user);
             }
 
             var posts = await _jobRepository.GetAll(new string[] { "CompanyInfo", "PostAuthor" });
