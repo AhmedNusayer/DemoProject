@@ -7,24 +7,41 @@
             <div class="panel-body inf-content">
                 <div class="row">
 
-                    <div class="col-md-4">
+                    <div class="col-md-4" style="margin-top:20px">
                         <img v-if="picturePath" :src="'/' + picturePath" height="260" width="260" class="rounded-circle" data-original-title="Usuario">
                         <img v-if="!picturePath" alt="" height="260" width="260" title="" class="rounded-circle"
                              :src="dpPlaceholder"
                              data-original-title="Usuario">
 
-                        <div class="card">
+                        <div class="card" style="margin-top:20px">
                             <div class="card-header">
                                 Intro
-                                <a class="btn btn-sm justify-content-end" onclick="document.getElementById('exampleFormControlTextarea1').focus()">
-                                    <i class="fas fa-plus-circle text-right btn"></i>
+                                <a class="btn btn-sm justify-content-end" data-toggle="modal" data-target="#intro-modal">
+                                    <i class="fas fa-pen fa-pen-indicateur"></i>
                                 </a>
+                                <textarea v-if="Intro" style="overflow-y: scroll; resize: none" v-model="Intro" class="form-control" readonly id="" name="Intro" rows="8"></textarea>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Example textarea</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" name="Intro" rows="3"></textarea>
+                        <!--Intro Modal -->
+                        <div class="modal fade" data-keyboard="false" data-backdrop="static" id="intro-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Add Education</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label for="exampleFormControlTextarea1">Edit Intro</label>
+                                        <textarea class="form-control" id="" name="Intro" rows="5" v-model="Intro"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-info btn-block close" data-dismiss="modal">Save</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -146,7 +163,110 @@
                         </div>
                     </div>
 
-                </div>
+                    <div class="col-md-10">
+                        <div class="card" style="margin-top:20px">
+                            <div class="row">
+                                <div class="col-md-8" style="margin-left:10px">
+                                    <p class="lead">Education</p>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <a class="btn btn-sm justify-content-end" v-on:click="addEducationClicked" style="float:right" data-toggle="modal" data-target="#education-modal">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div v-if="Educations.length" class="card" style="margin-top:5px">
+                            <div v-for="edu in Educations">
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h4>{{edu.Institution}}</h4>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a v-on:click="getEdu(edu)" class="btn btn-sm justify-content-end" style="float:right" data-toggle="modal" data-target="#education-modal">
+                                                <i class="fas fa-pen fa-pen-indicateur"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="lead">
+                                        {{edu.Degree}}
+                                        <span v-if="edu.Degree && (edu.StartDate || edu.EndDate)"> | </span>
+                                        <span v-if="edu.StartDate">{{edu.StartDate}} -</span>
+                                        {{edu.EndDate}}
+                                    </p>
+
+                                    <p class="text-secondary">
+                                        {{edu.FieldOfStudy}}
+                                        <span v-if="edu.FieldOfStudy && edu.Grade"> | </span>
+                                        {{edu.Grade}}
+                                    </p>
+                                </div>
+                                
+                                
+                                @*<p class="lead">
+                                    {{edu.Degree}}
+                                    <span v-if="edu.Degree && (edu.StartDate || edu.EndDate)"> | </span>
+                                    <span v-if="edu.StartDate">{{edu.StartDate}} -</span> 
+                                    {{edu.EndDate}}
+                                </p>
+
+                                <p class="text-secondary">
+                                    {{edu.FieldOfStudy}}
+                                    <span v-if="edu.FieldOfStudy && edu.Grade"> | </span>
+                                    {{edu.Grade}}
+                                </p>*@
+                                
+                                <hr class="my-4">
+                            </div>
+                        </div>
+                    </div>
+
+                        <!--Education Modal -->
+                        <div class="modal fade" data-keyboard="false" data-backdrop="static" id="education-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Add Education</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label class="text-secondary"> Institution </label>
+                                        <br />
+                                        <input class="form-control" type="text" name="Institution" v-model="Education.Institution" placeholder="" />
+                                        <br />
+                                        <label class="text-secondary"> Degree </label>
+                                        <br />
+                                        <input class="form-control" type="text" name="Degree" v-model="Education.Degree" placeholder="" />
+                                        <br />
+                                        <label class="text-secondary"> Field of Study </label>
+                                        <input class="form-control" type="text" name="FieldOfStudy" v-model="Education.FieldOfStudy" placeholder="" />
+                                        <br />
+                                        <label class="text-secondary"> Start Date </label>
+                                        <input class="form-control" type="date" name="StartDate" v-model="Education.StartDate" placeholder="" />
+                                        <br />
+                                        <label class="text-secondary"> End Date (or expected) </label>
+                                        <input class="form-control" type="date" name="EndDate" v-model="Education.EndDate" placeholder="" />
+                                        <br />
+                                        <label class="text-secondary"> Grade </label>
+                                        <input class="form-control" type="text" name="Grade" v-model="Education.Grade" placeholder="" />
+                                        <br />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-info btn-block close" v-on:click="addEducation" v-if="!forUpdate" :disabled="!Education.Institution" data-dismiss="modal">Add</button>
+                                        <button class="btn btn-info btn-block close" v-if="forUpdate" data-dismiss="modal">Update</button>
+                                        <a v-on:click="deleteEducation" v-if="forUpdate" class="btn btn-info btn-block">Delete Education</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
             </div>
         </div>
     </form>
