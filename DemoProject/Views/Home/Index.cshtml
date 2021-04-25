@@ -84,17 +84,29 @@
                                         </div>
 
                                     </div>
-                                        </div>
-</form>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </post-job>
+            <br />
         </div>
 
-        <jobpost-card inline-template jobpost="@ViewBag.posts">
+        <jobpost-card inline-template jobpost="@ViewBag.posts" sort="@ViewBag.sort">
             <div class="container d-flex justify-content-center">
                 <div class="col-lg-8">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{Sort}}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-sort="newest">Newest</a>
+                            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-sort="no_of_post">Available Posts</a>
+                            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-sort="by_salary">By Salary (Low-High)</a>
+                            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-sort="by_salary_des">By Salary (High-Low)</a>
+                        </div>
+                    </div>
                     <div v-for="job in JobPost" :key="job.Id" class="card shadow-lg mt-5">
                         <div class="card-header">
                             <h2>{{job.JobTitle}}</h2>
@@ -103,21 +115,23 @@
 
                         <div class="card-body">
                             @*<h4>{{job.CompanyInfo.CompanyName}} <span v-if="job.JobType"> | {{job.JobType}}</span> </h4>*@
-                            <p class="card-text text-secondary">{{job.CompanyInfo.CompanyName}} | {{job.CompanyInfo.CompanyLocation}}
+                            <p class="card-text text-secondary">
+                                {{job.CompanyInfo.CompanyName}} | {{job.CompanyInfo.CompanyLocation}}
                                 <span v-if="job.JobType"> | {{job.JobType}}</span> <br />
-                            <span v-if="job.SalaryRangeEnd"> Salary Range: ${{job.SalaryRangeStart}} to ${{job.SalaryRangeEnd}}</span>
+                                <span v-if="job.SalaryRangeEnd"> Salary Range: ${{job.SalaryRangeStart}} to ${{job.SalaryRangeEnd}}</span>
                             </p>
-                       
+
                             <div v-if="job.JobDescription.length>500" v-html="job.JobDescription.slice(0,500)+'...'"></div>
                             <div v-else v-html="job.JobDescription.slice(0,500)"></div>
                         </div>
                         <div class="card-footer text-muted">
                             <a style="float:right; color:white" class="btn btn-primary" v-on:click="Redirect(job.Id)">View Details</a>
                         </div>
-                        <br />
-                        <br />
+
                     </div>
                 </div>
+                <br />
+                <br />
             </div>
         </jobpost-card>
     </div>
