@@ -29,6 +29,8 @@
                 StartDate: "",
                 EndDate: ""
             },
+            Skills: [],
+            Skill: "",
             forEducationUpdate: false,
             forExperenceUpdate: false
         }
@@ -49,6 +51,9 @@
                 StartDate: this.Experience.StartDate, EndDate: this.Experience.EndDate
             })
         },
+        addSkill() {
+            this.Skills.push(this.Skill)
+        },
         addEducationClicked() {
             this.forEducationUpdate = false
             this.Education = {}
@@ -57,16 +62,22 @@
             this.forExperenceUpdate = false
             this.Experience = {}
         },
-        deleteEducation() {
-            var idx = this.Educations.findIndex(x => x.Institution === this.Education.Institution)
+        deleteEducation(edu) {
+            var idx = this.Educations.findIndex(x => x.Institution === edu.Institution)
             if (idx != -1) {
                 this.Educations.splice(idx, 1)
             }
         },
-        deleteExperience() {
-            var idx = this.Experiences.findIndex(x => x.Title === this.Experience.Title)
+        deleteExperience(exp) {
+            var idx = this.Experiences.findIndex(x => x.Title === exp.Title)
             if (idx != -1) {
                 this.Experiences.splice(idx, 1)
+            }
+        },
+        deleteSkill(skill) {
+            var idx = this.Skills.indexOf(skill)
+            if (idx != -1) {
+                this.Skills.splice(idx, 1)
             }
         },
         getEdu(edu) {
