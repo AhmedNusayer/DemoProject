@@ -37,13 +37,7 @@
             this.Education = {}
         },
         deleteEducation() {
-            this.Educations.filter(el => el.Institution != this.Education.Institution &&
-                el.Degree != this.Education.Degree &&
-                el.FieldOfStudy != this.Education.FieldOfStudy &&
-                el.StartDate != this.Education.StartDate &&
-                el.EndDate != this.Education.EndDate &&
-                el.Grade != this.Education.Grade
-            )
+            
         },
         getEdu(edu) {
             this.forUpdate = true
