@@ -1,8 +1,9 @@
 ﻿Vue.component("jobpost-card", {
-    props: ["jobpost"],
+    props: ["jobpost", "sort"],
     data: function () {
         return {
-            JobPost: JSON.parse(this.jobpost)
+            JobPost: JSON.parse(this.jobpost),
+            Sort: this.sort
         }
     },
 
