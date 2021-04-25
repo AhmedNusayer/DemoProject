@@ -20,7 +20,17 @@
                 EndDate: "",
                 Grade: ""
             },
-            forUpdate: false
+            Experiences: [],
+            Experience: {
+                Title: "",
+                EmploymentType: "",
+                Company: "",
+                Location: "",
+                StartDate: "",
+                EndDate: ""
+            },
+            forEducationUpdate: false,
+            forExperenceUpdate: false
         }
     },
 
@@ -32,22 +42,40 @@
                 EndDate: this.Education.EndDate, Grade: this.Education.Grade
             })
         },
+        addExperience() {
+            this.Experiences.push({
+                Title: this.Experience.Title, EmploymentType: this.Experience.EmploymentType,
+                Company: this.Experience.Company, Location: this.Experience.Location,
+                StartDate: this.Experience.StartDate, EndDate: this.Experience.EndDate
+            })
+        },
         addEducationClicked() {
-            this.forUpdate = false
+            this.forEducationUpdate = false
             this.Education = {}
         },
+        addExperienceClicked() {
+            this.forExperenceUpdate = false
+            this.Experience = {}
+        },
         deleteEducation() {
-            this.Educations.filter(el => el.Institution != this.Education.Institution &&
-                el.Degree != this.Education.Degree &&
-                el.FieldOfStudy != this.Education.FieldOfStudy &&
-                el.StartDate != this.Education.StartDate &&
-                el.EndDate != this.Education.EndDate &&
-                el.Grade != this.Education.Grade
-            )
+            var idx = this.Educations.findIndex(x => x.Institution === this.Education.Institution)
+            if (idx != -1) {
+                this.Educations.splice(idx, 1)
+            }
+        },
+        deleteExperience() {
+            var idx = this.Experiences.findIndex(x => x.Title === this.Experience.Title)
+            if (idx != -1) {
+                this.Experiences.splice(idx, 1)
+            }
         },
         getEdu(edu) {
-            this.forUpdate = true
+            this.forEducationUpdate = true
             this.Education = edu
+        },
+        getExperiance(exp) {
+            this.forExperenceUpdate = true
+            this.Experience = exp
         }
     }
 })
