@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using EntityProject;
 using InfrastructureProject;
 using InfrastructureProject.Data;
+using Newtonsoft.Json;
 
 namespace WebProject.Controllers
 {
@@ -128,6 +129,34 @@ namespace WebProject.Controllers
             
             ViewBag.user = user;
             return View();
+        }
+
+        public async Task<IActionResult> ViewCV(string userid)
+        {
+            var user = await _userManager.FindByIdAsync(userid);
+            if(user != null)
+            {
+                ViewBag.user = JsonConvert.SerializeObject(user); 
+            }
+
+            int template = 2;
+
+            if(template == 1)
+            {
+                return View("Template1");
+            }
+            else if(template == 2)
+            {
+                return View("Template2");
+            }
+            else if (template == 3)
+            {
+                return View("Template3");
+            }
+            else
+            {
+                return View();
+            }
         }
 
     }

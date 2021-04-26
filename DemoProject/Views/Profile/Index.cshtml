@@ -24,6 +24,9 @@
                 <form method="post" asp-controller="Profile" asp-action="Update">
                     <input type='submit' value="Update Profile" />
                 </form>
+                <form method="post" asp-controller="Profile" asp-action="ViewCV" asp-route-userid="@ViewBag.user.Id">
+                    <input type='submit' value="View CV" />
+                </form>
             </div>
         </div>
     </div>
