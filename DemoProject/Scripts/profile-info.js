@@ -19,7 +19,8 @@
                 StartDate: "",
                 EndDate: "",
                 Grade: "",
-                EducationUUID: ""
+                EducationUUID: "",
+                Description: ""
             },
             Experiences: [],
             Experience: {
@@ -29,7 +30,8 @@
                 Location: "",
                 StartDate: "",
                 EndDate: "",
-                ExperienceUUID: ""
+                ExperienceUUID: "",
+                Description: ""
             },
             Skills: [],
             Skill: "",
@@ -50,14 +52,16 @@
             this.Educations.push({
                 Institution: this.Education.Institution, Degree: this.Education.Degree,
                 FieldOfStudy: this.Education.FieldOfStudy, StartDate: this.Education.StartDate,
-                EndDate: this.Education.EndDate, Grade: this.Education.Grade, EducationUUID: this.getGUID()
+                EndDate: this.Education.EndDate, Grade: this.Education.Grade, EducationUUID: this.getGUID(),
+                Description: this.Educations.Description
             })
         },
         addExperience() {
             this.Experiences.push({
                 Title: this.Experience.Title, EmploymentType: this.Experience.EmploymentType,
                 Company: this.Experience.Company, Location: this.Experience.Location,
-                StartDate: this.Experience.StartDate, EndDate: this.Experience.EndDate, ExperienceUUID: this.getGUID()
+                StartDate: this.Experience.StartDate, EndDate: this.Experience.EndDate, ExperienceUUID: this.getGUID(),
+                Description: this.Experiences.Description
             })
         },
         addSkill() {

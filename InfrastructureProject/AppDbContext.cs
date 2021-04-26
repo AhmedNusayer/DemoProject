@@ -22,6 +22,13 @@ namespace InfrastructureProject
         public DbSet<Employer> employers { get; set; }
 
         public DbSet<JobPost> jobposts { get; set; }
+        public DbSet<Education> educations { get; set; }
+        public DbSet<Experience> experiences { get; set; }
+        public DbSet<Skill> skills { get; set; }
+        public DbSet<Interest> interests { get; set; }
+        public DbSet<Project> projects { get; set; }
+
+        public DbSet<Contribution> contributions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
