@@ -1,3 +1,316 @@
-﻿<div>
-    This is template 3
-</div>
+﻿
+@*cool*@
+
+<resume-info inline-template user="@ViewBag.user" picpath="@ViewBag.ProfilePicturePath">
+    <div>
+        <component :is="'style'" scoped>
+
+            .link {
+            color: inherit;
+            cursor: pointer;
+            text-decoration-line: none;
+
+            &:visited {
+            color: inherit;
+            }
+            }
+
+            .resume {
+            position: relative;
+            font-family:'Roboto';
+            font-size: 0.9em;
+            }
+
+            .picture {
+            position: absolute;
+            top: 100px;
+            left: 340px;
+            height: 120px;
+            width: 120px;
+            border-radius: 50%;
+            border: 5px solid #34495E;
+            content: url('/Images/dp_placeholder.png');
+            z-index: 2;
+            background-color: purple;
+            }
+
+            .banner {
+            width: 100%;
+            height: 200px;
+            padding: 30px;
+            background-color: #42b883;
+            color: white;
+            }
+
+            .content {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            }
+
+            .section-left-headline {
+            color: white;
+            font-size: 20px;
+            }
+
+            .content-left {
+            width: 400px;
+            color: rgba(255, 255, 255, 0.59);
+            background-color: #34495E;
+            padding: 30px;
+            }
+
+            .content-right{
+            height: 100%;
+            padding: 30px;
+            }
+
+            .section {
+            margin: 20px 0;
+            padding: 30px;
+            }
+
+            .section-link,
+            .section-headline {
+            display: flex;
+            align-items: center;
+            color: #34495E;
+            display: inline-block;
+            font-size: 1.2em;
+            margin: 8px 0;
+
+            &__icon {
+            margin-right: 8px;
+            font-size: 1.4em;
+            }
+            }
+
+            .section-link {
+            font-size: 1.1em;
+            color: rgba(255, 255, 255, 0.59) ;
+            margin-right: 8px;
+            }
+
+            .section-content {
+            margin-top: 5px;
+            font-size: 14px;
+
+            &__item {
+            display: block;
+            margin-bottom: 5px;
+            }
+
+            &__header {
+            display: block;
+            font-size: 1.1em;
+            font-weight: 500;
+            }
+
+            &__subheader {
+            display: block;
+            font-weight: 400;
+            }
+
+            &__plain,
+            &__text {
+            display: block;
+            font-size: 12px;
+
+            &--light {
+            font-size: 12px;
+            }
+            }
+
+            &__plain {
+            display: inline;
+            font-weight: 300;
+            }
+
+            &__item-grid {
+            flex: 1 1 0;
+            margin-bottom: 5px;
+            padding-right: 5px;
+            }
+
+            &--plain {
+            padding: 0;
+            }
+            }
+
+            .section-content-grid {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            }
+
+            .grid-item {
+            padding-right: 5px;
+            }
+
+            .squarred-grid-item {
+            display: block;
+            border: 1px solid white;
+            color: white;
+            margin-top: 5px;
+            padding: 5px;
+            }
+        </component>
+
+        <div class="resume">
+            <div class="banner">
+                <div style="font-size: 32px;">{{ User.Name}}</div>
+                <div style="font-size: 16px;">CV</div>
+                <div style="font-size: 12px;">{{ User.DateofBirth}} birthdate</div>
+            </div>
+
+            <div class="content">
+                <div class="content-left">
+                    <div class="section">
+                        <div class="section-left-headline">
+                            About Me
+                        </div>
+
+                        <div class="section-content section-content--plain">
+                            {{ User.Intro }}
+                            Some intro
+                            <br />
+                            <br />
+                            konwledge dets
+                            {{ User.Knowledge }}
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-left-headline">
+                            Skills
+                        </div>
+
+                        <div class="section-content-grid">
+                            <a
+                               class="grid-item">
+                                <span class="squarred-grid-item">
+                                    skill name
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-left-headline">
+                            Contact
+                        </div>
+
+                        <div class="section-content section-content--plain">
+                            <div class="section-link">
+                                <i class="section-link__icon material-icons">business</i>{{ User.Address }} Address
+                            </div>
+
+                            <a class="section-link link">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>{{ User.Email }}
+                            </a>
+
+                            <div class="section-link">
+                                <i class='fa fa-phone-square' aria-hidden="true"></i>{{ User.PhoneNumber }} 010000
+                            </div>
+
+                            <a 
+                               class="section-link link">
+                                <i class="fa fa-home" aria-hidden="true"></i>{{ User.Website }} mywebsite.com
+                            </a>
+
+                            <a 
+                               class="section-link link">
+                                <i class="fa fa-linkdin" aria-hidden="true"></i>{{ User.Linkedin }} linkedin
+                            </a>
+
+                            <a 
+                               class="section-link link">
+                                <i class="fab fa-github" aria-hidden="true"></i>{{ User.Github }} github.com
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-right">
+                    <div class="section">
+                        <div class="section-headline">
+                            <i class="section-headline__icon material-icons">work</i>Experience
+                        </div>
+
+                        <div class="section-content">
+                            <a 
+                               class="section-content__item">
+
+                                <span class="section-content__header">abc</span>
+                                <span class="section-content__subheader">
+                                    company 
+                                    <span class="section-content__plain"> experience.location </span>
+                                </span>
+
+                                <div class="section-content__text"> experience.timeperiod </div>
+                                <span class="section-content__text--light"> experience.description </span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-headline">
+                            <i class="section-headline__icon material-icons">school</i>Education
+                        </div>
+
+                        <div class="section-content">
+                            <a 
+                               class="section-content__item">
+
+                                <span class="section-content__header">  education.school  </span>
+                                <span class="section-content__subheader"> education.degree </span>
+                                <span class="section-content__text">  education.timeperiod  </span>
+                                <span class="section-content__text--light">  education.description  </span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div 
+                         class="section">
+                        <div class="section-headline">
+                            <i class="section-headline__icon material-icons">code</i>Projects
+                        </div>
+
+                        <div class="section-content-grid">
+                            <a 
+                               class="section-content__item-grid">
+                                <span class="section-content__header">  project.name  </span>
+                                <span class="section-content__subheader"> project.platform </span>
+                                <span class="section-content__text">  project.description  </span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div 
+                         class="section">
+                        <div class="section-headline">
+                            <i class="section-headline__icon fa fa-heart"></i>Contributions
+                        </div>
+
+                        <div class="section-content-grid">
+                            <a 
+                               class="section-content__item-grid"
+                              >
+                                <span class="section-content__header">  contribution.name  </span>
+                                <span class="section-content__text">  contribution.description  </span>
+                                <span class="section-content__text--light" style="word-break: break-all;">
+                                     contribution.url 
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="picture" ></div>
+        </div>
+    </div>
+</resume-info>
+
