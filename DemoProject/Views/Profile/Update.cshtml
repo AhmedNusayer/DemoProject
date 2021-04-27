@@ -1,7 +1,5 @@
 ﻿<profile-info inline-template picpath="@ViewBag.ProfilePicturePath"
-              name="@ViewBag.user.Name" username="@ViewBag.user.UserName"
-              email="@ViewBag.user.Email" phonenumber="@ViewBag.user.PhoneNumber"
-              address="@ViewBag.user.Address" dateofbirth="@ViewBag.user.DateofBirth.ToString("yyyy-MM-dd")">
+              user="@ViewBag.user">
     <form method="post" enctype="multipart/form-data" asp-controller="Profile" asp-action="Index">
         <div class="container">
             <div class="panel-body inf-content">
@@ -189,7 +187,7 @@
                                             </strong>
                                         </td>
                                         <td class="text-primary">
-                                            <p id='present-address'>
+                                            <p id='website'>
                                                 <input type='text' size="40" name="Website" v-model="Website" />
                                             </p>
                                         </td>
@@ -202,7 +200,7 @@
                                             </strong>
                                         </td>
                                         <td class="text-primary">
-                                            <p id='present-address'>
+                                            <p id='github'>
                                                 <input type='text' size="40" name="Github" v-model="Github" />
                                             </p>
                                         </td>
@@ -215,7 +213,7 @@
                                             </strong>
                                         </td>
                                         <td class="text-primary">
-                                            <p id='present-address'>
+                                            <p id='linkedin'>
                                                 <input type='text' size="40" name="Linkedin" v-model="Linkedin" />
                                             </p>
                                         </td>
@@ -228,7 +226,7 @@
                                             </strong>
                                         </td>
                                         <td class="text-primary">
-                                            <p id='present-address'>
+                                            <p id='hobby'>
                                                 <input type='text' size="40" name="Hobby" v-model="Hobby" />
                                             </p>
                                         </td>
@@ -256,7 +254,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-10">
-                                    <input class="btn btn-success" type="submit" value="Update" />
+                                    @*<a class="btn btn-success" v-on:click="update" value="Update">Update</a>*@
                                 </div>
                             </div>
 
@@ -540,23 +538,23 @@
                                 <div class="modal-body">
                                     <label class="text-secondary"> Institution </label>
                                     <br />
-                                    <input class="form-control" type="text" name="Institution" v-model="Education.Institution" placeholder="" />
+                                    <input class="form-control" type="text" name="Education.Institution" v-model="Education.Institution" placeholder="" />
                                     <br />
                                     <label class="text-secondary"> Degree </label>
                                     <br />
-                                    <input class="form-control" type="text" name="Degree" v-model="Education.Degree" placeholder="" />
+                                    <input class="form-control" type="text" name="Education.Degree" v-model="Education.Degree" placeholder="" />
                                     <br />
                                     <label class="text-secondary"> Field of Study </label>
-                                    <input class="form-control" type="text" name="FieldOfStudy" v-model="Education.FieldOfStudy" placeholder="" />
+                                    <input class="form-control" type="text" name="Education.FieldOfStudy" v-model="Education.FieldOfStudy" placeholder="" />
                                     <br />
                                     <label class="text-secondary"> Start Date </label>
-                                    <input class="form-control" type="date" name="StartDate" v-model="Education.StartDate" placeholder="" />
+                                    <input class="form-control" type="date" name="Education.StartDate" v-model="Education.StartDate" placeholder="" />
                                     <br />
                                     <label class="text-secondary"> End Date (or expected) </label>
-                                    <input class="form-control" type="date" name="EndDate" v-model="Education.EndDate" placeholder="" />
+                                    <input class="form-control" type="date" name="Education.EndDate" v-model="Education.EndDate" placeholder="" />
                                     <br />
                                     <label class="text-secondary"> Grade </label>
-                                    <input class="form-control" type="text" name="Grade" v-model="Education.Grade" placeholder="" />
+                                    <input class="form-control" type="text" name="Education.Grade" v-model="Education.Grade" placeholder="" />
                                     <br />
                                 </div>
                                 <div class="modal-footer">

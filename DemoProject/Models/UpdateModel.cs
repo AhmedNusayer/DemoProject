@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using EntityProject;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,6 +22,12 @@ namespace WebProject.Models
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
+        public string Intro { get; set; }
+        public string Knowledge { get; set; }
+        public string Hobby { get; set; }
+        public string Website { get; set; }
+        public string Github { get; set; }
+        public string Linkedin { get; set; }
+        public virtual List<Education> Educations { get; set; }
     }
 }

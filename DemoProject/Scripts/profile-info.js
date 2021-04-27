@@ -1,7 +1,9 @@
 ﻿Vue.component("profile-info", {
-    props: ["picpath", "name", "username", "email", "address", "phonenumber", "dateofbirth"],
+    props: ["user", "picpath", "name", "username", "email", "address", "phonenumber", "dateofbirth",
+            "intro", "knowledge", "hobby", "website", "github", "linkedin", "education"],
     data: function () {
         return {
+            User: JSON.parse(this.user),
             picturePath: this.picpath,
             dpPlaceholder: "/Images/dp_placeholder.png",
             Name: this.name,
@@ -10,12 +12,12 @@
             Address: this.address,
             PhoneNumber: this.phonenumber,
             DateofBirth: this.dateofbirth,
-            Website: "",
-            Github: "",
-            Linkedin: "",
-            Hobby: "",
-            Intro: "",
-            Knowledge: "",
+            Website: this.website,
+            Github: this.github,
+            Linkedin: this.linkedin,
+            Hobby: this.hobby,
+            Intro: this.intro,
+            Knowledge: this.knowledge,
             Educations: [],
             Education: {
                 Institution: "",
@@ -24,7 +26,7 @@
                 StartDate: "",
                 EndDate: "",
                 Grade: "",
-                EducationUUID: "",
+                GUID: "",
                 Description: ""
             },
             Experiences: [],
@@ -76,10 +78,11 @@
 
     methods: {
         addEducation() {
+            //this.Educations.push(this.education)
             this.Educations.push({
                 Institution: this.Education.Institution, Degree: this.Education.Degree,
                 FieldOfStudy: this.Education.FieldOfStudy, StartDate: this.Education.StartDate,
-                EndDate: this.Education.EndDate, Grade: this.Education.Grade, EducationUUID: this.getGUID(),
+                EndDate: this.Education.EndDate, Grade: this.Education.Grade, GUID: this.getGUID(),
                 Description: this.Educations.Description
             })
         },
@@ -205,6 +208,17 @@
             });
 
             return newGuid;
+        },
+
+        update() {
+            //this.user.Educations = this.Educations
+            $.ajax({
+                type: "POST",
+                url: "/Profile/Index",
+                data: {
+                    model: JSON.stringify(this.Educations)
+                }
+            })
         }
     }
 })
