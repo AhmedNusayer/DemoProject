@@ -8,10 +8,18 @@
                 <div class="row">
 
                     <div class="col-md-4" style="margin-top:20px">
-                        <img v-if="picturePath" :src="'/' + picturePath" height="260" width="260" class="rounded-circle" data-original-title="Usuario">
+                        <img v-if="picturePath" :src="'/' + picturePath" height="200" width="200" class="rounded float-start" data-original-title="Usuario">
                         <img v-if="!picturePath" alt="" height="260" width="260" title="" class="rounded-circle"
                              :src="dpPlaceholder"
                              data-original-title="Usuario">
+
+                        <div style="margin-top:20px">
+                            <span v-if="Github">
+                                <a class="btn btn-lg" data-toggle="modal" :href="Github">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </span>
+                        </div>
 
                         <div class="card" style="margin-top:20px">
                             <div class="card-header">
@@ -19,8 +27,27 @@
                                 <a class="btn btn-sm justify-content-end" data-toggle="modal" data-target="#intro-modal">
                                     <i class="fas fa-pen fa-pen-indicateur"></i>
                                 </a>
-                                <textarea v-if="Intro" style="overflow-y: scroll; resize: none" v-model="Intro" class="form-control" readonly id="" name="Intro" rows="8"></textarea>
+                                <textarea v-if="Intro" style="overflow-y: scroll; resize: none" v-model="Intro" class="form-control" readonly id="" name="Intro" rows="4"></textarea>
                             </div>
+                        </div>
+
+                        <div class="card" style="margin-top:20px">
+                            <div class="card-header">
+                                Knowledge
+                                <a class="btn btn-sm justify-content-end" data-toggle="modal" data-target="#knowledge-modal">
+                                    <i class="fas fa-pen fa-pen-indicateur"></i>
+                                </a>
+                                <textarea v-if="Knowledge" style="overflow-y: scroll; resize: none" v-model="Knowledge" class="form-control" readonly id="" name="Knowledge" rows="4"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="card" style="margin-top:20px">
+                            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                                <option selected>Choose...</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
                         </div>
 
                         <!--Intro Modal -->
@@ -36,6 +63,27 @@
                                     <div class="modal-body">
                                         <label for="exampleFormControlTextarea1">Edit Intro</label>
                                         <textarea class="form-control" id="" name="Intro" rows="5" v-model="Intro"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-info btn-block close" data-dismiss="modal">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Knowledge Modal-->
+                        <div class="modal fade" data-keyboard="false" data-backdrop="static" id="knowledge-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Add Knowledge</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label for="exampleFormControlTextarea1">Edit Knowledge</label>
+                                        <textarea class="form-control" id="" name="Intro" rows="5" v-model="Knowledge"></textarea>
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-info btn-block close" data-dismiss="modal">Save</button>
@@ -130,6 +178,58 @@
                                         <td class="text-primary">
                                             <p id='date-of-birth'>
                                                 <input type='date' size="40" name="DateofBirth" :value="DateofBirth" />
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                                Website
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            <p id='present-address'>
+                                                <input type='text' size="40" name="Website" v-model="Website" />
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                                Github
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            <p id='present-address'>
+                                                <input type='text' size="40" name="Github" v-model="Github" />
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                                Linkedin
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            <p id='present-address'>
+                                                <input type='text' size="40" name="Linkedin" v-model="Linkedin" />
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                                Hobby
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            <p id='present-address'>
+                                                <input type='text' size="40" name="Hobby" v-model="Hobby" />
                                             </p>
                                         </td>
                                     </tr>
@@ -270,7 +370,7 @@
                     <div class="col-md-10">
                         <div class="card shadow-lg" style="margin-top:20px">
                             <div class="row">
-                                <div class="col-md-8" style="margin-left:10px">
+                                <div class="col-md-8 card-text" style="margin-left:10px">
                                     <p class="lead"><b>Skill</b></p>
                                 </div>
                                 <div class="col-md-2">
@@ -287,7 +387,8 @@
                                 <div v-for="skill in Skills">
                                     <h4>
                                         <span class="badge badge-pill badge-info justify-content-center">
-                                            {{skill}}
+                                            {{skill.SkillName}}
+                                            <span v-if="skill.Level">Level: {{skill.Level}}</span>
                                             <a class="btn btn justify-content-end" v-on:click="deleteSkill(skill)" style="float:right">
                                                 <i class="far fa-times-circle"></i>
                                             </a>
@@ -339,6 +440,92 @@
                         </div>
                     </div>
 
+                    <!--Project-->
+                    <div class="col-md-10">
+                        <div class="card shadow-lg" style="margin-top:20px">
+                            <div class="row">
+                                <div class="col-md-8" style="margin-left:10px">
+                                    <p class="lead"><b>Project</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="btn justify-content-end" v-on:click="addProjectClicked" style="float:right" data-toggle="modal" data-target="#project-modal">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div v-if="Projects.length" class="card shadow-lg" style="margin-top:5px">
+                            <div v-for="project in Projects">
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h4>{{project.Name}}</h4>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a v-on:click="getProject(project)" class="btn justify-content-end" style="float:right" data-toggle="modal" data-target="#project-modal">
+                                                <i class="fas fa-pen fa-pen-indicateur"></i>
+                                            </a>
+                                            <a class="btn justify-content-end" v-on:click="deleteProject(project)">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="lead" style="color:midnightblue; font-size:medium">
+                                        <b>{{project.Platform}}</b>
+                                        <b>{{project.Year}}</b>
+                                        <b>{{project.Description}}</b>
+                                        <b>{{project.Url}}</b>
+                                    </p>
+                                </div>
+                                <hr class="my-4">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Contribution-->
+                    <div class="col-md-10">
+                        <div class="card shadow-lg" style="margin-top:20px">
+                            <div class="row">
+                                <div class="col-md-8" style="margin-left:10px">
+                                    <p class="lead"><b>Contribution</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="btn justify-content-end" v-on:click="addContributionClicked" style="float:right" data-toggle="modal" data-target="#contribution-modal">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div v-if="Contributions.length" class="card shadow-lg" style="margin-top:5px">
+                            <div v-for="contribution in Contributions">
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h4>{{contribution.Name}}</h4>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a v-on:click="getContribution(contribution)" class="btn justify-content-end" style="float:right" data-toggle="modal" data-target="#contribution-modal">
+                                                <i class="fas fa-pen fa-pen-indicateur"></i>
+                                            </a>
+                                            <a class="btn justify-content-end" v-on:click="deleteContribution(contribution)">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="lead" style="color:midnightblue; font-size:medium">
+                                        <b>{{contribution.Description}}</b>
+                                        <b>{{contribution.Url}}</b>
+                                    </p>
+                                </div>
+                                <hr class="my-4">
+                            </div>
+                        </div>
+                    </div>
+
 
                     <!--Education Modal -->
                     <div class="modal fade" data-keyboard="false" data-backdrop="static" id="education-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -374,7 +561,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-info btn-block close" v-on:click="addEducation" v-if="!forEducationUpdate" :disabled="!Education.Institution" data-dismiss="modal">Add</button>
-                                    <button class="btn btn-info btn-block close" v-if="forEducationUpdate" data-dismiss="modal">Update</button>
+                                    <button class="btn btn-success btn-block close" v-if="forEducationUpdate" data-dismiss="modal">Update</button>
                                 </div>
                             </div>
                         </div>
@@ -431,9 +618,13 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <input class="form-control" type="text" name="Skill" v-model="Skill" placeholder="" />
+                                    <label class="text-secondary"> Skill </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="SkillName" v-model="Skill.SkillName" placeholder="" />
                                     <br />
                                 </div>
+                                <label for="customRange1" class="form-label">Skill Level</label>
+                                <input type="range" class="form-range" min="0" max="100" value="0" name="Level" v-model="Skill.Level" id="">
                                 <div class="modal-footer">
                                     <button class="btn btn-info btn-block close" v-on:click="addSkill" data-dismiss="modal">Add</button>
                                 </div>
@@ -463,6 +654,76 @@
                                 <div class="modal-footer">
                                     <button class="btn btn-info btn-block close" v-on:click="addInterest" v-if="!forInterestUpdate" :disabled="!Interest.Title" data-dismiss="modal">Add</button>
                                     <button class="btn btn-info btn-block close" v-if="forInterestUpdate" data-dismiss="modal">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Project Modal-->
+                    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="project-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Add Project</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label class="text-secondary"> Name </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="Name" v-model="Project.Name" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Platform </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="Platform" v-model="Project.Platform" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Year </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="Year" v-model="Project.Year" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Url </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="Url" v-model="Project.Url" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Description </label>
+                                    <br />
+                                    <textarea class="form-control" id="" name="Description" rows="5" v-model="Project.Description"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-info btn-block close" v-on:click="addProject" v-if="!forProjectUpdate" :disabled="!Project.Name" data-dismiss="modal">Add</button>
+                                    <button class="btn btn-info btn-block close" v-if="forProjectUpdate" data-dismiss="modal">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Contribution Modal-->
+                    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="contribution-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Add Contribution</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label class="text-secondary"> Name </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="Name" v-model="Contribution.Name" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Url </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="Url" v-model="Contribution.Url" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Description </label>
+                                    <br />
+                                    <textarea class="form-control" id="" name="Description" rows="5" v-model="Contribution.Description"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-info btn-block close" v-on:click="addContribution" v-if="!forContributionUpdate" :disabled="!Contribution.Name" data-dismiss="modal">Add</button>
+                                    <button class="btn btn-info btn-block close" v-if="forContributionUpdate" data-dismiss="modal">Update</button>
                                 </div>
                             </div>
                         </div>

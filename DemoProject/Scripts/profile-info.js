@@ -10,7 +10,12 @@
             Address: this.address,
             PhoneNumber: this.phonenumber,
             DateofBirth: this.dateofbirth,
+            Website: "",
+            Github: "",
+            Linkedin: "",
+            Hobby: "",
             Intro: "",
+            Knowledge: "",
             Educations: [],
             Education: {
                 Institution: "",
@@ -34,16 +39,38 @@
                 Description: ""
             },
             Skills: [],
-            Skill: "",
+            Skill: {
+                SkillName: "",
+                Level: 0,
+                SkillUUID: ""
+            },
             Interests: [],
             Interest: {
                 Title: "",
                 Description: "",
                 InterestUUID: ""
             },
+            Projects: [],
+            Project: {
+                Name: "",
+                Platform: "",
+                Year: "",
+                Description: "",
+                Url: "",
+                ProjectUUID: ""
+            },
+            Contributions: [],
+            Contribution: {
+                Name: "",
+                Description: "",
+                Url: "",
+                ContributionUUID: ""
+            },
             forEducationUpdate: false,
             forExperenceUpdate: false,
-            forInterestUpdate: false
+            forInterestUpdate: false,
+            forProjectUpdate: false,
+            forContributionUpdate: false
         }
     },
 
@@ -65,11 +92,25 @@
             })
         },
         addSkill() {
-            this.Skills.push(this.Skill)
+            this.Skills.push({
+                SkillName: this.Skill.SkillName, Level: this.Skill.Level, SkillUUID: this.Skill.SkillUUID
+            })
         },
         addInterest() {
             this.Interests.push({
                 Title: this.Interest.Title, Description: this.Interest.Description, InterestUUID: this.getGUID()
+            })
+        },
+        addProject() {
+            this.Projects.push({
+                Name: this.Project.Name, Platform: this.Project.Platform, Year: this.Project.Year,
+                Description: this.Project.Description, Url: this.Project.Url, ProjectUUID: this.getGUID()
+            })
+        },
+        addContribution() {
+            this.Contributions.push({
+                Name: this.Contribution.Name, Description: this.Contribution.Description, Url: this.Contribution.Url,
+                ContributionUUID: this.getGUID()
             })
         },
 
@@ -85,6 +126,14 @@
             this.forInterestUpdate = false
             this.Interest = {}
         },
+        addProjectClicked() {
+            this.forProjectUpdate = false
+            this.Project = {}
+        },
+        addContributionClicked() {
+            this.forContributionUpdate = false
+            this.Contribution = {}
+        },
 
         deleteEducation(edu) {
             var idx = this.Educations.findIndex(x => x.EducationUUID === edu.EducationUUID)
@@ -99,7 +148,7 @@
             }
         },
         deleteSkill(skill) {
-            var idx = this.Skills.indexOf(skill)
+            var idx = this.Skills.findIndex(x => x.SkillUUID == skill.SkillUUID)
             if (idx != -1) {
                 this.Skills.splice(idx, 1)
             }
@@ -108,6 +157,18 @@
             var idx = this.Interests.findIndex(x => x.InterestUUID === interest.InterestUUID)
             if (idx != -1) {
                 this.Interests.splice(idx, 1)
+            }
+        },
+        deleteProject(project) {
+            var idx = this.Projects.findIndex(x => x.ProjectUUID === project.ProjectUUID)
+            if (idx != -1) {
+                this.Projects.splice(idx, 1)
+            }
+        },
+        deleteContribution(contribution) {
+            var idx = this.Contributions.findIndex(x => x.ContributionUUID === contribution.ContributionUUID)
+            if (idx != -1) {
+                this.Contributions.splice(idx, 1)
             }
         },
 
@@ -122,6 +183,14 @@
         getInterest(interest) {
             this.forInterestUpdate = true
             this.Interest = interest
+        },
+        getProject(project) {
+            this.forProjectUpdate = true
+            this.Project = project
+        },
+        getContribution(contribution) {
+            this.forContributionUpdate = true
+            this.Contribution = contribution
         },
 
         getGUID() {
