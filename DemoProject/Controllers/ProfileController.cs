@@ -13,6 +13,7 @@ using EntityProject;
 using InfrastructureProject;
 using InfrastructureProject.Data;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebProject.Controllers
 {
@@ -133,13 +134,24 @@ namespace WebProject.Controllers
 
         public async Task<IActionResult> ViewCV(string userid)
         {
-            var user = await _userManager.FindByIdAsync(userid);
-            if(user != null)
-            {
-                ViewBag.user = JsonConvert.SerializeObject(user); 
-            }
+            int template = 0;
+            var user = await _userManager.Users.Include("Educations")
+                .Include("Experiences")
+                .Include("Skills")
+                .Include("Interests")
+                .Include("Projects")
+                .Include("Contributions").SingleOrDefaultAsync(x => x.Id == userid);
 
-            int template = 2;
+            if (user != null)
+            {
+                ViewBag.user = JsonConvert.SerializeObject(user);
+                var picture = _repository.Find(item => item.UserProfile.Id == user.Id).FirstOrDefault();
+                if (picture != null)
+                {
+                    ViewBag.ProfilePicturePath = picture.ProfilePicturePath;
+                }
+                template = 2;
+            }
 
             if(template == 1)
             {
