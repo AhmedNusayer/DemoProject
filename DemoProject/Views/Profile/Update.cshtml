@@ -6,10 +6,48 @@
                 <div class="row">
 
                     <div class="col-md-4" style="margin-top:20px">
-                        <img v-if="picturePath" :src="'/' + picturePath" height="200" width="200" class="rounded float-start" data-original-title="Usuario">
-                        <img v-if="!picturePath" alt="" height="260" width="260" title="" class="rounded-circle"
-                             :src="dpPlaceholder"
-                             data-original-title="Usuario">
+                        <div class="container">
+                            <img v-if="picturePath" :src="'/' + picturePath" height="200" width="200" class="rounded float-start" data-original-title="Usuario">
+                            <img v-if="!picturePath" alt="" height="260" width="260" title="" class="rounded-circle"
+                                 :src="dpPlaceholder"
+                                 data-original-title="Usuario">
+
+
+                            <a class="btn btn-lg" style="position:absolute; right:100; top:0" data-toggle="modal" data-target="#picture-modal">
+                                <i class="far fa-edit"></i>
+                            </a>
+                        </div>
+
+                        <!--Picture Modal-->
+                        <div class="modal fade" data-keyboard="false" data-backdrop="static" id="picture-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Add Profile Picture</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img v-if="picturePath" :src="'/' + picturePath" height="200" width="200" class="rounded float-start" data-original-title="Usuario">
+                                        <img v-if="!picturePath" alt="" height="260" width="260" title="" class="rounded-circle"
+                                             :src="dpPlaceholder"
+                                             data-original-title="Usuario">
+                                    </div>
+                                    <div>
+                                        <div class="col-md-10">
+                                            <p>Upload profile picture</p>
+                                            <input id="fileId" name="File" type="file" />
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a class="btn btn-info btn-block close" v-on:click="updatePic" data-dismiss="modal">Update</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
 
                         <div style="margin-top:20px">
                             <span v-if="Github">
@@ -25,7 +63,7 @@
                                 <a class="btn btn-sm justify-content-end" data-toggle="modal" data-target="#intro-modal">
                                     <i class="fas fa-pen fa-pen-indicateur"></i>
                                 </a>
-                                <textarea v-if="Intro" style="overflow-y: scroll; resize: none" v-model="Intro" class="form-control" readonly id="" name="Intro" rows="4"></textarea>
+                                <textarea v-if=User.Intro style="overflow-y: scroll; resize: none" v-model=User.Intro class="form-control" readonly id="" name="Intro" rows="4"></textarea>
                             </div>
                         </div>
 
@@ -35,7 +73,7 @@
                                 <a class="btn btn-sm justify-content-end" data-toggle="modal" data-target="#knowledge-modal">
                                     <i class="fas fa-pen fa-pen-indicateur"></i>
                                 </a>
-                                <textarea v-if="Knowledge" style="overflow-y: scroll; resize: none" v-model="Knowledge" class="form-control" readonly id="" name="Knowledge" rows="4"></textarea>
+                                <textarea v-if=User.Knowledge style="overflow-y: scroll; resize: none" v-model=User.Knowledge class="form-control" readonly id="" name="Knowledge" rows="4"></textarea>
                             </div>
                         </div>
 
@@ -60,7 +98,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <label for="exampleFormControlTextarea1">Edit Intro</label>
-                                        <textarea class="form-control" id="" name="Intro" rows="5" v-model="Intro"></textarea>
+                                        <textarea class="form-control" id="" name="Intro" rows="5" v-model=User.Intro></textarea>
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-info btn-block close" data-dismiss="modal">Save</button>
@@ -81,7 +119,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <label for="exampleFormControlTextarea1">Edit Knowledge</label>
-                                        <textarea class="form-control" id="" name="Intro" rows="5" v-model="Knowledge"></textarea>
+                                        <textarea class="form-control" id="" name="Knowledge" rows="5" v-model=User.Knowledge></textarea>
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-info btn-block close" data-dismiss="modal">Save</button>
@@ -108,7 +146,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='name'>
-                                                <input type='text' size="40" name="Name" :value=Name />
+                                                <input type='text' size="40" name="Name" :value=User.Name />
                                             </p>
                                         </td>
                                     </tr>
@@ -122,7 +160,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='email'>
-                                                <input type='text' size="40" name="UserName" :value="UserName" />
+                                                <input type='text' size="40" name="UserName" :value=User.UserName />
                                             </p>
                                         </td>
                                     </tr>
@@ -136,7 +174,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='email'>
-                                                <input type='text' size="40" name="Email" :value="Email" />
+                                                <input type='text' size="40" name="Email" :value=User.Email />
                                             </p>
                                         </td>
                                     </tr>
@@ -149,7 +187,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='phone-number'>
-                                                <input type='number' size="40" name="PhoneNumber" :value="PhoneNumber" />
+                                                <input type='number' size="40" name="PhoneNumber" :value=User.PhoneNumber />
                                             </p>
                                         </td>
                                     </tr>
@@ -162,7 +200,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='present-address'>
-                                                <input type='text' size="40" name="Address" :value="Address" />
+                                                <input type='text' size="40" name="Address" :value=User.Address />
                                             </p>
                                         </td>
                                     </tr>
@@ -175,7 +213,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='date-of-birth'>
-                                                <input type='date' size="40" name="DateofBirth" :value="DateofBirth" />
+                                                <input type='date' size="40" name="DateofBirth" :value=User.DateofBirth />
                                             </p>
                                         </td>
                                     </tr>
@@ -188,7 +226,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='website'>
-                                                <input type='text' size="40" name="Website" v-model="Website" />
+                                                <input type='text' size="40" name="Website" v-model=User.Website />
                                             </p>
                                         </td>
                                     </tr>
@@ -201,7 +239,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='github'>
-                                                <input type='text' size="40" name="Github" v-model="Github" />
+                                                <input type='text' size="40" name="Github" v-model=User.Github />
                                             </p>
                                         </td>
                                     </tr>
@@ -214,7 +252,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='linkedin'>
-                                                <input type='text' size="40" name="Linkedin" v-model="Linkedin" />
+                                                <input type='text' size="40" name="Linkedin" v-model=User.Linkedin />
                                             </p>
                                         </td>
                                     </tr>
@@ -227,7 +265,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='hobby'>
-                                                <input type='text' size="40" name="Hobby" v-model="Hobby" />
+                                                <input type='text' size="40" name="Hobby" v-model=User.Hobby />
                                             </p>
                                         </td>
                                     </tr>
@@ -240,7 +278,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='password'>
-                                                <input type='password' size="40" name="Password" required />
+                                                <input type='password' size="40" v-model="Password" required />
                                             </p>
                                         </td>
                                     </tr>
@@ -249,12 +287,12 @@
                             <div class="form-group">
                                 <div class="col-md-10">
                                     <p>Upload profile picture</p>
-                                    <input class="form-control" name="File" type="file" />
+                                    <input class="form-control" id="fileId" name="File" type="file" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-10">
-                                    @*<a class="btn btn-success" v-on:click="update" value="Update">Update</a>*@
+                                    <a class="btn btn-success" v-on:click="update" value="Update">Update</a>
                                 </div>
                             </div>
 

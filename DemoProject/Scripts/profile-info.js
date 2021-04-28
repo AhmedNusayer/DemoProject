@@ -3,7 +3,9 @@
             "intro", "knowledge", "hobby", "website", "github", "linkedin", "education"],
     data: function () {
         return {
-            User: JSON.parse(this.user),
+            UserInfo: JSON.parse(this.user),
+            User: "",
+            A: {},
             picturePath: this.picpath,
             dpPlaceholder: "/Images/dp_placeholder.png",
             Name: this.name,
@@ -18,6 +20,8 @@
             Hobby: this.hobby,
             Intro: this.intro,
             Knowledge: this.knowledge,
+            Password: null,
+            File: null,
             Educations: [],
             Education: {
                 Institution: "",
@@ -210,13 +214,36 @@
             return newGuid;
         },
 
+        updatePic() {
+            var formData = new window.FormData();
+            var file = document.getElementById("fileId").files[0];
+            formData.append("file", file);
+            var self = this
+            $.ajax({
+                type: "POST",
+                url: "/Profile/AddPicture",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    alert(result)
+                    self.picturePath = result
+                },
+                async: false
+            })
+        },
+
         update() {
-            //this.user.Educations = this.Educations
+            var B = {
+                UserDetails: this.UserInfo,
+                Password: this.Password
+            }
+
             $.ajax({
                 type: "POST",
                 url: "/Profile/Index",
                 data: {
-                    model: JSON.stringify(this.Educations)
+                    model: B
                 }
             })
         }
