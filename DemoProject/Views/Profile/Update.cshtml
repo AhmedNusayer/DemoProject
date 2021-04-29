@@ -50,8 +50,8 @@
 
 
                         <div style="margin-top:20px">
-                            <span v-if="Github">
-                                <a class="btn btn-lg" data-toggle="modal" :href="Github">
+                            <span v-if="User.Github">
+                                <a class="btn btn-lg" data-toggle="modal" :href="User.Github">
                                     <i class="fab fa-github"></i>
                                 </a>
                             </span>
@@ -63,7 +63,7 @@
                                 <a class="btn btn-sm justify-content-end" data-toggle="modal" data-target="#intro-modal">
                                     <i class="fas fa-pen fa-pen-indicateur"></i>
                                 </a>
-                                <textarea v-if=User.Intro style="overflow-y: scroll; resize: none" v-model=User.Intro class="form-control" readonly id="" name="Intro" rows="4"></textarea>
+                                <textarea v-if=UserInfo.Intro style="overflow-y: scroll; resize: none" v-model=UserInfo.Intro class="form-control" readonly id="" name="Intro" rows="4"></textarea>
                             </div>
                         </div>
 
@@ -73,7 +73,7 @@
                                 <a class="btn btn-sm justify-content-end" data-toggle="modal" data-target="#knowledge-modal">
                                     <i class="fas fa-pen fa-pen-indicateur"></i>
                                 </a>
-                                <textarea v-if=User.Knowledge style="overflow-y: scroll; resize: none" v-model=User.Knowledge class="form-control" readonly id="" name="Knowledge" rows="4"></textarea>
+                                <textarea v-if=UserInfo.Knowledge style="overflow-y: scroll; resize: none" v-model=UserInfo.Knowledge class="form-control" readonly id="" name="Knowledge" rows="4"></textarea>
                             </div>
                         </div>
 
@@ -98,7 +98,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <label for="exampleFormControlTextarea1">Edit Intro</label>
-                                        <textarea class="form-control" id="" name="Intro" rows="5" v-model=User.Intro></textarea>
+                                        <textarea class="form-control" id="" name="Intro" rows="5" v-model=UserInfo.Intro></textarea>
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-info btn-block close" data-dismiss="modal">Save</button>
@@ -119,7 +119,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <label for="exampleFormControlTextarea1">Edit Knowledge</label>
-                                        <textarea class="form-control" id="" name="Knowledge" rows="5" v-model=User.Knowledge></textarea>
+                                        <textarea class="form-control" id="" name="Knowledge" rows="5" v-model=UserInfo.Knowledge></textarea>
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-info btn-block close" data-dismiss="modal">Save</button>
@@ -127,7 +127,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="col-md-6 card" style="background-color:#FFF">
                         <div class="card-header">
@@ -146,7 +145,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='name'>
-                                                <input type='text' size="40" name="Name" :value=User.Name />
+                                                <input type='text' size="40" name="Name" v-model=UserInfo.Name />
                                             </p>
                                         </td>
                                     </tr>
@@ -160,7 +159,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='email'>
-                                                <input type='text' size="40" name="UserName" :value=User.UserName />
+                                                <input type='text' size="40" name="UserName" v-model=UserInfo.UserName />
                                             </p>
                                         </td>
                                     </tr>
@@ -174,7 +173,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='email'>
-                                                <input type='text' size="40" name="Email" :value=User.Email />
+                                                <input type='text' size="40" name="Email" v-model=UserInfo.Email />
                                             </p>
                                         </td>
                                     </tr>
@@ -187,7 +186,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='phone-number'>
-                                                <input type='number' size="40" name="PhoneNumber" :value=User.PhoneNumber />
+                                                <input type='number' size="40" name="PhoneNumber" v-model=UserInfo.PhoneNumber />
                                             </p>
                                         </td>
                                     </tr>
@@ -200,7 +199,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='present-address'>
-                                                <input type='text' size="40" name="Address" :value=User.Address />
+                                                <input type='text' size="40" name="Address" v-model=UserInfo.Address />
                                             </p>
                                         </td>
                                     </tr>
@@ -213,7 +212,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='date-of-birth'>
-                                                <input type='date' size="40" name="DateofBirth" :value=User.DateofBirth />
+                                                <input type='date' size="40" name="DateofBirth" v-model=UserInfo.DateofBirth />
                                             </p>
                                         </td>
                                     </tr>
@@ -226,7 +225,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='website'>
-                                                <input type='text' size="40" name="Website" v-model=User.Website />
+                                                <input type='text' size="40" name="Website" v-model=UserInfo.Website />
                                             </p>
                                         </td>
                                     </tr>
@@ -239,7 +238,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='github'>
-                                                <input type='text' size="40" name="Github" v-model=User.Github />
+                                                <input type='text' size="40" name="Github" v-model=UserInfo.Github />
                                             </p>
                                         </td>
                                     </tr>
@@ -252,7 +251,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='linkedin'>
-                                                <input type='text' size="40" name="Linkedin" v-model=User.Linkedin />
+                                                <input type='text' size="40" name="Linkedin" v-model=UserInfo.Linkedin />
                                             </p>
                                         </td>
                                     </tr>
@@ -265,7 +264,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='hobby'>
-                                                <input type='text' size="40" name="Hobby" v-model=User.Hobby />
+                                                <input type='text' size="40" name="Hobby" v-model=UserInfo.Hobby />
                                             </p>
                                         </td>
                                     </tr>
@@ -284,12 +283,6 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="form-group">
-                                <div class="col-md-10">
-                                    <p>Upload profile picture</p>
-                                    <input class="form-control" id="fileId" name="File" type="file" />
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <div class="col-md-10">
                                     <a class="btn btn-success" v-on:click="update" value="Update">Update</a>
@@ -316,8 +309,8 @@
                         </div>
                     </div>
                     <div class="col-md-10">
-                        <div v-if="Educations.length" class="card shadow-lg" style="margin-top:5px">
-                            <div v-for="edu in Educations">
+                        <div v-if="UserInfo.Educations.length" class="card shadow-lg" style="margin-top:5px">
+                            <div v-for="edu in UserInfo.Educations">
                                 <div class="col-md-10">
                                     <div class="row">
                                         <div class="col-md-8">
@@ -366,8 +359,8 @@
                         </div>
                     </div>
                     <div class="col-md-10">
-                        <div v-if="Experiences.length" class="card shadow-lg" style="margin-top:5px">
-                            <div v-for="exp in Experiences">
+                        <div v-if="UserInfo.Experiences.length" class="card shadow-lg" style="margin-top:5px">
+                            <div v-for="exp in UserInfo.Experiences">
                                 <div class="col-md-10">
                                     <div class="row">
                                         <div class="col-md-8">
@@ -419,8 +412,8 @@
                     </div>
                     <div class="col-md-10">
                         <div class="row">
-                            <div v-if="Skills.length" style="margin-top:5px">
-                                <div v-for="skill in Skills">
+                            <div v-if="UserInfo.Skills.length" style="margin-top:5px">
+                                <div v-for="skill in UserInfo.Skills">
                                     <h4>
                                         <span class="badge badge-pill badge-info justify-content-center">
                                             {{skill.SkillName}}
@@ -451,8 +444,8 @@
                         </div>
                     </div>
                     <div class="col-md-10">
-                        <div v-if="Interests.length" class="card shadow-lg" style="margin-top:5px">
-                            <div v-for="interest in Interests">
+                        <div v-if="UserInfo.Interests.length" class="card shadow-lg" style="margin-top:5px">
+                            <div v-for="interest in UserInfo.Interests">
                                 <div class="col-md-10">
                                     <div class="row">
                                         <div class="col-md-8">
@@ -492,8 +485,8 @@
                         </div>
                     </div>
                     <div class="col-md-10">
-                        <div v-if="Projects.length" class="card shadow-lg" style="margin-top:5px">
-                            <div v-for="project in Projects">
+                        <div v-if="UserInfo.Projects.length" class="card shadow-lg" style="margin-top:5px">
+                            <div v-for="project in UserInfo.Projects">
                                 <div class="col-md-10">
                                     <div class="row">
                                         <div class="col-md-8">
@@ -536,8 +529,8 @@
                         </div>
                     </div>
                     <div class="col-md-10">
-                        <div v-if="Contributions.length" class="card shadow-lg" style="margin-top:5px">
-                            <div v-for="contribution in Contributions">
+                        <div v-if="UserInfo.Contributions.length" class="card shadow-lg" style="margin-top:5px">
+                            <div v-for="contribution in UserInfo.Contributions">
                                 <div class="col-md-10">
                                     <div class="row">
                                         <div class="col-md-8">
@@ -563,7 +556,7 @@
                     </div>
 
 
-                    <!--Education Modal -->
+                    <!--Education Modal-->
                     <div class="modal fade" data-keyboard="false" data-backdrop="static" id="education-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                             <div class="modal-content">
@@ -576,23 +569,23 @@
                                 <div class="modal-body">
                                     <label class="text-secondary"> Institution </label>
                                     <br />
-                                    <input class="form-control" type="text" name="Education.Institution" v-model="Education.Institution" placeholder="" />
+                                    <input class="form-control" type="text" name="Institution" v-model="Education.Institution" placeholder="" />
                                     <br />
                                     <label class="text-secondary"> Degree </label>
                                     <br />
-                                    <input class="form-control" type="text" name="Education.Degree" v-model="Education.Degree" placeholder="" />
+                                    <input class="form-control" type="text" name="Degree" v-model="Education.Degree" placeholder="" />
                                     <br />
                                     <label class="text-secondary"> Field of Study </label>
-                                    <input class="form-control" type="text" name="Education.FieldOfStudy" v-model="Education.FieldOfStudy" placeholder="" />
+                                    <input class="form-control" type="text" name="FieldOfStudy" v-model="Education.FieldOfStudy" placeholder="" />
                                     <br />
                                     <label class="text-secondary"> Start Date </label>
-                                    <input class="form-control" type="date" name="Education.StartDate" v-model="Education.StartDate" placeholder="" />
+                                    <input class="form-control" type="date" name="StartDate" v-model="Education.StartDate" placeholder="" />
                                     <br />
                                     <label class="text-secondary"> End Date (or expected) </label>
-                                    <input class="form-control" type="date" name="Education.EndDate" v-model="Education.EndDate" placeholder="" />
+                                    <input class="form-control" type="date" name="EndDate" v-model="Education.EndDate" placeholder="" />
                                     <br />
                                     <label class="text-secondary"> Grade </label>
-                                    <input class="form-control" type="text" name="Education.Grade" v-model="Education.Grade" placeholder="" />
+                                    <input class="form-control" type="text" name="Grade" v-model="Education.Grade" placeholder="" />
                                     <br />
                                 </div>
                                 <div class="modal-footer">

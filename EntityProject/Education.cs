@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EntityProject
 {
-    public class Education:IEntity
+    public class Education:IEntity,ICloneable
     {
         [Key]
         public Guid GUID { get; set; }
@@ -14,5 +14,10 @@ namespace EntityProject
         public DateTime EndDate { get; set; }
         public string Grade { get; set; }
         public string Description { get; set; }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

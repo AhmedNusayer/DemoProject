@@ -56,87 +56,14 @@ namespace WebProject.Controllers
         [Authorize]
         public async Task<IActionResult> Index(UpdateModel model)
         {
-            ApplicationUser user = await _userManager.GetUserAsync(User);
-            //return RedirectToAction("ViewCV", "Profile", new {userid=user.Id});
-            //var details = JsonConvert.DeserializeObject<UpdateModel>(model);
-            var a = "aaa";
+            ApplicationUser user2 = await _userManager.GetUserAsync(User);
+            var user = await _userManager.Users.Include("Educations")
+                .Include("Experiences")
+                .Include("Skills")
+                .Include("Interests")
+                .Include("Projects")
+                .Include("Contributions").SingleOrDefaultAsync(x => x.Id == user2.Id);
 
-            if (ModelState.IsValid) {
-                /*user.Name = model.Name;
-                user.PhoneNumber = model.PhoneNumber;
-                user.Address = model.Address;
-                user.DateofBirth = model.DateofBirth;
-                user.Intro = model.Intro;
-                user.Knowledge = model.Knowledge;
-                user.Hobby = model.Hobby;
-                user.Website = model.Website;
-                user.Github = model.Github;
-                user.Linkedin = model.Linkedin;*/
-                //user.Educations = model.Educations;
-
-                /*var userPassword = _userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
-
-                if (userPassword != PasswordVerificationResult.Success)
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return RedirectToAction("Update", "Profile");
-                }
-                else
-                {
-                    await _userManager.UpdateAsync(user);
-                }
-
-                if (model.File != null)
-                {
-                    IFormFile file = model.File;
-                    if (file.Length > 0)
-                    {
-                        string webRootPath = _hostingEnv.WebRootPath;
-                        var fileName = Path.GetFileName(file.FileName);
-                        string newPath = Path.Combine(webRootPath, "Images");
-
-                        if (!Directory.Exists(newPath))
-                        {
-                            Directory.CreateDirectory(newPath);
-                        }
-
-                        //var entity = _context.profilePictures.Where(item => item.UserProfile.Id == user.Id).FirstOrDefault();
-                        ProfilePicture entity = _repository.Find(item => item.UserProfile.Id == user.Id).FirstOrDefault();
-                        if (entity != null)
-                        {
-                            var path = Path.Combine(webRootPath, entity.ProfilePicturePath);
-                            if (System.IO.File.Exists(path))
-                            {
-                                System.IO.File.Delete(path);
-                            }
-                            entity.ProfilePicturePath = "Images/" + user.Id + "_" + fileName;
-                            await _repository.Update(entity);
-                        }
-                        else
-                        {
-                            ProfilePicture profilePicture = new ProfilePicture();
-                            profilePicture.UserProfile = user;
-                            profilePicture.ProfilePicturePath = "Images/" + user.Id + "_" + fileName;
-                            //_context.profilePictures.Add(profilePicture);
-                            await _repository.Add(profilePicture);
-                        }
-
-                        string fullPath = Path.Combine(newPath, user.Id + "_" + fileName);
-
-                            *//*using (StreamWriter writer = new StreamWriter("C:\\Users\\DELL\\Downloads\\case.txt"))
-                            {
-                                writer.WriteLine(a);
-                            }*//*
-
-                        using (var stream = new FileStream(fullPath, FileMode.Create))
-                        {
-                            await file.CopyToAsync(stream);
-                        }
-                        //_context.SaveChanges();
-
-                    }
-                }*/
-            }
             var picture = _repository.Find(item => item.UserProfile.Id == user.Id).FirstOrDefault();
             if (picture != null)
             {
@@ -145,7 +72,6 @@ namespace WebProject.Controllers
 
             ViewBag.user = user;
             return View();
-            //return null;
         }
 
         public async Task<IActionResult> ViewCV(string userid)
@@ -237,6 +163,49 @@ namespace WebProject.Controllers
                 }
             }
             return Json(picPath);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> UpdateProfile(UpdateModel model)
+        {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+
+            if (ModelState.IsValid)
+            {
+                user.Name = model.UserDetails.Name;
+                user.PhoneNumber = model.UserDetails.PhoneNumber;
+                user.Address = model.UserDetails.Address;
+                user.DateofBirth = model.UserDetails.DateofBirth;
+                user.Intro = model.UserDetails.Intro;
+                user.Knowledge = model.UserDetails.Knowledge;
+                user.Hobby = model.UserDetails.Hobby;
+                user.Website = model.UserDetails.Website;
+                user.Github = model.UserDetails.Github;
+                user.Linkedin = model.UserDetails.Linkedin;
+
+                user.Educations = model.UserDetails.Educations.GetRange(0, model.UserDetails.Educations.Count);
+                
+                user.Experiences = model.UserDetails.Experiences;
+                user.Skills = model.UserDetails.Skills;
+                user.Interests = model.UserDetails.Interests;
+                user.Projects = model.UserDetails.Projects;
+                user.Contributions = model.UserDetails.Contributions;
+
+                var userPassword = _userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
+
+                if (userPassword != PasswordVerificationResult.Success)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Json("/Profile/Update");
+                }
+                else
+                {
+                    await _userManager.UpdateAsync(user);
+                }
+
+                
+            }
+            return Json("/Profile/Index");
         }
 
     }

@@ -1,28 +1,13 @@
 ﻿Vue.component("profile-info", {
-    props: ["user", "picpath", "name", "username", "email", "address", "phonenumber", "dateofbirth",
-            "intro", "knowledge", "hobby", "website", "github", "linkedin", "education"],
+    props: ["user", "picpath"],
     data: function () {
         return {
             UserInfo: JSON.parse(this.user),
             User: "",
-            A: {},
             picturePath: this.picpath,
             dpPlaceholder: "/Images/dp_placeholder.png",
-            Name: this.name,
-            UserName: this.username,
-            Email: this.email,
-            Address: this.address,
-            PhoneNumber: this.phonenumber,
-            DateofBirth: this.dateofbirth,
-            Website: this.website,
-            Github: this.github,
-            Linkedin: this.linkedin,
-            Hobby: this.hobby,
-            Intro: this.intro,
-            Knowledge: this.knowledge,
             Password: null,
             File: null,
-            Educations: [],
             Education: {
                 Institution: "",
                 Degree: "",
@@ -33,7 +18,6 @@
                 GUID: "",
                 Description: ""
             },
-            Experiences: [],
             Experience: {
                 Title: "",
                 EmploymentType: "",
@@ -41,36 +25,32 @@
                 Location: "",
                 StartDate: "",
                 EndDate: "",
-                ExperienceUUID: "",
+                GUID: "",
                 Description: ""
             },
-            Skills: [],
             Skill: {
                 SkillName: "",
                 Level: 0,
-                SkillUUID: ""
+                GUID: ""
             },
-            Interests: [],
             Interest: {
                 Title: "",
                 Description: "",
-                InterestUUID: ""
+                GUID: ""
             },
-            Projects: [],
             Project: {
                 Name: "",
                 Platform: "",
                 Year: "",
                 Description: "",
                 Url: "",
-                ProjectUUID: ""
+                GUID: ""
             },
-            Contributions: [],
             Contribution: {
                 Name: "",
                 Description: "",
                 Url: "",
-                ContributionUUID: ""
+                GUID: ""
             },
             forEducationUpdate: false,
             forExperenceUpdate: false,
@@ -82,42 +62,52 @@
 
     methods: {
         addEducation() {
-            //this.Educations.push(this.education)
-            this.Educations.push({
-                Institution: this.Education.Institution, Degree: this.Education.Degree,
-                FieldOfStudy: this.Education.FieldOfStudy, StartDate: this.Education.StartDate,
-                EndDate: this.Education.EndDate, Grade: this.Education.Grade, GUID: this.getGUID(),
-                Description: this.Educations.Description
+            this.UserInfo.Educations.push({
+                Institution: this.Education.Institution,
+                Degree: this.Education.Degree,
+                FieldOfStudy: this.Education.FieldOfStudy,
+                StartDate: this.Education.StartDate,
+                EndDate: this.Education.EndDate,
+                Grade: this.Education.Grade,
+                GUID: this.getGUID(),
+                Description: this.Education.Description
             })
         },
         addExperience() {
-            this.Experiences.push({
-                Title: this.Experience.Title, EmploymentType: this.Experience.EmploymentType,
-                Company: this.Experience.Company, Location: this.Experience.Location,
-                StartDate: this.Experience.StartDate, EndDate: this.Experience.EndDate, ExperienceUUID: this.getGUID(),
-                Description: this.Experiences.Description
+            this.UserInfo.Experiences.push({
+                Title: this.Experience.Title,
+                EmploymentType: this.Experience.EmploymentType,
+                Company: this.Experience.Company,
+                Location: this.Experience.Location,
+                StartDate: this.Experience.StartDate,
+                EndDate: this.Experience.EndDate,
+                GUID: this.getGUID(),
+                Description: this.Experience.Description
             })
         },
         addSkill() {
-            this.Skills.push({
-                SkillName: this.Skill.SkillName, Level: this.Skill.Level, SkillUUID: this.Skill.SkillUUID
+            this.UserInfo.Skills.push({
+                SkillName: this.Skill.SkillName, Level: this.Skill.Level,
+                GUID: this.getGUID()
             })
         },
         addInterest() {
-            this.Interests.push({
-                Title: this.Interest.Title, Description: this.Interest.Description, InterestUUID: this.getGUID()
+            this.UserInfo.Interests.push({
+                Title: this.Interest.Title,
+                Description: this.Interest.Description,
+                GUID: this.getGUID()
             })
         },
         addProject() {
-            this.Projects.push({
+            this.UserInfo.Projects.push({
                 Name: this.Project.Name, Platform: this.Project.Platform, Year: this.Project.Year,
-                Description: this.Project.Description, Url: this.Project.Url, ProjectUUID: this.getGUID()
+                Description: this.Project.Description, Url: this.Project.Url, GUID: this.getGUID()
             })
         },
         addContribution() {
-            this.Contributions.push({
-                Name: this.Contribution.Name, Description: this.Contribution.Description, Url: this.Contribution.Url,
-                ContributionUUID: this.getGUID()
+            this.UserInfo.Contributions.push({
+                Name: this.Contribution.Name, Description: this.Contribution.Description,
+                Url: this.Contribution.Url, GUID: this.getGUID()
             })
         },
 
@@ -143,39 +133,39 @@
         },
 
         deleteEducation(edu) {
-            var idx = this.Educations.findIndex(x => x.EducationUUID === edu.EducationUUID)
+            var idx = this.UserInfo.Educations.findIndex(x => x.GUID === edu.GUID)
             if (idx != -1) {
-                this.Educations.splice(idx, 1)
+                this.UserInfo.Educations.splice(idx, 1)
             }
         },
         deleteExperience(exp) {
-            var idx = this.Experiences.findIndex(x => x.ExperienceUUID === exp.ExperienceUUID)
+            var idx = this.UserInfo.Experiences.findIndex(x => x.GUID === exp.GUID)
             if (idx != -1) {
-                this.Experiences.splice(idx, 1)
+                this.UserInfo.Experiences.splice(idx, 1)
             }
         },
         deleteSkill(skill) {
-            var idx = this.Skills.findIndex(x => x.SkillUUID == skill.SkillUUID)
+            var idx = this.UserInfo.Skills.findIndex(x => x.GUID == skill.GUID)
             if (idx != -1) {
-                this.Skills.splice(idx, 1)
+                this.UserInfo.Skills.splice(idx, 1)
             }
         },
         deleteInterest(interest) {
-            var idx = this.Interests.findIndex(x => x.InterestUUID === interest.InterestUUID)
+            var idx = this.UserInfo.Interests.findIndex(x => x.GUID === interest.GUID)
             if (idx != -1) {
-                this.Interests.splice(idx, 1)
+                this.UserInfo.Interests.splice(idx, 1)
             }
         },
         deleteProject(project) {
-            var idx = this.Projects.findIndex(x => x.ProjectUUID === project.ProjectUUID)
+            var idx = this.UserInfo.Projects.findIndex(x => x.GUID === project.GUID)
             if (idx != -1) {
-                this.Projects.splice(idx, 1)
+                this.UserInfo.Projects.splice(idx, 1)
             }
         },
         deleteContribution(contribution) {
-            var idx = this.Contributions.findIndex(x => x.ContributionUUID === contribution.ContributionUUID)
+            var idx = this.UserInfo.Contributions.findIndex(x => x.GUID === contribution.GUID)
             if (idx != -1) {
-                this.Contributions.splice(idx, 1)
+                this.UserInfo.Contributions.splice(idx, 1)
             }
         },
 
@@ -234,17 +224,21 @@
         },
 
         update() {
+            var self = this
             var B = {
-                UserDetails: this.UserInfo,
-                Password: this.Password
+                UserDetails: self.UserInfo,
+                Password: self.Password
             }
 
             $.ajax({
                 type: "POST",
-                url: "/Profile/Index",
+                url: "/Profile/UpdateProfile",
                 data: {
                     model: B
-                }
+                },
+                success: function (result) {
+                    window.location.href = result
+                },
             })
         }
     }
