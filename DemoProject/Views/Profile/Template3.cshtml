@@ -17,7 +17,6 @@
 
             .resume {
             position: relative;
-            font-family:'Roboto';
             font-size: 0.9em;
             }
 
@@ -93,6 +92,7 @@
 
             .section-content {
             margin-top: 5px;
+            margin-right: 8px;
             font-size: 14px;
 
             &__item {
@@ -100,25 +100,10 @@
             margin-bottom: 5px;
             }
 
-            &__header {
-            display: block;
-            font-size: 1.1em;
-            font-weight: 500;
-            }
-
-            &__subheader {
-            display: block;
-            font-weight: 400;
-            }
-
             &__plain,
             &__text {
             display: block;
             font-size: 12px;
-
-            &--light {
-            font-size: 12px;
-            }
             }
 
             &__plain {
@@ -135,6 +120,37 @@
             &--plain {
             padding: 0;
             }
+            }
+
+            .section-content-item-grid {
+            flex: 1 1 0;
+            margin-bottom: 5px;
+            padding-right: 5px;
+            }
+
+            .section-content-header {
+            display: block;
+            font-size: 1.1em;
+            font-weight: 700;
+            }
+
+            .section-content-subheader {
+            display: block;
+            font-weight: 550;
+            }
+
+            .section-content-plain {
+            display: inline;
+            font-weight: 300;
+            }
+
+            .section-content-text {
+            display: block;
+            font-size: 12px;
+            }
+
+            .section-content-text-light {
+            font-size: 12px;
             }
 
             .section-content-grid {
@@ -201,32 +217,32 @@
                             Contact
                         </div>
 
-                        <div class="section-content section-content--plain">
-                            <div class="section-link">
-                                <i class="section-link__icon material-icons">business</i>{{ User.Address }} Address
+                        <div class="section-content section-content--plain row">
+                            <div class="section-link col-lg-12">
+                                <i class="section-link__icon fa fa-building"></i>{{ User.Address }} Address
                             </div>
 
-                            <a class="section-link link">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>{{ User.Email }}
+                            <a class="section-link col-lg-12">
+                                <i class="section-link__icon fa fa-envelope" aria-hidden="true"></i> {{ User.Email }}
                             </a>
 
-                            <div class="section-link">
-                                <i class='fa fa-phone-square' aria-hidden="true"></i>{{ User.PhoneNumber }} 010000
+                            <div class="section-link col-lg-12">
+                                <i class='section-link__icon fa fa-phone-square' aria-hidden="true"></i> {{ User.PhoneNumber }} 010000
                             </div>
 
                             <a 
-                               class="section-link link">
-                                <i class="fa fa-home" aria-hidden="true"></i>{{ User.Website }} mywebsite.com
+                               class="section-link col-lg-12">
+                                <i class="section-link__icon fa fa-globe" aria-hidden="true"></i> {{ User.Website }} mywebsite.com
                             </a>
 
                             <a 
-                               class="section-link link">
-                                <i class="fa fa-linkdin" aria-hidden="true"></i>{{ User.Linkedin }} linkedin
+                               class="section-link col-lg-12">
+                                <i class="section-link__icon fab fa-linkedin" aria-hidden="true"></i> {{ User.Linkedin }} linkedin
                             </a>
 
                             <a 
-                               class="section-link link">
-                                <i class="fab fa-github" aria-hidden="true"></i>{{ User.Github }} github.com
+                               class="section-link col-lg-12">
+                                <i class="section-link__icon fab fa-github" aria-hidden="true"></i> {{ User.Github }} github.com
                             </a>
 
                         </div>
@@ -236,38 +252,38 @@
                 <div class="content-right">
                     <div class="section">
                         <div class="section-headline">
-                            <i class="section-headline__icon material-icons">work</i>Experience
+                            <i class="section-headline__icon fa fa-briefcase"></i> Experience
                         </div>
 
                         <div class="section-content">
                             <a 
                                class="section-content__item">
 
-                                <span class="section-content__header">abc</span>
-                                <span class="section-content__subheader">
+                                <span class="section-content-header">abc</span>
+                                <span class="section-content-subheader">
                                     company 
-                                    <span class="section-content__plain"> experience.location </span>
+                                    <span class="section-content-plain"> experience.location </span>
                                 </span>
 
-                                <div class="section-content__text"> experience.timeperiod </div>
-                                <span class="section-content__text--light"> experience.description </span>
+                                <div class="section-content-text"> experience.timeperiod </div>
+                                <span class="section-content-text-light"> experience.description </span>
                             </a>
                         </div>
                     </div>
 
                     <div class="section">
                         <div class="section-headline">
-                            <i class="section-headline__icon material-icons">school</i>Education
+                            <i class="section-headline__icon fa fa-graduation-cap"></i> Education
                         </div>
 
                         <div class="section-content">
                             <a 
                                class="section-content__item">
 
-                                <span class="section-content__header">  education.school  </span>
-                                <span class="section-content__subheader"> education.degree </span>
-                                <span class="section-content__text">  education.timeperiod  </span>
-                                <span class="section-content__text--light">  education.description  </span>
+                                <span class="section-content-header">  education.school  </span>
+                                <span class="section-content-subheader"> education.degree </span>
+                                <span class="section-content-text">  education.timeperiod  </span>
+                                <span class="section-content-text-light">  education.description  </span>
                             </a>
                         </div>
                     </div>
@@ -275,15 +291,15 @@
                     <div 
                          class="section">
                         <div class="section-headline">
-                            <i class="section-headline__icon material-icons">code</i>Projects
+                            <i class="section-headline__icon fa fa-code"></i> Projects
                         </div>
 
                         <div class="section-content-grid">
                             <a 
                                class="section-content__item-grid">
-                                <span class="section-content__header">  project.name  </span>
-                                <span class="section-content__subheader"> project.platform </span>
-                                <span class="section-content__text">  project.description  </span>
+                                <span class="section-content-header">  project.name  </span>
+                                <span class="section-content-subheader"> project.platform </span>
+                                <span class="section-content-text">  project.description  </span>
                             </a>
                         </div>
                     </div>
@@ -291,16 +307,16 @@
                     <div 
                          class="section">
                         <div class="section-headline">
-                            <i class="section-headline__icon fa fa-heart"></i>Contributions
+                            <i class="section-headline__icon fa fa-heart"></i> Contributions
                         </div>
 
                         <div class="section-content-grid">
                             <a 
-                               class="section-content__item-grid"
+                               class="section-content-item-grid"
                               >
-                                <span class="section-content__header">  contribution.name  </span>
-                                <span class="section-content__text">  contribution.description  </span>
-                                <span class="section-content__text--light" style="word-break: break-all;">
+                                <span class="section-content-header">  contribution.name  </span>
+                                <span class="section-content-text">  contribution.description  </span>
+                                <span class="section-content-text-light" style="word-break: break-all;">
                                      contribution.url 
                                 </span>
                             </a>
