@@ -1,5 +1,4 @@
-﻿
-@*cool*@
+﻿@*cool*@
 
 <resume-info inline-template user="@ViewBag.user" picpath="@ViewBag.ProfilePicturePath">
     <div>
@@ -28,7 +27,6 @@
             width: 120px;
             border-radius: 50%;
             border: 5px solid #34495E;
-            content: url('/Images/dp_placeholder.png');
             z-index: 2;
             background-color: purple;
             }
@@ -176,8 +174,8 @@
         <div class="resume">
             <div class="banner">
                 <div style="font-size: 32px;">{{ User.Name}}</div>
-                <div style="font-size: 16px;">CV</div>
-                <div style="font-size: 12px;">{{ User.DateofBirth}} birthdate</div>
+                <div style="font-size: 16px;">Curriculum Vitae</div>
+                <div style="font-size: 12px;">{{ User.Address}}</div>
             </div>
 
             <div class="content">
@@ -189,24 +187,23 @@
 
                         <div class="section-content section-content--plain">
                             {{ User.Intro }}
-                            Some intro
                             <br />
                             <br />
-                            konwledge dets
                             {{ User.Knowledge }}
                         </div>
                     </div>
 
-                    <div class="section">
+                    <div class="section" v-if="User.Skills.length != 0">
                         <div class="section-left-headline">
                             Skills
                         </div>
 
                         <div class="section-content-grid">
-                            <a
-                               class="grid-item">
+                            <a v-for="skill in User.skills"
+                               class="grid-item"
+                               :key="skill.GUID">
                                 <span class="squarred-grid-item">
-                                    skill name
+                                    {{skill.SkillName}}
                                 </span>
                             </a>
                         </div>
@@ -218,31 +215,28 @@
                         </div>
 
                         <div class="section-content section-content--plain row">
-                            <div class="section-link col-lg-12">
-                                <i class="section-link__icon fa fa-building"></i>{{ User.Address }} Address
+                            <div class="section-link col-lg-12" v-if="User.Address">
+                                <i class="section-link__icon fa fa-building"></i>{{ User.Address }}
                             </div>
 
-                            <a class="section-link col-lg-12">
+                            <a class="section-link col-lg-12" :href='"mailto:" + User.Email'>
                                 <i class="section-link__icon fa fa-envelope" aria-hidden="true"></i> {{ User.Email }}
                             </a>
 
-                            <div class="section-link col-lg-12">
-                                <i class='section-link__icon fa fa-phone-square' aria-hidden="true"></i> {{ User.PhoneNumber }} 010000
+                            <div class="section-link col-lg-12" v-if="User.PhoneNumber">
+                                <i class='section-link__icon fa fa-phone-square' aria-hidden="true"></i> {{ User.PhoneNumber }}
                             </div>
 
-                            <a 
-                               class="section-link col-lg-12">
-                                <i class="section-link__icon fa fa-globe" aria-hidden="true"></i> {{ User.Website }} mywebsite.com
+                            <a class="section-link col-lg-12" v-if="User.Website" :href='User.Website'>
+                                <i class="section-link__icon fa fa-globe" aria-hidden="true"></i> {{ User.Website }}
                             </a>
 
-                            <a 
-                               class="section-link col-lg-12">
-                                <i class="section-link__icon fab fa-linkedin" aria-hidden="true"></i> {{ User.Linkedin }} linkedin
+                            <a class="section-link col-lg-12" v-if="User.Linkedin" :href='User.Linkedin'>
+                                <i class="section-link__icon fab fa-linkedin" aria-hidden="true"></i> {{ User.Linkedin }}
                             </a>
 
-                            <a 
-                               class="section-link col-lg-12">
-                                <i class="section-link__icon fab fa-github" aria-hidden="true"></i> {{ User.Github }} github.com
+                            <a class="section-link col-lg-12" v-if="User.Github" :href='User.Github'>
+                                <i class="section-link__icon fab fa-github" aria-hidden="true"></i> {{ User.Github }}
                             </a>
 
                         </div>
@@ -256,17 +250,18 @@
                         </div>
 
                         <div class="section-content">
-                            <a 
-                               class="section-content__item">
+                            <a class="section-content__item"
+                               v-for="experience in User.Experiences"
+                               :key="experience.GUID">
 
-                                <span class="section-content-header">abc</span>
+                                <span class="section-content-header">{{experience.Title}}</span>
                                 <span class="section-content-subheader">
-                                    company 
-                                    <span class="section-content-plain"> experience.location </span>
+                                    {{experience.Company}}
+                                    <span class="section-content-plain"> {{experience.Location}} </span>
                                 </span>
 
-                                <div class="section-content-text"> experience.timeperiod </div>
-                                <span class="section-content-text-light"> experience.description </span>
+                                <div class="section-content-text"> {{experience.StartDatr}} - {{experience.EndDate}} </div>
+                                <span class="section-content-text-light"> {{experience.Description}} </span>
                             </a>
                         </div>
                     </div>
@@ -277,47 +272,48 @@
                         </div>
 
                         <div class="section-content">
-                            <a 
-                               class="section-content__item">
+                            <a class="section-content__item"
+                               v-for="education in User.Educations"
+                               :key="education.GUID">
 
-                                <span class="section-content-header">  education.school  </span>
-                                <span class="section-content-subheader"> education.degree </span>
-                                <span class="section-content-text">  education.timeperiod  </span>
-                                <span class="section-content-text-light">  education.description  </span>
+                                <span class="section-content-header"> {{education.Institution}}  </span>
+                                <span class="section-content-subheader"> {{education.Degree}} </span>
+                                <span class="section-content-text"> {{education.StartDatr}} - {{education.EndDate}} </span>
+                                <span class="section-content-text-light">  {{education.Description}}  </span>
                             </a>
                         </div>
                     </div>
 
-                    <div 
-                         class="section">
+                    <div class="section" v-if="User.Projects.length != 0">
                         <div class="section-headline">
                             <i class="section-headline__icon fa fa-code"></i> Projects
                         </div>
 
                         <div class="section-content-grid">
-                            <a 
-                               class="section-content__item-grid">
-                                <span class="section-content-header">  project.name  </span>
-                                <span class="section-content-subheader"> project.platform </span>
-                                <span class="section-content-text">  project.description  </span>
+                            <a class="section-content__item-grid"
+                               v-for="project in User.Projects" :key="project.GUID"
+                               :href="project.Url">
+                                <span class="section-content-header">  {{project.Name}}  </span>
+                                <span class="section-content-subheader"> {{project.Platform}} </span>
+                                <span class="section-content-text">  {{project.Description}}  </span>
                             </a>
                         </div>
                     </div>
 
-                    <div 
-                         class="section">
+                    <div class="section" v-if="User.Contributions.length != 0">
                         <div class="section-headline">
                             <i class="section-headline__icon fa fa-heart"></i> Contributions
                         </div>
 
                         <div class="section-content-grid">
-                            <a 
-                               class="section-content-item-grid"
-                              >
-                                <span class="section-content-header">  contribution.name  </span>
-                                <span class="section-content-text">  contribution.description  </span>
+                            <a class="section-content-item-grid"
+                               v-for="contribution in User.Contributions"
+                               :key="contribution.GUID"
+                               :href="contribution.url">
+                                <span class="section-content-header">  {{contribution.Name}}  </span>
+                                <span class="section-content-text">  {{contribution.Description}}  </span>
                                 <span class="section-content-text-light" style="word-break: break-all;">
-                                     contribution.url 
+                                    {{contribution.Url}}
                                 </span>
                             </a>
                         </div>
@@ -325,7 +321,8 @@
                 </div>
             </div>
 
-            <div class="picture" ></div>
+            <div class="picture" v-if="picturePath" :style='{content: "url(/" + picturePath + ")"}'></div>
+            <div class="picture" v-if="!picturePath" :style='{content: "url(" + dpPlaceholder + ")"}'></div>
         </div>
     </div>
 </resume-info>

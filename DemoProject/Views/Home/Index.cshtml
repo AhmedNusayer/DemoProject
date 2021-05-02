@@ -96,7 +96,7 @@
         <jobpost-card inline-template jobpost="@ViewBag.posts" sort="@ViewBag.sort">
             <div class="container d-flex justify-content-center">
                 <div class="col-lg-8">
-                    <div class="dropdown">
+                    <div class="dropdown" v-if="JobPost.length!=0">
                         <button class="btn btn-secondary dropdown-toggle float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{Sort}}
                         </button>

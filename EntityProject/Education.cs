@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EntityProject
 {
-    public class Education:IEntity,ICloneable
+    public class Education:IEntity
     {
         [Key]
         public Guid GUID { get; set; }
@@ -15,9 +15,5 @@ namespace EntityProject
         public string Grade { get; set; }
         public string Description { get; set; }
 
-        public object Clone()
-        {
-            return this.MemberwiseClone();
-        }
     }
 }
