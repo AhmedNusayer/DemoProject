@@ -92,7 +92,7 @@ namespace WebProject.Controllers
                 {
                     ViewBag.ProfilePicturePath = picture.ProfilePicturePath;
                 }
-                template = 3;
+                template = 4;
             }
 
             if (template == 1)
