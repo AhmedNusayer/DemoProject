@@ -34,7 +34,7 @@ namespace WebProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
+            options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
             services.AddControllers();
             services.AddMvcCore();
             services.AddControllersWithViews();

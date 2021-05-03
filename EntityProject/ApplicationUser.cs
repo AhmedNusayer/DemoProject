@@ -1,19 +1,30 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace EntityProject
 {
-    public class ApplicationUser: IdentityUser
+    public class ApplicationUser: IdentityUser, IEntity
     {
+        public ApplicationUser()
+        {
+            Educations = new List<Education>();
+            Experiences = new List<Experience>();
+            Skills = new List<Skill>();
+            Interests = new List<Interest>();
+            Projects = new List<Project>();
+            Contributions = new List<Contribution>();
+        }
         public string Name { get; set; }   
 
         public DateTime DateofBirth { get; set; }
         
         public string Address { get; set; }
         public string Intro { get; set; }
+        
         public virtual List<Education> Educations { get; set; }
         public virtual List<Experience> Experiences { get; set; }
 

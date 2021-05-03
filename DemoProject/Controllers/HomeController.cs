@@ -48,7 +48,7 @@ namespace WebProject.Controllers
                 ViewBag.user = JsonConvert.SerializeObject(user);
             }
 
-            var posts = await _jobRepository.GetAll(new string[] { "CompanyInfo", "PostAuthor" });
+            var posts = await _jobRepository.GetAll();
             var orderdPost = posts.OrderByDescending(x => x.TimeofPost);
             ViewBag.sort = "Sort";
             if (sort == "newest")
@@ -88,7 +88,7 @@ namespace WebProject.Controllers
             if (ModelState.IsValid)
             {
                 var user = await userManager.GetUserAsync(User);
-                var employer = _employerRepository.Find(item => item.User == user, new string[] { "CompanyInfo" }).FirstOrDefault();
+                var employer = _employerRepository.Find(item => item.User == user).FirstOrDefault();
                 var company = employer.CompanyInfo;
 
                 var jobpost = new JobPost()
@@ -114,7 +114,7 @@ namespace WebProject.Controllers
         {
             ViewBag.PostId = id;
 
-            var post = _jobRepository.Find(x =>x.Id == id, new string[] { "CompanyInfo", "PostAuthor" }).FirstOrDefault();
+            var post = _jobRepository.Find(x =>x.Id == id).FirstOrDefault();
             if(post != null)
             {
                 string jsonString = JsonConvert.SerializeObject(post);

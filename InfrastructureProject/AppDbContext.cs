@@ -13,6 +13,7 @@ namespace InfrastructureProject
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
+            this.ChangeTracker.LazyLoadingEnabled = true;
         }
 
         public DbSet<ProfilePicture> profilePictures { get; set; }
@@ -34,6 +35,8 @@ namespace InfrastructureProject
         {
             base.OnModelCreating(modelBuilder);
         }
+
+        
     }
 
 

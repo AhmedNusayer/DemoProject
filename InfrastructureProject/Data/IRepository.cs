@@ -11,8 +11,6 @@ namespace InfrastructureProject.Data
     {
         Task<List<T>> GetAll();
 
-        Task<List<T>> GetAll(string[] include);
-
         Task<T> Get(int id);
 
         Task<T> Delete(int id);        
@@ -22,8 +20,6 @@ namespace InfrastructureProject.Data
         Task<T> Update(T entity);
 
         IQueryable<T> Find(Expression<Func<T, bool>> expression);
-
-        IQueryable<T> Find(Expression<Func<T, bool>> expression, string[] include);
 
         Task AddRange(IEnumerable<T> entities);
 
