@@ -69,7 +69,6 @@
                 StartDate: this.Education.StartDate,
                 EndDate: this.Education.EndDate,
                 Grade: this.Education.Grade,
-                GUID: this.getGUID(),
                 Description: this.Education.Description
             })
         },
@@ -81,33 +80,31 @@
                 Location: this.Experience.Location,
                 StartDate: this.Experience.StartDate,
                 EndDate: this.Experience.EndDate,
-                GUID: this.getGUID(),
                 Description: this.Experience.Description
             })
         },
         addSkill() {
             this.UserInfo.Skills.push({
-                SkillName: this.Skill.SkillName, Level: this.Skill.Level,
-                GUID: this.getGUID()
+                SkillName: this.Skill.SkillName,
+                Level: this.Skill.Level,
             })
         },
         addInterest() {
             this.UserInfo.Interests.push({
                 Title: this.Interest.Title,
                 Description: this.Interest.Description,
-                GUID: this.getGUID()
             })
         },
         addProject() {
             this.UserInfo.Projects.push({
                 Name: this.Project.Name, Platform: this.Project.Platform, Year: this.Project.Year,
-                Description: this.Project.Description, Url: this.Project.Url, GUID: this.getGUID()
+                Description: this.Project.Description, Url: this.Project.Url
             })
         },
         addContribution() {
             this.UserInfo.Contributions.push({
                 Name: this.Contribution.Name, Description: this.Contribution.Description,
-                Url: this.Contribution.Url, GUID: this.getGUID()
+                Url: this.Contribution.Url
             })
         },
 
@@ -190,7 +187,7 @@
             this.Contribution = contribution
         },
 
-        getGUID() {
+        /*getGUID() {
             var d = new Date().getTime();
             if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
                 d += performance.now(); //use high-precision timer if available
@@ -202,7 +199,7 @@
             });
 
             return newGuid;
-        },
+        },*/
 
         updatePic() {
             var formData = new window.FormData();

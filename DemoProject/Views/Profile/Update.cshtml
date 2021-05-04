@@ -285,7 +285,7 @@
                             </table>
                             <div class="form-group">
                                 <div class="col-md-10">
-                                    <a class="btn btn-success" v-on:click="update" value="Update">Update</a>
+                                    <input class="btn btn-success" :disabled="!Password" type="button" v-on:click="update" value="Update"/>
                                 </div>
                             </div>
 
@@ -590,7 +590,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-info btn-block close" v-on:click="addEducation" v-if="!forEducationUpdate" :disabled="!Education.Institution" data-dismiss="modal">Add</button>
-                                    <button class="btn btn-success btn-block close" v-if="forEducationUpdate" data-dismiss="modal">Update</button>
+                                    <button class="btn btn-success btn-block close" v-if="forEducationUpdate" :disabled="!Education.Institution" data-dismiss="modal">Update</button>
                                 </div>
                             </div>
                         </div>

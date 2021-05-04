@@ -14,6 +14,7 @@ using InfrastructureProject;
 using InfrastructureProject.Data;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace WebProject.Controllers
 {
@@ -22,8 +23,7 @@ namespace WebProject.Controllers
         //private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _hostingEnv;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IRepository<ProfilePicture> _repository;
-        private readonly IRepository<Education> _education;
+        private readonly IRepository<ProfilePicture> _repository;  
 
         public ProfileController(IWebHostEnvironment hostingEnv, UserManager<ApplicationUser> userManager, AppDbContext context)
         {
@@ -31,19 +31,13 @@ namespace WebProject.Controllers
             _hostingEnv = hostingEnv;
             _userManager = userManager;
             _repository = new GenericRepository<ProfilePicture>(context);
-            _education = new GenericRepository<Education>(context);
         }
 
         [Authorize]
         public async Task<IActionResult> Update()
         {
             ApplicationUser user = await _userManager.GetUserAsync(User);
-            /*var user = await _userManager.Users.Include("Educations")
-                .Include("Experiences")
-                .Include("Skills")
-                .Include("Interests")
-                .Include("Projects")
-                .Include("Contributions").SingleOrDefaultAsync(x => x.Id == user2.Id);*/
+
             var picture = _repository.Find(item => item.UserProfile.Id == user.Id).FirstOrDefault();
             if (picture != null)
             {
@@ -59,12 +53,6 @@ namespace WebProject.Controllers
         public async Task<IActionResult> Index(UpdateModel model)
         {
             ApplicationUser user = await _userManager.GetUserAsync(User);
-            /*var user = await _userManager.Users.Include("Educations")
-                .Include("Experiences")
-                .Include("Skills")
-                .Include("Interests")
-                .Include("Projects")
-                .Include("Contributions").SingleOrDefaultAsync(x => x.Id == user2.Id);*/
 
             var picture = _repository.Find(item => item.UserProfile.Id == user.Id).FirstOrDefault();
             if (picture != null)
@@ -80,12 +68,6 @@ namespace WebProject.Controllers
         {
             int template = 0;
             ApplicationUser user = await _userManager.FindByIdAsync(userid);
-            /*var user = await _userManager.Users.Include("Educations")
-                .Include("Experiences")
-                .Include("Skills")
-                .Include("Interests")
-                .Include("Projects")
-                .Include("Contributions").SingleOrDefaultAsync(x => x.Id == userid);*/
 
             if (user != null)
             {
@@ -190,7 +172,7 @@ namespace WebProject.Controllers
                 user.Github = model.UserDetails.Github;
                 user.Linkedin = model.UserDetails.Linkedin;
 
-                user.Educations = model.UserDetails.Educations.GetRange(0, model.UserDetails.Educations.Count);
+                user.Educations = model.UserDetails.Educations;
                 user.Experiences = model.UserDetails.Experiences;
                 user.Skills = model.UserDetails.Skills;
                 user.Interests = model.UserDetails.Interests;
@@ -206,7 +188,7 @@ namespace WebProject.Controllers
                 }
                 else
                 {
-                    await _userManager.UpdateAsync(user);
+                    IdentityResult result = await _userManager.UpdateAsync(user);
                 }
 
                 
