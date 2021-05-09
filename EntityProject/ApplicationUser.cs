@@ -20,7 +20,7 @@ namespace EntityProject
         }
         public string Name { get; set; }   
 
-        public DateTime DateofBirth { get; set; }
+        public DateTime? DateofBirth { get; set; }
         
         public string Address { get; set; }
         public string Intro { get; set; }
@@ -37,6 +37,11 @@ namespace EntityProject
         public string Github { get; set; }
         public string Website { get; set; }
         public string Linkedin { get; set; }
+        public string Gender { get; set; }
+        public string Template { get; set; }
 
+        public string BloodGroup { get; set; }
+        public string Profession { get; set; }
+        public string Nationality { get; set; }
     }
 }

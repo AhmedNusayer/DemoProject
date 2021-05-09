@@ -187,7 +187,7 @@
                     <div class="spacer"></div>
                     <div class="experience" v-for="experience in User.Experiences" :key="experience.GUID">
                         <h2 class="company">{{experience.Company}}</h2>
-                        <p class="job-info"><span class="job-title">{{experience.Title}} | </span><span class="experience-timeperiod">{{experience.StartDatr}} - {{experience.EndDate}}</span></p>
+                        <p class="job-info"><span class="job-title">{{experience.Title}} | </span><span class="experience-timeperiod">{{experience.StartDate}} - {{experience.EndDate}}</span></p>
                         <p class="job-description" v-if="experience.Description">{{experience.Description}}</p>
                         @*<ul style="margin: 5px 0 0 0;">
                                 <li>
@@ -203,7 +203,7 @@
                     <div class="spacer"></div>
                     <div class="education" v-for="education in User.Educations" :key="education.GUID">
                         <h2 class="education-description">{{education.Description}}</h2>
-                        <p><span class="degree">{{education.Degree}} | </span><span class="education-timeperiod">{{education.StartDatr}} - {{education.EndDate}}</span></p>
+                        <p><span class="degree">{{education.Degree}} | </span><span class="education-timeperiod">{{education.StartDate}} - {{education.EndDate}}</span></p>
                     </div>
                 </div>
                 <div class="skills-container" v-if="User.Skills != []">

@@ -199,7 +199,7 @@
                         </div>
 
                         <div class="section-content-grid">
-                            <a v-for="skill in User.skills"
+                            <a v-for="skill in User.Skills"
                                class="grid-item"
                                :key="skill.GUID">
                                 <span class="squarred-grid-item">
@@ -216,7 +216,7 @@
 
                         <div class="section-content section-content--plain row">
                             <div class="section-link col-lg-12" v-if="User.Address">
-                                <i class="section-link__icon fa fa-building"></i>{{ User.Address }}
+                                <i class="section-link__icon fa fa-building"></i> {{ User.Address }}
                             </div>
 
                             <a class="section-link col-lg-12" :href='"mailto:" + User.Email'>
@@ -260,7 +260,7 @@
                                     <span class="section-content-plain"> {{experience.Location}} </span>
                                 </span>
 
-                                <div class="section-content-text"> {{experience.StartDatr}} - {{experience.EndDate}} </div>
+                                <div class="section-content-text"> {{experience.StartDate}} - {{experience.EndDate}} </div>
                                 <span class="section-content-text-light"> {{experience.Description}} </span>
                             </a>
                         </div>
@@ -278,7 +278,7 @@
 
                                 <span class="section-content-header"> {{education.Institution}}  </span>
                                 <span class="section-content-subheader"> {{education.Degree}} </span>
-                                <span class="section-content-text"> {{education.StartDatr}} - {{education.EndDate}} </span>
+                                <span class="section-content-text"> {{education.StartDate}} - {{education.EndDate}} </span>
                                 <span class="section-content-text-light">  {{education.Description}}  </span>
                             </a>
                         </div>

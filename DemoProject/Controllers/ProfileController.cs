@@ -23,7 +23,8 @@ namespace WebProject.Controllers
         //private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _hostingEnv;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IRepository<ProfilePicture> _repository;  
+        private readonly IRepository<ProfilePicture> _repository;
+        private readonly IRepository<Education> _education;
 
         public ProfileController(IWebHostEnvironment hostingEnv, UserManager<ApplicationUser> userManager, AppDbContext context)
         {
@@ -31,6 +32,7 @@ namespace WebProject.Controllers
             _hostingEnv = hostingEnv;
             _userManager = userManager;
             _repository = new GenericRepository<ProfilePicture>(context);
+            _education = new GenericRepository<Education>(context);
         }
 
         [Authorize]
@@ -66,7 +68,7 @@ namespace WebProject.Controllers
 
         public async Task<IActionResult> ViewCV(string userid)
         {
-            int template = 0;
+            string template = "";
             ApplicationUser user = await _userManager.FindByIdAsync(userid);
 
             if (user != null)
@@ -77,24 +79,28 @@ namespace WebProject.Controllers
                 {
                     ViewBag.ProfilePicturePath = picture.ProfilePicturePath;
                 }
-                template = 4;
+                template = user.Template;
             }
 
-            if (template == 1)
+            if (template == "1")
             {
                 return View("Template1");
             }
-            else if (template == 2)
+            else if (template == "2")
             {
                 return View("Template2");
             }
-            else if (template == 3)
+            else if (template == "3")
             {
                 return View("Template3");
             }
-            else if (template == 4)
+            else if (template == "4")
             {
                 return View("Template4");
+            }
+            else if(template == "5")
+            {
+                return View("Template5");
             }
             else
             {
@@ -157,7 +163,7 @@ namespace WebProject.Controllers
         [Authorize]
         public async Task<IActionResult> UpdateProfile(UpdateModel model)
         {
-            ApplicationUser user = await _userManager.GetUserAsync(User);
+            ApplicationUser user = _userManager.GetUserAsync(User).GetAwaiter().GetResult();
 
             if (ModelState.IsValid)
             {
@@ -172,12 +178,20 @@ namespace WebProject.Controllers
                 user.Github = model.UserDetails.Github;
                 user.Linkedin = model.UserDetails.Linkedin;
 
-                user.Educations = model.UserDetails.Educations;
+                user.Educations = model.UserDetails.Educations;  //.GetRange(0, model.UserDetails.Educations.Count)
+                
                 user.Experiences = model.UserDetails.Experiences;
                 user.Skills = model.UserDetails.Skills;
                 user.Interests = model.UserDetails.Interests;
                 user.Projects = model.UserDetails.Projects;
                 user.Contributions = model.UserDetails.Contributions;
+                user.Template = model.UserDetails.Template;
+
+                //var deleteEducation = user.Educations.Select(a => a.GUID).Except(model.UserDetails.Educations.Select(a => a.GUID));
+                //var eduId = user.Educations.Select(a => a.GUID);
+                //var modelEduId = model.UserDetails.Educations.Select(a => a.GUID);
+                //var deleteEducation = eduId.Except(modelEduId);
+                //user.Educations = model.UserDetails.Educations;
 
                 var userPassword = _userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
 
@@ -189,6 +203,11 @@ namespace WebProject.Controllers
                 else
                 {
                     IdentityResult result = await _userManager.UpdateAsync(user);
+                    /*foreach (var item in deleteEducation)
+                    {
+                        await _education.Delete(item);
+                    }*/
+                    //await _education.RemoveRange(deleteEducation);
                 }
 
                 
