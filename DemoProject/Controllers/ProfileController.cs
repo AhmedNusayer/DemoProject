@@ -102,6 +102,10 @@ namespace WebProject.Controllers
             {
                 return View("Template5");
             }
+            else if (template == "6")
+            {
+                return View("Template6");
+            }
             else
             {
                 return View();
@@ -186,6 +190,8 @@ namespace WebProject.Controllers
                 user.Projects = model.UserDetails.Projects;
                 user.Contributions = model.UserDetails.Contributions;
                 user.Template = model.UserDetails.Template;
+                user.Nationality = model.UserDetails.Nationality;
+                user.Profession = model.UserDetails.Profession;
 
                 //var deleteEducation = user.Educations.Select(a => a.GUID).Except(model.UserDetails.Educations.Select(a => a.GUID));
                 //var eduId = user.Educations.Select(a => a.GUID);

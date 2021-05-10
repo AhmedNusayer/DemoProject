@@ -7,8 +7,8 @@
 
                     <div class="col-md-4" style="margin-top:20px">
                         <div class="container">
-                            <img v-if="picturePath" :src="'/' + picturePath" height="200" width="200" class="rounded float-start" data-original-title="Usuario">
-                            <img v-if="!picturePath" alt="" height="260" width="260" title="" class="rounded-circle"
+                            <img v-if="picturePath" :src="'/' + picturePath" height="200" width="200" style="background-color: cadetblue" class="rounded float-start" data-original-title="Usuario">
+                            <img v-if="!picturePath" alt="" height="260" style="background-color: cadetblue" width="260" title="" class="rounded-circle"
                                  :src="dpPlaceholder"
                                  data-original-title="Usuario">
 
@@ -29,8 +29,8 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <img v-if="picturePath" :src="'/' + picturePath" height="200" width="200" class="rounded float-start" data-original-title="Usuario">
-                                        <img v-if="!picturePath" alt="" height="260" width="260" title="" class="rounded-circle"
+                                        <img v-if="picturePath" :src="'/' + picturePath" height="200" width="200" style="background-color: cadetblue" class="rounded float-start" data-original-title="Usuario">
+                                        <img v-if="!picturePath" alt="" height="260" style="background-color: cadetblue" width="260" title="" class="rounded-circle"
                                              :src="dpPlaceholder"
                                              data-original-title="Usuario">
                                     </div>
@@ -48,11 +48,21 @@
                         </div>
 
 
-
+                        <!--Github-Linkedin-Website-->
                         <div style="margin-top:20px">
-                            <span v-if="User.Github">
-                                <a class="btn btn-lg" data-toggle="modal" :href="User.Github">
+                            <span v-if="UserInfo.Github">
+                                <a class="btn btn-lg" :href="UserInfo.Github">
                                     <i class="fab fa-github"></i>
+                                </a>
+                            </span>
+                            <span v-if="UserInfo.Linkedin">
+                                <a class="btn btn-lg" :href="UserInfo.Linkedin">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                            </span>
+                            <span v-if="UserInfo.Linkedin">
+                                <a class="btn btn-lg" :href="UserInfo.Linkedin">
+                                    <i class="fas fa-globe"></i>
                                 </a>
                             </span>
                         </div>
@@ -78,13 +88,18 @@
                         </div>
 
                         <div class="card" style="margin-top:20px">
+                            <input type="text" class="form-control" v-model="UserInfo.Profession" placeholder="I am a...">
+                        </div>
+
+                        <div class="card" style="margin-top:20px">
                             <select class="custom-select my-1 mr-sm-2" v-model="UserInfo.Template" id="inlineFormCustomSelectPref">
-                                <option selected>Choose...</option>
+                                <option selected>Choose Template...</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
                                 <option value="4">Four</option>
                                 <option value="5">Five</option>
+                                <option value="6">Six</option>
                             </select>
                         </div>
 
@@ -130,6 +145,7 @@
                             </div>
                         </div>
                     </div>
+                    <!--Profile Info-->
                     <div class="col-md-6 card" style="background-color:#FFF">
                         <div class="card-header">
                             Update Profile
@@ -140,156 +156,140 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-user text-primary"></span>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
                                                 Name
                                             </strong>
                                         </td>
                                         <td class="text-primary">
                                             <p id='name'>
-                                                <input type='text' size="40" name="Name" v-model=UserInfo.Name />
+                                                <input class="form-control" type='text' size="40" name="Name" v-model=UserInfo.Name />
                                             </p>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-bookmark text-primary"></span>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
                                                 Username
                                             </strong>
                                         </td>
                                         <td class="text-primary">
                                             <p id='email'>
-                                                <input type='text' size="40" name="UserName" v-model=UserInfo.UserName />
+                                                <input class="form-control" type='text' size="40" name="UserName" v-model=UserInfo.UserName />
                                             </p>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-envelope text-primary"></span>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
                                                 Email
                                             </strong>
                                         </td>
                                         <td class="text-primary">
                                             <p id='email'>
-                                                <input type='text' size="40" name="Email" v-model=UserInfo.Email />
+                                                <input class="form-control" type='text' size="40" name="Email" v-model=UserInfo.Email />
                                             </p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
                                                 Phone No
                                             </strong>
                                         </td>
                                         <td class="text-primary">
                                             <p id='phone-number'>
-                                                <input type='number' size="40" name="PhoneNumber" v-model=UserInfo.PhoneNumber />
+                                                <input class="form-control" type='number' size="40" name="PhoneNumber" v-model=UserInfo.PhoneNumber />
                                             </p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
                                                 Adderss
                                             </strong>
                                         </td>
                                         <td class="text-primary">
                                             <p id='present-address'>
-                                                <input type='text' size="40" name="Address" v-model=UserInfo.Address />
+                                                <input class="form-control" type='text' size="40" name="Address" v-model=UserInfo.Address />
                                             </p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-eye-open text-primary"></span>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
                                                 Date of Birth
                                             </strong>
                                         </td>
                                         <td class="text-primary">
                                             <p id='date-of-birth'>
-                                                <input type='date' size="40" name="DateofBirth" v-model=UserInfo.DateofBirth />
+                                                <input class="form-control" type='date' size="40" name="DateofBirth" v-model=UserInfo.DateofBirth />
                                             </p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
                                                 Website
                                             </strong>
                                         </td>
                                         <td class="text-primary">
                                             <p id='website'>
-                                                <input type='text' size="40" name="Website" v-model=UserInfo.Website />
+                                                <input class="form-control" type='text' size="40" name="Website" v-model=UserInfo.Website />
                                             </p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
                                                 Github
                                             </strong>
                                         </td>
                                         <td class="text-primary">
                                             <p id='github'>
-                                                <input type='text' size="40" name="Github" v-model=UserInfo.Github />
+                                                <input class="form-control" type='text' size="40" name="Github" v-model=UserInfo.Github />
                                             </p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
                                                 Linkedin
                                             </strong>
                                         </td>
                                         <td class="text-primary">
                                             <p id='linkedin'>
-                                                <input type='text' size="40" name="Linkedin" v-model=UserInfo.Linkedin />
+                                                <input class="form-control" type='text' size="40" name="Linkedin" v-model=UserInfo.Linkedin />
                                             </p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
                                                 Hobby
                                             </strong>
                                         </td>
                                         <td class="text-primary">
                                             <p id='hobby'>
-                                                <input type='text' size="40" name="Hobby" v-model=UserInfo.Hobby />
+                                                <input class="form-control" type='text' size="40" name="Hobby" v-model=UserInfo.Hobby />
                                             </p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-eye-open text-primary"></span>
-                                                Password
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
+                                                Nationality
                                             </strong>
                                         </td>
                                         <td class="text-primary">
-                                            <p id='password'>
-                                                <input type='password' size="40" v-model="Password" required />
+                                            <p id='nationality'>
+                                                <input class="form-control" type='text' size="40" v-model="UserInfo.Nationality" required />
                                             </p>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="form-group">
-                                <div class="col-md-10">
-                                    <input class="btn btn-success" :disabled="!Password" type="button" v-on:click="update" value="Update"/>
-                                </div>
-                            </div>
 
                         </div>
                     </div>
@@ -763,6 +763,19 @@
                                     <button class="btn btn-info btn-block close" v-if="forContributionUpdate" data-dismiss="modal">Update</button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-10">
+                        <div style="margin-top:20px">
+
+                            <div class="float-left" style="width:70%">
+                                <input type="password" class="form-control-lg" style="width:70%" v-model="Password" placeholder="Please enter password to update">
+                            </div>
+                            <div>
+                                <input type="button" class="btn btn-primary mb-3 float-right" :disabled="!Password" v-on:click="update" value="Update"/>
+                            </div>
+
                         </div>
                     </div>
 

@@ -37,7 +37,7 @@ namespace WebProject.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Index(string sort = null)
+        public async Task<IActionResult> Index(string searchString, string sort = null)
         {
 
             var user =  await userManager.GetUserAsync(User);
@@ -50,6 +50,8 @@ namespace WebProject.Controllers
 
             var posts = await _jobRepository.GetAll();
             var orderdPost = posts.OrderByDescending(x => x.TimeofPost);
+            List<JobPost> searchedPosts = null;
+            var jsonString = "";
             ViewBag.sort = "Sort";
             if (sort == "newest")
             {
@@ -75,10 +77,26 @@ namespace WebProject.Controllers
             {
                 orderdPost = posts.OrderByDescending(x => x.TimeofPost);
             }
-            string jsonString = JsonConvert.SerializeObject(orderdPost);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchedPosts = posts.Where(s => s.JobTitle.Contains(searchString, StringComparison.OrdinalIgnoreCase) 
+                                           || s.JobLocation.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                                           || s.JobType.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                                           || s.CompanyInfo.CompanyName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                                           .ToList();
+            }
+
+            if (searchedPosts == null)
+            {
+                jsonString = JsonConvert.SerializeObject(orderdPost);
+            }
+            else
+            {
+                jsonString = JsonConvert.SerializeObject(searchedPosts);
+            }
 
             ViewBag.posts = jsonString;
-
             return View();
         }
 
