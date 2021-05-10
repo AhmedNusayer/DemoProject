@@ -1,0 +1,432 @@
+﻿
+@*material-dark*@
+
+<resume-info inline-template user="@ViewBag.user" picpath="@ViewBag.ProfilePicturePath">
+    <div>
+        <component :is="'style'" scoped>
+            .resume {
+            font-family:'Roboto';
+            background:#cccccc;
+            display: flow-root;
+            }
+
+            a {
+            color: inherit;
+            cursor: pointer;
+            text-decoration-line: none;
+            }
+
+            .description-personal {
+            margin-left:20px;
+            margin-top:20px;
+            padding-right:40px;
+            text-align:justify;
+            font-family:Roboto;
+            }
+
+            .title {
+            right:25px;
+            padding-left:20px;
+            padding-top:10px;
+            bottom:25px;
+            }
+
+            .username{
+            text-transform:uppercase;
+            display:block;
+            font-size:1.7em;
+            color:white;
+            color:rgba(0,0,0,0.7);
+            padding-top:0;
+            margin-top:0;
+            letter-spacing:10px;
+            font-weight:400;
+            }
+
+            .description {
+            margin-bottom: 20px;
+            text-transform:uppercase;
+            opacity:0.8;
+            letter-spacing:3px;
+            }
+
+            .section-headline {
+            text-transform:uppercase;
+            font-weight:500;
+            letter-spacing:3px;
+            font-size:10pt;
+            opacity:0.8;
+            margin-left:20px;
+            margin-top:12px;
+            margin-bottom:6px;
+            }
+
+            li {
+            margin:0;
+            padding:0;
+            list-style-type:none;
+            padding-top:9px;
+            }
+            ul {
+            margin:0;
+            padding:0;
+            list-style-type:none;
+            }
+
+            p {
+            margin-top:0;
+            margin-bottom:25px;
+            font-family:'Roboto', sans-serif;
+            font-weight:300;
+            font-size:10pt;
+            line-height:17pt;
+            }
+
+            .m_box {
+            box-shadow:0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+            }
+
+            h1, h3, h5, h6 {
+            font-weight:400;
+            margin:0;
+            }
+            h2 {
+            font-weight:400;
+            font-weight:500;
+            margin:0;
+            margin:0;
+            font-size:22pt;
+            line-height:37pt;
+            }
+            h4 {
+            font-weight:400;
+            margin:0;
+            font-size:12pt;
+            line-height:20pt;
+            opacity:1;
+            }
+
+            .rightCol {
+            width:63.5%;
+            height:100%;
+            float:right;
+            display:flex;
+            flex-direction:column;
+            }
+
+            .experience {
+            margin-top: 40px;
+            }
+
+            .about {
+            display: block;
+            margin-top:8px !important;
+            font-weight:375;
+            font-size: 16px;
+            color:rgba(0,0,0,0.541176);
+            }
+
+            .block {
+            width:90%;
+            position:relative;
+            background-color:#ffffff;
+            padding:20px;
+            margin-top:5px;
+            margin-bottom:5px;
+            display:inline-block;
+            box-shadow:0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+            }
+
+            .headline {
+            font-weight:300;
+            display:block;
+            font-size:15px;
+            color:rgba(0,0,0,0.870588);
+            }
+
+            .subheadline {
+            color:rgba(0,0,0,0.541176);
+            display:block;
+            font-size:14px;
+            font-weight:300;
+            }
+
+            .info {
+            font-size:14px;
+            color:rgba(0,0,0,0.870588);
+            margin-bottom:0;
+            padding-top:20px;
+            }
+
+            .leftCol {
+            width:35%;
+            height:100%;
+            float:left;
+            padding:0;
+            text-align:left;
+            color:#ffffff;
+            color:rgba(255,255,255,0.59);
+            background-color:#16151c;
+            overflow:hidden;
+            display:block;
+            }
+
+            a {
+            color:rgba(255,255,255,0.59);
+            text-decoration:none;
+            }
+
+            .itemleft {
+            width:100%;
+            margin-top:13px;
+            float:left;
+            }
+
+            .textleft {
+            float:right;
+            width:80%;
+            padding-right:10%;
+            padding-top:0;
+            display:block;
+            font-size:15px;
+            font-weight:300;
+            }
+
+            li {
+            padding-top:0;
+            display:block;
+            font-size:15px;
+            font-weight:300;
+            }
+
+            span {
+            font-weight:300;
+            }
+
+            span {
+            font-size: 13px;
+            }
+
+            .left {
+            float:left;
+            width:10%;
+            padding-top:3px;
+            i:nth-child(2) {
+            float:left;
+            padding-top:4px;
+            }
+            }
+
+            .skillright {
+            float:right;
+            width:93%;
+            }
+
+            .item.last{
+            .text {
+            border-bottom-style:none;
+            padding-bottom:0;
+            }
+
+            .section-headline {
+            margin-top: 0 !important;
+            }
+            }
+
+            .progress {
+            float:left;
+            position:relative;
+            height:2px;
+            display:block;
+            width:95%;
+            background-color:rgba(255,255,255,0.19);
+            border-radius:2px;
+            margin:0.5rem 0 1rem;
+            overflow:visible;
+            margin-bottom:10px;
+            }
+
+            .determinate {
+            background-color:#78909c;
+            position:absolute;
+            top:0;
+            bottom:0;
+            }
+
+            .skillbar{
+            font-size:13px;
+            position:absolute;
+            top:-4px;
+            right:-2px;
+            margin-left:50%;
+            color:white;
+            }
+
+            .skill {
+            clear:both;
+            width:97%;
+            padding-top:4px;
+            }
+
+            .icon {
+            float:left;
+            margin-left:0;
+            width:20%;
+            text-align:center;
+            font-size:18pt;
+            }
+
+            .myselfpic {
+            color:black;
+            }
+
+            .picheading {
+            background-color:#a43131;
+            background-repeat:no-repeat;
+            background-size:cover;
+            background-position:center;
+            position:relative;
+            width:100%;
+            height:388px;
+            }
+
+            .githubIcon {
+            width:25px;
+            padding-left:17px;
+            }
+        </component>
+
+        <div class="resume">
+            <div class="leftCol m_box">
+                <div class="shadow"></div>
+                <div class="picheading myselfpic" v-if="picturePath" :style='{"background-image": "url(/" + picturePath + ")"}'></div>
+                <div class="picheading myselfpic" v-if="!picturePath" :style='{"background-image": "url(" + dpPlaceholder + ")"}'></div>
+                <div class="section-headline">
+                    Contact
+                </div>
+                <div v-if="User.DateofBirth" class="itemleft">
+                    <div class="icon">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="textleft">
+                        <ul>
+                            <li> Born {{User.DateofBirth}} in {{User.Address}}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="itemleft" v-if="User.Address">
+                    <div class="icon">
+                        <i class="fa fa-building"></i>
+                    </div>
+                    <div class="textleft">
+                        <ul>
+                            <li>{{User.Address}}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="itemleft" v-if="User.PhoneNumber">
+                    <div class="icon">
+                        <i class="fa fa-phone-square"></i>
+                    </div>
+                    <div class="textleft">
+                        {{User.PhoneNumber}}
+                    </div>
+                </div>
+
+                <a :href='"mailto:" + User.Email'>
+                    <div class="itemleft">
+                        <div class="icon">
+                            <i class="fa fa-envelope"></i>
+                        </div>
+                        <div class="textleft">
+                            {{User.Email}}
+                        </div>
+                    </div>
+                </a>
+
+                <a v-if="User.Github" :href="User.Github">
+                    <div class="itemleft">
+                        <div class="icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div class="textleft">
+                            <span>{{ User.Github }}</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a v-if="User.Website" :href="User.Website">
+                    <div class="itemleft">
+                        <div class="icon">
+                            <i class="fa fa-globe"></i>
+                        </div>
+                        <div class="textleft">
+                            <span>{{User.Website}}</span>
+                        </div>
+                    </div>
+                </a>
+
+                <div class="itemleft">
+                    <div class="section-headline">
+                        Skills
+                    </div>
+                    <div class="skill" v-for="skill in User.Skills" :key="skill.GUID">
+                        <div class="skillright">
+                            <span style="display:block">{{skill.SkillName}}</span>
+                            <div class="progress"> 
+                                <div class="determinate" :style="'width: '+skill.Level+'%;'">
+                                    <i class="fa fa-circle skillbar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="itemleft last">
+                    <div v-if="User.Knowledge" class="section-headline">
+                        Additional Skills
+                    </div>
+                    <div v-if="User.Knowledge" class="skill">
+                        <div class="skillright" style="padding-bottom:50px">
+                            <span>{{User.Knowledge}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rightCol">
+                <div class="title">
+                    <h2 class="username">{{User.Name}}</h2>
+                    <div class="description">Curriculum Vitae</div>
+                    <span class="about">{{User.Intro}}</span>
+                </div>
+
+                <div class="section-headline experience"> Experience </div>
+                <div class="block" v-for="experience in User.Experiences" :key="experience.GUID">
+                    <a >
+                        <div class="block-helper"></div>
+                        <h3 class="headline">{{experience.Title}} - {{experience.Company}}</h3>
+                        <div class="subheadline">{{experience.StartDate}} - {{experience.EndDate}}</div>
+                        <p class="info">
+                            {{experience.Description}}
+                        </p>
+                    </a>
+                </div>
+                <div class="section-headline"> Education </div>
+                <div class="block" v-for="education in User.Educations" :key="education.GUID">
+                    <a >
+                        <div class="block-helper"></div>
+                        <div class="headline">{{education.Degree}}</div>
+                        <p class="info">
+                            {{education.StartDate}} - {{education.EndDate}}, {{education.Description}}
+                        </p>
+                    </a>
+                </div>
+            </div>
+
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+</resume-info>
