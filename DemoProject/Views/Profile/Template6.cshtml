@@ -6,7 +6,7 @@
         <component :is="'style'" scoped>
             .resume {
             font-family:'Roboto';
-            background:#cccccc;
+            background:#16151c;
             display: flow-root;
             }
 
@@ -54,7 +54,7 @@
             text-transform:uppercase;
             font-weight:500;
             letter-spacing:3px;
-            font-size:10pt;
+            font-size:15pt;
             opacity:0.8;
             margin-left:20px;
             margin-top:12px;
@@ -107,11 +107,13 @@
             }
 
             .rightCol {
-            width:63.5%;
+            width:65%;
             height:100%;
             float:right;
             display:flex;
             flex-direction:column;
+            padding-left:20px;
+            background-color:#cccccc
             }
 
             .experience {
@@ -166,7 +168,6 @@
             text-align:left;
             color:#ffffff;
             color:rgba(255,255,255,0.59);
-            background-color:#16151c;
             overflow:hidden;
             display:block;
             }
@@ -197,14 +198,6 @@
             display:block;
             font-size:15px;
             font-weight:300;
-            }
-
-            span {
-            font-weight:300;
-            }
-
-            span {
-            font-size: 13px;
             }
 
             .left {
@@ -297,7 +290,7 @@
         </component>
 
         <div class="resume">
-            <div class="leftCol m_box">
+            <div class="leftCol">
                 <div class="shadow"></div>
                 <div class="picheading myselfpic" v-if="picturePath" :style='{"background-image": "url(/" + picturePath + ")"}'></div>
                 <div class="picheading myselfpic" v-if="!picturePath" :style='{"background-image": "url(" + dpPlaceholder + ")"}'></div>
@@ -310,7 +303,7 @@
                     </div>
                     <div class="textleft">
                         <ul>
-                            <li> Born {{User.DateofBirth}} in {{User.Address}}</li>
+                            <li> Born {{new Date(User.DateofBirth).getFullYear()}} <span v-if="User.Address">in {{User.Address}}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -368,7 +361,7 @@
                     </div>
                 </a>
 
-                <div class="itemleft">
+                <div class="itemleft" v-if="User.Skills.length">
                     <div class="section-headline">
                         Skills
                     </div>
@@ -394,36 +387,51 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
             <div class="rightCol">
                 <div class="title">
                     <h2 class="username">{{User.Name}}</h2>
-                    <div class="description">Curriculum Vitae</div>
+                    <div class="description">{{User.Profession}}</div>
                     <span class="about">{{User.Intro}}</span>
                 </div>
 
-                <div class="section-headline experience"> Experience </div>
+                <div class="section-headline experience" v-if="User.Experiences.length"> Experience </div>
                 <div class="block" v-for="experience in User.Experiences" :key="experience.GUID">
-                    <a >
+                    <a>
                         <div class="block-helper"></div>
-                        <h3 class="headline">{{experience.Title}} - {{experience.Company}}</h3>
-                        <div class="subheadline">{{experience.StartDate}} - {{experience.EndDate}}</div>
+                        <h3 class="headline">{{experience.Title}} <span v-if="experience.Company">- {{experience.Company}}</span></h3>
+                        <div class="subheadline">{{new Date(experience.StartDate).getFullYear()}} <span v-if="experience.EndDate"> - {{new Date(experience.EndDate).getFullYear()}}</span></div>
                         <p class="info">
                             {{experience.Description}}
                         </p>
                     </a>
                 </div>
-                <div class="section-headline"> Education </div>
+
+                <div class="section-headline" v-if="User.Educations.length"> Education </div>
                 <div class="block" v-for="education in User.Educations" :key="education.GUID">
-                    <a >
+                    <a>
                         <div class="block-helper"></div>
                         <div class="headline">{{education.Degree}}</div>
+                        <div class="subheadline">{{education.Institution}} <span v-if="education.StartDate"> | {{new Date(education.StartDate).getFullYear()}}</span> <span v-if="education.EndDate"> - {{new Date(education.EndDate).getFullYear()}}</span></div>
                         <p class="info">
-                            {{education.StartDate}} - {{education.EndDate}}, {{education.Description}}
+                           {{education.Description}}
                         </p>
                     </a>
                 </div>
+
+                <div class="section-headline" v-if="User.Projects.length"> Project </div>
+                <div class="block" v-for="project in User.Projects" :key="project.GUID">
+                    <a >
+                        <div class="block-helper"></div>
+                        <div class="headline">{{project.Name}} </div>
+                        <div class="subheadline">{{project.Year}} <span v-if="project.Url"> | Project Link: <a style="color:inherit;"  :href="project.Url"> {{project.Url}}</a> </span></div>
+                        <p class="info">
+                            {{project.Description}}
+                        </p>
+                    </a>
+                </div>
+
             </div>
 
             <div style="clear:both;"></div>
