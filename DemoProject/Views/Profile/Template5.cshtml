@@ -30,7 +30,6 @@
 
             span {
             width:100%;
-            display:block;
             font-weight:normal;
             }
 
@@ -185,7 +184,7 @@
                     {{User.Name}}
                 </span>
                 <span class="person-position">
-                    Curriculum Vitae
+                    {{User.Profession}}
                 </span>
             </div>
             <div class="left-col">
@@ -227,33 +226,37 @@
                 </div>
             </div>
             <div class="right-col">
-                <div class="experience">
+                <div class="experience" v-if="User.Experiences.length">
                     <h3>Experience </h3>
                     <div class="experience-block" v-for="experience in User.Experiences" :key="experience.GUID">
                         <div>
-                            <span class="company"> {{experience.Company}} </span>
-                            <span class="job-title">- {{experience.Title}} </span>
+                            <span class="company" v-if="experience.Company" > {{experience.Company}} - </span>
+                            <span class="job-title"> {{experience.Title}} </span>
                         </div>
                         <div>
-                            <span class="time-period"> {{experience.StartDate}} - {{experience.EndDate}} </span>
+                            <span class="time-period"> {{new Date(experience.StartDate).getFullYear()}} <span v-if="experience.EndDate"> - {{new Date(experience.EndDate).getFullYear()}} </span></span>
                         </div>
                         <div>
                             <span class="job-description"> {{experience.Description}} </span>
                         </div>
                     </div>
                 </div>
-                <div class="education">
+                <div class="education" v-if="User.Educations.length">
                     <h3>Education </h3>
                     <div class="education-block" v-for="education in User.Educations" :key="education.GUID">
                         <div>
                             <span class="degree"> {{education.Degree}} </span>
                         </div>
                         <div>
+                            <span class="degree-description"> {{education.Institution}} </span>
+                            <br />
+                            <span class="time-period"> {{new Date(education.StartDate).getFullYear()}} <span v-if="education.EndDate"> - {{new Date(education.EndDate).getFullYear()}} </span></span>
+                            <br />
                             <span class="degree-description"> {{education.Description}} </span>
                         </div>
                     </div>
                 </div>
-                <div class="skills-block">
+                <div class="skills-block" v-if="User.Skills.length">
                     <h3>Skills </h3>
                     <div class="skills">
                         <div class="skill" v-for="skill in User.Skills" :key="skill.GUID">

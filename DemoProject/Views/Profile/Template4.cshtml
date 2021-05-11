@@ -178,7 +178,7 @@
                 <span class="name center"> {{User.Name}}</span>
             </div>
             <div class="row text-center">
-                <p class="position center">Curriculum Vitae</p>
+                <p class="position center"> {{User.Profession}}</p>
             </div>
             <div class="row">
                 <div class="image center">
@@ -188,12 +188,12 @@
             </div>
 
             <div class="left half">
-                <div class="experience">
+                <div class="experience" v-if="User.Experiences.length">
                     <h3> Experience </h3>
                     <div class="experience-block" v-for="experience in User.Experiences" :key="experience.GUID">
                         <span class="company"> {{experience.Company}} </span>
                         <span class="job-title"> {{experience.Title}} </span>
-                        <span class="time-period"> {{experience.StartDate}} - {{experience.EndDate}} </span>
+                        <span style=" display: inline;"> {{new Date(experience.StartDate).getFullYear()}} <span style=" display: inline;" v-if="experience.EndDate"> - {{new Date(experience.EndDate).getFullYear()}} </span> </span>
                         <span class="job-description"> {{experience.Description}} </span>
                     </div>
                 </div>
@@ -230,16 +230,21 @@
             </div>
 
             <div class="right half">
-                <div class="education">
+                <div class="education" v-if="User.Educations.length">
                     <h3>Education</h3>
                     <div class="education-block" v-for="education in User.Educations" :key="education.GUID">
                         <span class="degree"> {{education.Degree}} </span>
+                        <br />
+                        <span class="degree-description"> {{education.Institution}} </span>
+                        <br />
+                        <span style="display: inline;"> {{new Date(education.StartDate).getFullYear()}} <span style=" display: inline;" v-if="education.EndDate"> - {{new Date(education.EndDate).getFullYear()}} </span></span>
+                        <br />
                         <span class="job-description"> {{education.Description}} </span>
                     </div>
                 </div>
 
                 
-                <div class="skills">
+                <div class="skills" v-if="User.Skills.length">
                     <h3>Skills</h3>
                     <div class="skill-block" v-for="skill in User.Skills" :key="skill.GUID">
                         <span class="skill"> {{skill.SkillName}} </span>
