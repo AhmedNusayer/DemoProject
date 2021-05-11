@@ -237,6 +237,6 @@
                     window.location.href = result
                 },
             })
-        }
+        },
     }
 })

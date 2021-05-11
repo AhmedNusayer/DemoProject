@@ -1,8 +1,9 @@
 ﻿Vue.component("home-page", {
-    props: ["role"],
+    props: ["role","user"],
     data: function () {
         return {
-            rolename: this.role
+            rolename: this.role,
+            User: JSON.parse(this.user)
         }
     },
 

@@ -192,6 +192,8 @@ namespace WebProject.Controllers
                 user.Template = model.UserDetails.Template;
                 user.Nationality = model.UserDetails.Nationality;
                 user.Profession = model.UserDetails.Profession;
+                user.Gender = model.UserDetails.Gender;
+                user.BloodGroup = model.UserDetails.BloodGroup;
 
                 //var deleteEducation = user.Educations.Select(a => a.GUID).Except(model.UserDetails.Educations.Select(a => a.GUID));
                 //var eduId = user.Educations.Select(a => a.GUID);

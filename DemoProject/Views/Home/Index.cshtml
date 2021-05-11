@@ -1,8 +1,8 @@
-﻿<home-page inline-template role="@ViewBag.rolename">
+﻿<home-page inline-template role="@ViewBag.rolename" user="@ViewBag.user">
     <div class="row d-flex justify-content-center">
         <h1 class="display-4">Welcome to the Job Portal</h1>
         <div class="container d-flex justify-content-center" v-if="isuser">
-            Hello User
+            <h6 class="display-4" style="font-size:2.0rem">Hello <span class="display-4" style="font-size:2.5rem">{{User.Name}}</span> </h6>
         </div>
         <div class="container" v-if="isemployer">
             <post-job inline-template user="@ViewBag.user">
@@ -95,7 +95,7 @@
 
         <jobpost-card inline-template jobpost="@ViewBag.posts" sort="@ViewBag.sort">
             <div class="container d-flex justify-content-center">
-                <div class="col-lg-8">
+                <div class="col-lg-8"  style="margin-top:20px">
                     <div class="float-left" style="width:70%">
 
                         <form asp-controller="Home" asp-action="Index">

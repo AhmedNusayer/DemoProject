@@ -60,8 +60,8 @@
                                     <i class="fab fa-linkedin"></i>
                                 </a>
                             </span>
-                            <span v-if="UserInfo.Linkedin">
-                                <a class="btn btn-lg" :href="UserInfo.Linkedin">
+                            <span v-if="UserInfo.Website">
+                                <a class="btn btn-lg" :href="UserInfo.Website">
                                     <i class="fas fa-globe"></i>
                                 </a>
                             </span>
@@ -92,8 +92,8 @@
                         </div>
 
                         <div class="card" style="margin-top:20px">
+                            <label class="text-dark" style="font-family:Courier New, Courier, monospace; font-size:larger"> Select Template </label>
                             <select class="custom-select my-1 mr-sm-2" v-model="UserInfo.Template" id="inlineFormCustomSelectPref">
-                                <option selected>Choose Template...</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
@@ -175,7 +175,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='email'>
-                                                <input class="form-control" type='text' size="40" name="UserName" v-model=UserInfo.UserName />
+                                                <input class="form-control" disabled type='text' size="40" name="UserName" v-model=UserInfo.UserName />
                                             </p>
                                         </td>
                                     </tr>
@@ -188,7 +188,7 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='email'>
-                                                <input class="form-control" type='text' size="40" name="Email" v-model=UserInfo.Email />
+                                                <input class="form-control" disabled type='text' size="40" name="Email" v-model=UserInfo.Email />
                                             </p>
                                         </td>
                                     </tr>
@@ -224,7 +224,8 @@
                                         </td>
                                         <td class="text-primary">
                                             <p id='date-of-birth'>
-                                                <input class="form-control" type='date' size="40" name="DateofBirth" v-model=UserInfo.DateofBirth />
+                                                <input class="form-control" type='date' size="40" name="DateofBirth" :value="UserInfo.DateofBirth && new Date(UserInfo.DateofBirth).toISOString().split('T')[0]"
+                                                       v-on:input="UserInfo.DateofBirth = $event.target.valueAsDate.toISOString()"/>
                                             </p>
                                         </td>
                                     </tr>
@@ -288,6 +289,39 @@
                                             </p>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
+                                                Gender
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <select class="custom-select my-1 mr-sm-2" v-model="UserInfo.Gender" id="inlineFormCustomSelectPref">
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Others">Others</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
+                                                Blood Group
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <select class="custom-select my-1 mr-sm-2" v-model="UserInfo.BloodGroup" id="inlineFormCustomSelectPref">
+                                                <option value="A+">A+</option>
+                                                <option value="A-">A-</option>
+                                                <option value="B+">B+</option>
+                                                <option value="B-">B-</option>
+                                                <option value="AB+">AB+</option>
+                                                <option value="AB-">AB-</option>
+                                                <option value="O+">O+</option>
+                                                <option value="O-">O-</option>
+                                            </select>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
 
@@ -298,12 +332,12 @@
                     <div class="col-md-10">
                         <div class="card shadow-lg" style="margin-top:20px">
                             <div class="row">
-                                <div class="col-md-8" style="margin-left:10px">
+                                <div class="col-md-10" style="padding-left: 30px;padding-top: 15px;">
                                     <p class="lead"><b>Education</b></p>
                                 </div>
 
                                 <div class="col-md-2">
-                                    <a class="btn justify-content-end" v-on:click="addEducationClicked" style="float:right" data-toggle="modal" data-target="#education-modal">
+                                    <a class="btn justify-content-end" v-on:click="addEducationClicked" style="float:right; padding: 15px;" data-toggle="modal" data-target="#education-modal">
                                         <i class="fas fa-plus"></i>
                                     </a>
                                 </div>
@@ -313,9 +347,9 @@
                     <div class="col-md-10">
                         <div v-if="UserInfo.Educations.length" class="card shadow-lg" style="margin-top:5px">
                             <div v-for="edu in UserInfo.Educations">
-                                <div class="col-md-10">
+                                <div class="col-md-12">
                                     <div class="row">
-                                        <div class="col-md-8">
+                                        <div class="col-md-10">
                                             <h4>{{edu.Institution}}</h4>
                                         </div>
                                         <div class="col-md-2">
@@ -349,11 +383,11 @@
                     <div class="col-md-10">
                         <div class="card shadow-lg" style="margin-top:20px">
                             <div class="row">
-                                <div class="col-md-8" style="margin-left:10px">
+                                <div class="col-md-10" style="padding-left: 30px;padding-top: 15px;">
                                     <p class="lead"><b>Work Experience</b></p>
                                 </div>
                                 <div class="col-md-2">
-                                    <a class="btn justify-content-end" v-on:click="addExperienceClicked" style="float:right" data-toggle="modal" data-target="#experience-modal">
+                                    <a class="btn justify-content-end" v-on:click="addExperienceClicked" style="float:right; padding: 15px;" data-toggle="modal" data-target="#experience-modal">
                                         <i class="fas fa-plus"></i>
                                     </a>
                                 </div>
@@ -363,9 +397,9 @@
                     <div class="col-md-10">
                         <div v-if="UserInfo.Experiences.length" class="card shadow-lg" style="margin-top:5px">
                             <div v-for="exp in UserInfo.Experiences">
-                                <div class="col-md-10">
+                                <div class="col-md-12">
                                     <div class="row">
-                                        <div class="col-md-8">
+                                        <div class="col-md-10">
                                             <h4>{{exp.Title}}</h4>
                                         </div>
                                         <div class="col-md-2">
@@ -385,10 +419,10 @@
 
                                     <p class="text-secondary">
                                         {{exp.StartDate}}
-                                        <span v-if="exp.StartDate && exp.EndDate"> | {{exp.EndDate}} </span>
+                                        <span v-if="exp.StartDate && exp.EndDate"> - {{exp.EndDate}} </span>
                                         <span v-else>{{exp.EndDate}}</span>
                                     </p>
-                                    <p class="text-primary">
+                                    <p style="color:midnightblue; font-size:medium">
                                         {{exp.Location}}
                                     </p>
                                 </div>
@@ -401,11 +435,11 @@
                     <div class="col-md-10">
                         <div class="card shadow-lg" style="margin-top:20px">
                             <div class="row">
-                                <div class="col-md-8 card-text" style="margin-left:10px">
+                                <div class="col-md-10 card-text" style="padding-left: 30px;padding-top: 15px;">
                                     <p class="lead"><b>Skill</b></p>
                                 </div>
                                 <div class="col-md-2">
-                                    <a class="btn justify-content-end" v-on:click="" style="float:right" data-toggle="modal" data-target="#skill-modal">
+                                    <a class="btn justify-content-end" v-on:click="" style="float:right; padding: 15px;" data-toggle="modal" data-target="#skill-modal">
                                         <i class="fas fa-plus"></i>
                                     </a>
                                 </div>
@@ -413,19 +447,16 @@
                         </div>
                     </div>
                     <div class="col-md-10">
-                        <div class="row">
-                            <div v-if="UserInfo.Skills.length" style="margin-top:5px">
-                                <div v-for="skill in UserInfo.Skills">
-                                    <h4>
-                                        <span class="badge badge-pill badge-info justify-content-center">
-                                            {{skill.SkillName}}
-                                            <span v-if="skill.Level">Level: {{skill.Level}}</span>
-                                            <a class="btn btn justify-content-end" v-on:click="deleteSkill(skill)" style="float:right">
-                                                <i class="far fa-times-circle"></i>
-                                            </a>
-                                        </span>
-                                    </h4>
-                                </div>
+                        <div v-if="UserInfo.Skills.length" style="display: flex; flex-wrap: wrap; padding-top:15px">
+                            <div v-for="skill in UserInfo.Skills" style="padding:10px; margin-right:15px; margin-bottom:10px" class="badge badge-pill badge-info justify-content-center">
+                                <span style="font-size:15px; line-height:2.3">
+                                    {{skill.SkillName}}
+                                    <span v-if="skill.Level">Level: {{skill.Level}}</span>
+
+                                </span>
+                                <a class="btn rounded justify-content-end" v-on:click="deleteSkill(skill)" style="float:right">
+                                    <i class="far fa-times-circle"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -434,11 +465,11 @@
                     <div class="col-md-10">
                         <div class="card shadow-lg" style="margin-top:20px">
                             <div class="row">
-                                <div class="col-md-8" style="margin-left:10px">
+                                <div class="col-md-10" style="padding-left: 30px;padding-top: 15px;">
                                     <p class="lead"><b>Interest</b></p>
                                 </div>
                                 <div class="col-md-2">
-                                    <a class="btn justify-content-end" v-on:click="addInterestClicked" style="float:right" data-toggle="modal" data-target="#interest-modal">
+                                    <a class="btn justify-content-end" v-on:click="addInterestClicked" style="float:right; padding: 15px;" data-toggle="modal" data-target="#interest-modal">
                                         <i class="fas fa-plus"></i>
                                     </a>
                                 </div>
@@ -448,9 +479,9 @@
                     <div class="col-md-10">
                         <div v-if="UserInfo.Interests.length" class="card shadow-lg" style="margin-top:5px">
                             <div v-for="interest in UserInfo.Interests">
-                                <div class="col-md-10">
+                                <div class="col-md-12">
                                     <div class="row">
-                                        <div class="col-md-8">
+                                        <div class="col-md-10">
                                             <h4>{{interest.Title}}</h4>
                                         </div>
                                         <div class="col-md-2">
@@ -475,11 +506,11 @@
                     <div class="col-md-10">
                         <div class="card shadow-lg" style="margin-top:20px">
                             <div class="row">
-                                <div class="col-md-8" style="margin-left:10px">
+                                <div class="col-md-10" style="padding-left: 30px;padding-top: 15px;">
                                     <p class="lead"><b>Project</b></p>
                                 </div>
                                 <div class="col-md-2">
-                                    <a class="btn justify-content-end" v-on:click="addProjectClicked" style="float:right" data-toggle="modal" data-target="#project-modal">
+                                    <a class="btn justify-content-end" v-on:click="addProjectClicked" style="float:right; padding: 15px;" data-toggle="modal" data-target="#project-modal">
                                         <i class="fas fa-plus"></i>
                                     </a>
                                 </div>
@@ -489,9 +520,9 @@
                     <div class="col-md-10">
                         <div v-if="UserInfo.Projects.length" class="card shadow-lg" style="margin-top:5px">
                             <div v-for="project in UserInfo.Projects">
-                                <div class="col-md-10">
+                                <div class="col-md-12">
                                     <div class="row">
-                                        <div class="col-md-8">
+                                        <div class="col-md-10">
                                             <h4>{{project.Name}}</h4>
                                         </div>
                                         <div class="col-md-2">
@@ -505,8 +536,10 @@
                                     </div>
                                     <p class="lead" style="color:midnightblue; font-size:medium">
                                         <b>{{project.Platform}}</b>
-                                        <b>{{project.Year}}</b>
+                                        <span v-if="project.Year"> | <b>{{project.Year}}</b></span>
+                                        <br />
                                         <b>{{project.Description}}</b>
+                                        <br />
                                         <b>{{project.Url}}</b>
                                     </p>
                                 </div>
@@ -519,11 +552,11 @@
                     <div class="col-md-10">
                         <div class="card shadow-lg" style="margin-top:20px">
                             <div class="row">
-                                <div class="col-md-8" style="margin-left:10px">
+                                <div class="col-md-10" style="padding-left: 30px;padding-top: 15px;">
                                     <p class="lead"><b>Contribution</b></p>
                                 </div>
                                 <div class="col-md-2">
-                                    <a class="btn justify-content-end" v-on:click="addContributionClicked" style="float:right" data-toggle="modal" data-target="#contribution-modal">
+                                    <a class="btn justify-content-end" v-on:click="addContributionClicked" style="float:right; padding: 15px;" data-toggle="modal" data-target="#contribution-modal">
                                         <i class="fas fa-plus"></i>
                                     </a>
                                 </div>
@@ -533,9 +566,9 @@
                     <div class="col-md-10">
                         <div v-if="UserInfo.Contributions.length" class="card shadow-lg" style="margin-top:5px">
                             <div v-for="contribution in UserInfo.Contributions">
-                                <div class="col-md-10">
+                                <div class="col-md-12">
                                     <div class="row">
-                                        <div class="col-md-8">
+                                        <div class="col-md-10">
                                             <h4>{{contribution.Name}}</h4>
                                         </div>
                                         <div class="col-md-2">
@@ -549,6 +582,7 @@
                                     </div>
                                     <p class="lead" style="color:midnightblue; font-size:medium">
                                         <b>{{contribution.Description}}</b>
+                                        <br />
                                         <b>{{contribution.Url}}</b>
                                     </p>
                                 </div>
@@ -581,10 +615,12 @@
                                     <input class="form-control" type="text" name="FieldOfStudy" v-model="Education.FieldOfStudy" placeholder="" />
                                     <br />
                                     <label class="text-secondary"> Start Date </label>
-                                    <input class="form-control" type="date" name="StartDate" v-model="Education.StartDate" placeholder="" />
+                                    <input class="form-control" type="date" name="StartDate" :value="Education.StartDate && new Date(Education.StartDate).toISOString().split('T')[0]"
+                                                       v-on:input="Education.StartDate = $event.target.valueAsDate.toISOString()" placeholder="" />
                                     <br />
                                     <label class="text-secondary"> End Date (or expected) </label>
-                                    <input class="form-control" type="date" name="EndDate" v-model="Education.EndDate" placeholder="" />
+                                    <input class="form-control" type="date" name="EndDate" :value="Education.EndDate && new Date(Education.EndDate).toISOString().split('T')[0]"
+                                                       v-on:input="Education.EndDate = $event.target.valueAsDate.toISOString()" placeholder="" />
                                     <br />
                                     <label class="text-secondary"> Grade </label>
                                     <input class="form-control" type="text" name="Grade" v-model="Education.Grade" placeholder="" />
@@ -627,10 +663,12 @@
                                     <input class="form-control" type="text" name="Location" v-model="Experience.Location" placeholder="" />
                                     <br />
                                     <label class="text-secondary"> Start Date </label>
-                                    <input class="form-control" type="date" name="StartDate" v-model="Experience.StartDate" placeholder="" />
+                                    <input class="form-control" type="date" name="StartDate" :value="Experience.StartDate && new Date(Experience.StartDate).toISOString().split('T')[0]"
+                                                       v-on:input="Experience.StartDate = $event.target.valueAsDate.toISOString()" placeholder="" />
                                     <br />
                                     <label class="text-secondary"> End Date (or expected) </label>
-                                    <input class="form-control" type="date" name="EndDate" v-model="Experience.EndDate" placeholder="" />
+                                    <input class="form-control" type="date" name="EndDate" :value="Experience.EndDate && new Date(Experience.EndDate).toISOString().split('T')[0]"
+                                                       v-on:input="Experience.EndDate = $event.target.valueAsDate.toISOString()" placeholder="" />
                                     <br />
                                     <label class="text-secondary"> Description </label>
                                     <textarea class="form-control" id="" name="Description" rows="5" v-model="Experience.Description"></textarea>
@@ -659,9 +697,11 @@
                                     <br />
                                     <input class="form-control" type="text" name="SkillName" v-model="Skill.SkillName" placeholder="" />
                                     <br />
+                                    <label for="customRange1" class="text-secondary">Skill Level</label>
+                                    <br />
+                                    <input type="range" style="width:100%" class="form-range" min="0" max="100" value="0" name="Level" v-model="Skill.Level" id="">
                                 </div>
-                                <label for="customRange1" class="form-label">Skill Level</label>
-                                <input type="range" class="form-range" min="0" max="100" value="0" name="Level" v-model="Skill.Level" id="">
+                                
                                 <div class="modal-footer">
                                     <button class="btn btn-info btn-block close" v-on:click="addSkill" data-dismiss="modal">Add</button>
                                 </div>

@@ -80,10 +80,10 @@ namespace WebProject.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                searchedPosts = posts.Where(s => s.JobTitle.Contains(searchString, StringComparison.OrdinalIgnoreCase) 
-                                           || s.JobLocation.Contains(searchString, StringComparison.OrdinalIgnoreCase)
-                                           || s.JobType.Contains(searchString, StringComparison.OrdinalIgnoreCase)
-                                           || s.CompanyInfo.CompanyName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                searchedPosts = posts.Where(s => (s.JobTitle != null && s.JobTitle.Contains(searchString, StringComparison.OrdinalIgnoreCase)) 
+                                           || (s.JobLocation != null && s.JobLocation.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                                           || (s.JobType != null && s.JobType.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                                           || (s.CompanyInfo.CompanyName != null && s.CompanyInfo.CompanyName.Contains(searchString, StringComparison.OrdinalIgnoreCase)))
                                            .ToList();
             }
 
