@@ -13,7 +13,6 @@
 
             p {
             margin:0;
-            font-size:12px;
             }
 
             ul li {
@@ -64,7 +63,7 @@
             }
 
             span {
-            margin-right:25px;
+            margin-right:10px;
             }
 
             i {
@@ -164,7 +163,7 @@
             <div class="resume-header">
                 <div class="header-left">
                     <h2 id="position" class="header2">
-                        Curriculum Vitae of
+                        {{User.Profession}}
                     </h2>
                     <h1 id="name" class="header1">
                         {{User.Name}}
@@ -182,12 +181,12 @@
                 </div>
             </div>
             <div class="resume-body">
-                <div class="experience-container">
+                <div class="experience-container" v-if="User.Experiences.length">
                     <h2 class="experience-title">Experience</h2>
                     <div class="spacer"></div>
                     <div class="experience" v-for="experience in User.Experiences" :key="experience.GUID">
                         <h2 class="company">{{experience.Company}}</h2>
-                        <p class="job-info"><span class="job-title">{{experience.Title}} | </span><span class="experience-timeperiod">{{experience.StartDate}} - {{experience.EndDate}}</span></p>
+                        <p class="job-info"><span class="job-title">{{experience.Title}} | </span><span class="experience-timeperiod"> {{new Date(experience.StartDate).getFullYear()}} <span v-if="experience.EndDate">- {{new Date(experience.EndDate).getFullYear()}}</span></span></p>
                         <p class="job-description" v-if="experience.Description">{{experience.Description}}</p>
                         @*<ul style="margin: 5px 0 0 0;">
                                 <li>
@@ -198,15 +197,15 @@
                             </ul>*@
                     </div>
                 </div>
-                <div class="education-container">
+                <div class="education-container" v-if="User.Educations.length">
                     <h2 class="education-title">Education</h2>
                     <div class="spacer"></div>
                     <div class="education" v-for="education in User.Educations" :key="education.GUID">
                         <h2 class="education-description">{{education.Description}}</h2>
-                        <p><span class="degree">{{education.Degree}} | </span><span class="education-timeperiod">{{education.StartDate}} - {{education.EndDate}}</span></p>
+                        <p><span class="degree">{{education.Degree}} | </span><span class="education-timeperiod"> {{new Date(education.StartDate).getFullYear()}} <span v-if="education.EndDate">- {{new Date(education.EndDate).getFullYear()}}</span></span></p>
                     </div>
                 </div>
-                <div class="skills-container" v-if="User.Skills != []">
+                <div class="skills-container" v-if="User.Skills.length">
                     <h2 class="skills-title">Skills</h2>
                     <div class="spacer"></div>
                     <p class="skill-description">{{User.Knowledge}}</p>
