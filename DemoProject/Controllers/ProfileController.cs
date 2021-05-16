@@ -250,8 +250,15 @@ namespace WebProject.Controllers
         public async Task<IActionResult> ApplicantInfo(string userid)
         {
             ApplicationUser user = await _userManager.FindByIdAsync(userid);
-            ViewBag.user = JsonConvert.SerializeObject(user);
-
+            if (user != null)
+            {
+                ViewBag.user = JsonConvert.SerializeObject(user);
+                var picture = _repository.Find(item => item.UserProfile.Id == user.Id).FirstOrDefault();
+                if (picture != null)
+                {
+                    ViewBag.ProfilePicturePath = picture.ProfilePicturePath;
+                }
+            }
             return View();
         }
 

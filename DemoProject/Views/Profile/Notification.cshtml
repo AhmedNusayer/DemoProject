@@ -1,12 +1,17 @@
 ﻿
 <notification-list inline-template notifications="@ViewBag.Notifications">
     <div>
+        <h3>Notifications</h3>
+        <br />
+        <div v-if="!Notifications.length">No notifications available..</div>
         <div v-for="notification in Notifications">
-            <div class="card">
-                <a v-on:click="viewinfo(notification.userfrom.Id)">
-                    {{notification.userfrom.Name}} {{notification.Details}} "{{notification.post.JobTitle}}"
-                </a>
-            </div>
+            <a class="card border border-dark mb-3" v-on:click="viewinfo(notification.userfrom.Id)">
+                <div class="text-dark" style="padding:10px;">
+                    <p class="card-text" >
+                        {{notification.userfrom.Name}} {{notification.Details}} "{{notification.post.JobTitle}}"
+                    </p>
+                </div>
+            </a>
         </div>
     </div>
 </notification-list>

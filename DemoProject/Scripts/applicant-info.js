@@ -1,8 +1,10 @@
 ﻿Vue.component("applicant-info", {
-    props: ["user"],
+    props: ["user", "picpath"],
     data: function () {
         return {
-            User: JSON.parse(this.user)
+            User: JSON.parse(this.user),
+            picturePath: this.picpath,
+            dpPlaceholder: "/Images/dp_placeholder.png"
         }
     },
     methods: {
