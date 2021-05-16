@@ -198,30 +198,8 @@ namespace WebProject.Controllers
                 user.Gender = model.UserDetails.Gender;
                 user.BloodGroup = model.UserDetails.BloodGroup;
 
-                //var deleteEducation = user.Educations.Select(a => a.GUID).Except(model.UserDetails.Educations.Select(a => a.GUID));
-                //var eduId = user.Educations.Select(a => a.GUID);
-                //var modelEduId = model.UserDetails.Educations.Select(a => a.GUID);
-                //var deleteEducation = eduId.Except(modelEduId);
-                //user.Educations = model.UserDetails.Educations;
+                IdentityResult result = await _userManager.UpdateAsync(user);
 
-                var userPassword = _userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
-
-                if (userPassword != PasswordVerificationResult.Success)
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Json("/Profile/Update");
-                }
-                else
-                {
-                    IdentityResult result = await _userManager.UpdateAsync(user);
-                    /*foreach (var item in deleteEducation)
-                    {
-                        await _education.Delete(item);
-                    }*/
-                    //await _education.RemoveRange(deleteEducation);
-                }
-
-                
             }
             return Json("/Profile/Index");
         }

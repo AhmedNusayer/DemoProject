@@ -10,11 +10,7 @@ namespace WebProject.Models
 {
     public class UpdateModel : IViewModel
     {
-        //[Required]
         public ApplicationUser UserDetails { get; set; }
 
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
     }
 }

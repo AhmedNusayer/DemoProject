@@ -6,7 +6,6 @@
             User: "",
             picturePath: this.picpath,
             dpPlaceholder: "/Images/dp_placeholder.png",
-            Password: null,
             File: null,
             Education: {
                 Institution: "",
@@ -224,7 +223,6 @@
             var self = this
             var B = {
                 UserDetails: self.UserInfo,
-                Password: self.Password
             }
 
             $.ajax({
