@@ -238,5 +238,8 @@
                 },
             })
         },
+        viewcv() {
+            window.location.href = '/Profile/ViewCV?userid=' + this.UserInfo.Id
+        }
     }
 })

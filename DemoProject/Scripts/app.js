@@ -10,6 +10,8 @@ import "./jobpost-card.js"
 import "./job-details.js"
 import "./resume-info.js"
 import "./apply-form.js"
+import "./notification-list.js"
+import "./applicant-info.js"
 
 new Vue({
     el: "#app",

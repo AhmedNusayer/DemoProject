@@ -4,9 +4,7 @@
 }
 
 <profile-info inline-template picpath="@ViewBag.ProfilePicturePath" 
-              name="@ViewBag.user.Name" username="@ViewBag.user.UserName" 
-              email="@ViewBag.user.Email" phonenumber="@ViewBag.user.PhoneNumber"
-              address="@ViewBag.user.Address" dateofbirth="@ViewBag.user.DateofBirth">
+              user="@ViewBag.user">
     <div class="row">
         <div class="col-md-5">
             <div>
@@ -15,19 +13,20 @@
                      :src="dpPlaceholder"
                      data-original-title="Usuario">
 
-                <h1>Hello {{Name}}</h1>
-                <p>User Name : {{UserName}}</p>
-                <p> Email : {{Email}}</p>
-                <p>Phone Number : {{PhoneNumber}}</p>
-                <p>Address : {{Address}}</p>
-                <p>Date of Birth : {{DateofBirth}}</p>
+                <h1>Hello {{UserInfo.Name}}</h1>
+                <p>User Name : {{UserInfo.UserName}}</p>
+                <p> Email : {{UserInfo.Email}}</p>
+                <p>Phone Number : {{UserInfo.PhoneNumber}}</p>
+                <p>Address : {{UserInfo.Address}}</p>
+                <p>Date of Birth : {{UserInfo.DateofBirth}}</p>
                 <form method="post" asp-controller="Profile" asp-action="Update">
                     <input type='submit' value="Update Profile" />
                 </form>
-                <form method="post" asp-controller="Profile" asp-action="ViewCV" asp-route-userid="@ViewBag.user.Id">
-                    <input type='submit' value="View CV" />
-                </form>
+
             </div>
+        </div>
+        <div>
+            <a class="btn btn-success" v-on:click="viewcv"> View CV </a>
         </div>
     </div>
 </profile-info>

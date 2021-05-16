@@ -1,0 +1,13 @@
+﻿
+<notification-list inline-template notifications="@ViewBag.Notifications">
+    <div>
+        <div v-for="notification in Notifications">
+            <div class="card">
+                <a v-on:click="viewinfo(notification.userfrom.Id)">
+                    {{notification.userfrom.Name}} {{notification.Details}} "{{notification.post.JobTitle}}"
+                </a>
+            </div>
+        </div>
+    </div>
+</notification-list>
+

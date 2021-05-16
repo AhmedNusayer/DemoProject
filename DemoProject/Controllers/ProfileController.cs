@@ -25,6 +25,7 @@ namespace WebProject.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IRepository<ProfilePicture> _repository;
         private readonly IRepository<Education> _education;
+        private readonly IRepository<Notification> _notificationRepository;
 
         public ProfileController(IWebHostEnvironment hostingEnv, UserManager<ApplicationUser> userManager, AppDbContext context)
         {
@@ -33,6 +34,8 @@ namespace WebProject.Controllers
             _userManager = userManager;
             _repository = new GenericRepository<ProfilePicture>(context);
             _education = new GenericRepository<Education>(context);
+            _notificationRepository = new GenericRepository<Notification>(context);
+
         }
 
         [Authorize]
@@ -62,7 +65,7 @@ namespace WebProject.Controllers
                 ViewBag.ProfilePicturePath = picture.ProfilePicturePath;
             }
 
-            ViewBag.user = user;
+            ViewBag.user = JsonConvert.SerializeObject(user);
             return View();
         }
 
@@ -221,6 +224,35 @@ namespace WebProject.Controllers
                 
             }
             return Json("/Profile/Index");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Notification()
+        {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+            var role = await _userManager.GetRolesAsync(user);
+
+            if (role.Any(x=> x.Contains("User")))
+            {
+                var notifications = _notificationRepository.Find(item => item.userto.Id == user.Id);
+                ViewBag.Notifications = JsonConvert.SerializeObject(notifications);
+            }
+            else if(role.Any(x => x.Contains("Employer")))
+            {
+                var notifications = _notificationRepository.Find(item => item.post.PostAuthor.Id == user.Id);
+                ViewBag.Notifications = JsonConvert.SerializeObject(notifications);
+            }
+
+            return View();
+        }
+
+        [Authorize(Roles = "Employer")]
+        public async Task<IActionResult> ApplicantInfo(string userid)
+        {
+            ApplicationUser user = await _userManager.FindByIdAsync(userid);
+            ViewBag.user = JsonConvert.SerializeObject(user);
+
+            return View();
         }
 
     }
