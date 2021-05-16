@@ -31,6 +31,9 @@ namespace InfrastructureProject
 
         public DbSet<Contribution> contributions { get; set; }
 
+        public DbSet<Notification> notifications { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

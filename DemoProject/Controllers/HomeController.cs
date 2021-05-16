@@ -20,6 +20,7 @@ namespace WebProject.Controllers
         private readonly IRepository<JobPost> _jobRepository;
         private readonly IRepository<Employer> _employerRepository;
         private readonly IRepository<Company> _companyRepository;
+        private readonly IRepository<Notification> _notificationRepository;
 
         public AppDbContext Context { get; }
 
@@ -30,6 +31,7 @@ namespace WebProject.Controllers
             _jobRepository = new GenericRepository<JobPost>(context);
             _employerRepository = new GenericRepository<Employer>(context);
             _companyRepository = new GenericRepository<Company>(context);
+            _notificationRepository = new GenericRepository<Notification>(context);
         }
 
         public IActionResult Privacy()
@@ -140,5 +142,31 @@ namespace WebProject.Controllers
             }
             return View();
         }
+
+        [Authorize(Roles = "User")]
+        public IActionResult Apply(string postid)
+        {
+            ViewBag.PostId = postid;
+            return View();
+        }
+
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> Submit(string postid)
+        {
+            var user = await userManager.GetUserAsync(User);
+            var post = _jobRepository.Find(x => x.Id == int.Parse(postid)).FirstOrDefault();
+
+            Notification notification = new Notification()
+            {
+                userfrom = user,
+                post = post,
+                Details = "applied for this post"
+            };
+
+            await _notificationRepository.Add(notification);
+
+            return RedirectToAction("JobDetails", "Home", new { id= postid });
+        }
+
     }
 }

@@ -1,0 +1,18 @@
+﻿
+<apply-form inline-template postid="@ViewBag.PostId">
+    <div class="row d-flex justify-content-center">
+        <div class="col-lg-8" style="font-size:20px;">
+            Are you sure you want to apply to this job?
+            <br />
+            By clicking the Submit button a notificaiton will be send to the company.
+            They can see your CV.
+            Be sure to prepare your CV before appling to this job.
+            <br />
+            <br />
+        </div>
+        <div class="col-lg-8">
+            <button class="btn-success" style="float:right;" type="button" v-on:click="SubmitForm">Submit</button>
+        </div>
+
+    </div>
+</apply-form>

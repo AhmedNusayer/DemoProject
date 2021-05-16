@@ -9,6 +9,7 @@ import "./post-job.js"
 import "./jobpost-card.js"
 import "./job-details.js"
 import "./resume-info.js"
+import "./apply-form.js"
 
 new Vue({
     el: "#app",
