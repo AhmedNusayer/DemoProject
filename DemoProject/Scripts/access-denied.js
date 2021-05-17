@@ -1,9 +1,7 @@
-﻿Vue.component("signin-user", {
+﻿Vue.component("access-denied", {
     props: ["error"],
     data: function () {
         return {
-            Email: "",
-            Password: "",
             Error: this.error
         }
     }

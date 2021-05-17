@@ -67,8 +67,12 @@ namespace WebProject.Controllers
 
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string ReturnUrl = null)
         {
+            if (ReturnUrl != null)
+            {
+                ViewBag.Error = "Opps... Something went wrong. Please log in to continue";
+            }
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Home");
@@ -215,5 +219,16 @@ namespace WebProject.Controllers
             ApplicationUser a = await userManager.FindByNameAsync(username);
             return Json(!(a == null));
         }
+
+        [HttpGet]
+        public IActionResult AccessDenied(string ReturnUrl = null)
+        {
+            if (ReturnUrl != null)
+            {
+                ViewBag.Error = "Sorry... You are not authorized to visit this page";
+            }
+            return View();
+        }
+
     }
 }

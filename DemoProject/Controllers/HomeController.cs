@@ -165,7 +165,7 @@ namespace WebProject.Controllers
 
             await _notificationRepository.Add(notification);
 
-            return RedirectToAction("JobDetails", "Home", new { id= postid });
+            return RedirectToAction("JobDetails", "Home", new { id = postid });
         }
 
     }

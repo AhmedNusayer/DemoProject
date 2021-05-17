@@ -12,6 +12,7 @@ import "./resume-info.js"
 import "./apply-form.js"
 import "./notification-list.js"
 import "./applicant-info.js"
+import "./access-denied.js"
 
 new Vue({
     el: "#app",
