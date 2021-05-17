@@ -8,6 +8,9 @@
         <div class="row d-flex justify-content-center">
             <div class="col-lg-6">
                 <p class="card-text text-secondary text-danger lead float-left">
+                    @Html.ValidationMessage("Error")
+                </p>
+                <p class="card-text text-secondary text-danger lead float-left">
                     {{Error}}
                 </p>
 

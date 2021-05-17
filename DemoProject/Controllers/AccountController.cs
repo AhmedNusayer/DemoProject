@@ -59,8 +59,12 @@ namespace WebProject.Controllers
                 
                 foreach(var error in result.Errors)
                 {
-                    ModelState.AddModelError("", error.Description);
+                    ModelState.AddModelError("Error", error.Description);
                 }
+            }
+            else
+            {
+                ModelState.AddModelError("Error", "Verification Error. Please try again");
             }
             return View(model);
         }
@@ -94,11 +98,7 @@ namespace WebProject.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
-                ModelState.AddModelError("", "Invalid Login Attempt");
-            }
-            else
-            {
-                return RedirectToAction("Update", "Profile");
+                ModelState.AddModelError("Error", "Invalid Login Attempt");
             }
             return View(model);
         }
@@ -145,9 +145,14 @@ namespace WebProject.Controllers
 
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError("", error.Description);
+                    ModelState.AddModelError("Error", error.Description);
                 }
             }
+            else
+            {
+                ModelState.AddModelError("Error", "Verification Error. Please try again");
+            }
+
             return View(model);
         }
 
@@ -174,6 +179,11 @@ namespace WebProject.Controllers
                 await _repository.Add(company);
 
                 return RedirectToAction("RegisterEmployer", "Account");
+            }
+
+            else
+            {
+                ModelState.AddModelError("Error", "Verification Error. Please try again");
             }
 
             return View();
@@ -216,6 +226,18 @@ namespace WebProject.Controllers
         [HttpGet]
         public async Task<ActionResult> IsUserExists(string username)
         {
+          if(username == null)
+            {
+                return Json("false");
+            }
+            List<string> BlackList = new List<string>() {
+                 "home", "account", "profile"
+            };
+            var bl = BlackList.FirstOrDefault(x => x == username.ToLower());
+            if (bl != null) 
+            {
+                return Json("false");
+            }
             ApplicationUser a = await userManager.FindByNameAsync(username);
             return Json(!(a == null));
         }
