@@ -47,7 +47,7 @@ namespace WebProject.Controllers
             if (ModelState.IsValid && VerificationCode.verificationCode == model.VerificationCode)
             {
                 /*.Substring(0, model.Email.IndexOf("@"))*/
-                var user = new ApplicationUser {UserName = model.Email, Email = model.Email, Name = model.FirstName.Trim() + " " + model.LastName.Trim(), EmailConfirmed = true };
+                var user = new ApplicationUser {UserName = model.UserName, Email = model.Email, Name = model.FirstName.Trim() + " " + model.LastName.Trim(), EmailConfirmed = true };
                 var result = await userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -123,7 +123,7 @@ namespace WebProject.Controllers
 
             if (ModelState.IsValid && VerificationCode.verificationCode == model.VerificationCode && VerificationCode.verificationCodeEmployer == model.CompanyVerificationCode)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.FirstName.Trim() + " " + model.LastName.Trim(), EmailConfirmed = true };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, Name = model.FirstName.Trim() + " " + model.LastName.Trim(), EmailConfirmed = true };
                 var result = await userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -208,6 +208,12 @@ namespace WebProject.Controllers
             }
 
             return null;
+        }
+        [HttpGet]
+        public async Task<ActionResult> IsUserExists(string username)
+        {
+            ApplicationUser a = await userManager.FindByNameAsync(username);
+            return Json(!(a == null));
         }
     }
 }

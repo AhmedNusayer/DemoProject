@@ -9,7 +9,7 @@
     },
     methods: {
         viewcv() {
-            window.location.href = '/Profile/ViewCV?userid=' + this.User.Id
+            window.location.href = '/' + this.User.UserName
         }
     }
 })

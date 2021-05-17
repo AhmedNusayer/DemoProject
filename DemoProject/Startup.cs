@@ -80,6 +80,11 @@ namespace WebProject
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "publicUrl",
+                    pattern: "/{username}",
+                    defaults: new {controller = "Profile", action = "ViewCV"}
+                    );
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });

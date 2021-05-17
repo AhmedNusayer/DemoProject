@@ -237,7 +237,7 @@
             })
         },
         viewcv() {
-            window.location.href = '/Profile/ViewCV?userid=' + this.UserInfo.Id
+            window.location.href = '/' + this.UserInfo.UserName
         }
     }
 })

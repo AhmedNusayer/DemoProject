@@ -69,10 +69,10 @@ namespace WebProject.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ViewCV(string userid)
+        public async Task<IActionResult> ViewCV(string username)
         {
             string template = "";
-            ApplicationUser user = await _userManager.FindByIdAsync(userid);
+            ApplicationUser user = await _userManager.FindByNameAsync(username);
 
             if (user != null)
             {
