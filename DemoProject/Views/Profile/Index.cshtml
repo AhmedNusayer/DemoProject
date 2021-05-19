@@ -13,7 +13,7 @@
             }
 
             .padding {
-            padding: 3rem !important
+            padding: 0.5rem
             }
 
             .user-card-full {
@@ -34,10 +34,6 @@
 
             .m-l-0 {
             margin-left: 0px
-            }
-
-            .user-card-full .user-profile {
-            border-radius: 5px 0 0 5px
             }
 
             .bg-c-lite-green {
@@ -105,6 +101,11 @@
             font-weight: 600
             }
 
+            .h-w-s {
+            font-weight: 700;
+            font-size: 22px
+            }
+
             .m-b-20 {
             margin-bottom: 20px
             }
@@ -139,26 +140,26 @@
 
         <div class="page-content page-container" id="page-content">
             <div class="padding">
-                <div class="row container d-flex justify-content-center">
+                <div class="row d-flex justify-content-center">
                     <div class="col-xl-12 col-md-12">
                         <div class="card user-card-full">
                             <div class="row m-l-0 m-r-0">
                                 <div class="col-sm-4 bg-c-lite-green user-profile">
                                     <div class="card-block text-center text-white">
                                         <div class="m-b-25">
-                                            <img v-if="picturePath" :src="'/' + picturePath" height="200" width="200" class="rounded-circle" data-original-title="Usuario">
+                                            <img v-if="picturePath" :src="'/' + picturePath" height="200" width="200" class="rounded-circle" data-original-title="Usuario" style="background-color:#b7e1ea;">
                                             <img v-if="!picturePath" alt="" height="200" width="200" title="" class="rounded-circle"
-                                                 :src="dpPlaceholder"
+                                                 :src="dpPlaceholder" style="background-color:#b7e1ea;"
                                                  data-original-title="Usuario">
                                         </div>
-                                        <h6 class="f-w-600">{{UserInfo.Name}}</h6>
+                                        <h5 style="font-size: 30px; font-weight:700;" >{{UserInfo.Name}}</h5>
                                         <p>{{UserInfo.Profession}}</p>
                                         <br />
                                         <p>{{UserInfo.Intro}}</p>
                                         <br />
                                         <br />
                                         <div class="text-left">
-                                            <h5 style="padding-left:20px">Skills</h5>
+                                            <h5 class="h-w-s" style="padding-left:20px">Skills</h5>
                                             <ul>
                                                 <li v-for="skill in UserInfo.Skills">
                                                     {{skill.SkillName}}
@@ -179,9 +180,9 @@
                                     </div>
 
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-8" style="background-image: linear-gradient(to right, white,ivory);">
                                     <div class="card-block">
-                                        <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                        <h5 class="m-b-20 p-b-5 b-b-default h-w-s">Information</h5>
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <p class="m-b-10 f-w-600">UserName</p>
@@ -244,7 +245,7 @@
                                             </div>
                                         </div>
 
-                                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Education</h6>
+                                        <h5 class="m-b-20 m-t-40 p-b-5 b-b-default h-w-s">Education</h5>
                                         <div class="row">
                                             <div v-for="education in UserInfo.Educations" class="col-sm-6">
                                                 <p class="m-b-10 f-w-600">{{education.Degree}}</p>
@@ -256,7 +257,7 @@
                                             </div>
                                         </div>
 
-                                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Experience</h6>
+                                        <h5 class="m-b-20 m-t-40 p-b-5 b-b-default h-w-s">Experience</h5>
                                         <div class="row">
                                             <div v-for="experience in UserInfo.Experiences" class="col-sm-6">
                                                 <p class="m-b-10 f-w-600">{{experience.Title}}</p>
@@ -268,7 +269,7 @@
                                             </div>
                                         </div>
 
-                                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Project</h6>
+                                        <h5 class="m-b-20 m-t-40 p-b-5 b-b-default h-w-s">Project</h5>
                                         <div class="row">
                                             <div v-for="project in UserInfo.Projects" class="col-sm-6">
                                                 <p class="m-b-10 f-w-600">{{project.Name}}</p>
@@ -283,7 +284,7 @@
                                             </div>
                                         </div>
 
-                                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Contribution</h6>
+                                        <h5 class="m-b-20 m-t-40 p-b-5 b-b-default h-w-s">Contribution</h5>
                                         <div class="row">
                                             <div v-for="contribution in UserInfo.Contributions" class="col-sm-6">
                                                 <p class="m-b-10 f-w-600">{{contribution.Name}}</p>
@@ -292,7 +293,7 @@
                                             </div>
                                         </div>
 
-                                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Interest</h6>
+                                        <h5 class="m-b-20 m-t-40 p-b-5 b-b-default h-w-s">Interest</h5>
                                         <div class="row">
                                             <div v-for="interest in UserInfo.Interests" class="col-sm-6">
                                                 <p class="m-b-10 f-w-600">{{interest.Title}}</p>
@@ -304,7 +305,7 @@
                                 </div>
                             </div>
 
-                            <div class="card-footer">
+                            <div class="card-footer" style="background-image:linear-gradient(to right, rgb(238, 90, 111), rgb(170, 181, 182));">
                                 <a style="float:right; margin-left:10px" class="btn btn-success" asp-controller="Profile" asp-action="Update">Update Profile</a>
                                 <a style="color:white; float:right" class="btn btn-success" v-on:click="viewcv"> View CV </a>
                             </div>

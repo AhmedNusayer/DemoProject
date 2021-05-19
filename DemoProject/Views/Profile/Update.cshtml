@@ -2,13 +2,19 @@
               user="@ViewBag.user">
     <form method="post" enctype="multipart/form-data" asp-controller="Profile" asp-action="Index">
         <div class="container">
+            <component  :is="'style'" scoped>
+                .center {
+                margin-left: auto;
+                margin-right: auto;
+                }
+            </component>
             <div class="panel-body inf-content">
                 <div class="row">
 
-                    <div class="col-md-4" style="margin-top:20px">
+                    <div class="col-md-4" style="padding-top:20px;background-color:#f7f7f7;border-radius:.25rem;">
                         <div class="container">
-                            <img v-if="picturePath" :src="'/' + picturePath" height="200" width="200" style="background-color: cadetblue" class="rounded-circle float-start" data-original-title="Usuario">
-                            <img v-if="!picturePath" alt="" height="260" style="background-color: cadetblue" width="260" title="" class="rounded-circle"
+                            <img v-if="picturePath" :src="'/' + picturePath" height="260" width="260" style="background-color:#b7e2eb;" class="rounded-circle float-start" data-original-title="Usuario">
+                            <img v-if="!picturePath" alt="" height="260" style="background-color:#b7e2eb;" width="260" title="" class="rounded-circle"
                                  :src="dpPlaceholder"
                                  data-original-title="Usuario">
 
@@ -28,9 +34,9 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <div class="modal-body">
-                                        <img v-if="picturePath" :src="'/' + picturePath" height="200" width="200" style="background-color: cadetblue" class="rounded float-start" data-original-title="Usuario">
-                                        <img v-if="!picturePath" alt="" height="260" style="background-color: cadetblue" width="260" title="" class="rounded-circle"
+                                    <div class="modal-body center">
+                                        <img v-if="picturePath" :src="'/' + picturePath" height="260" width="260" style="background-color:#b7e2eb" class="rounded-circle float-start" data-original-title="Usuario">
+                                        <img v-if="!picturePath" alt="" height="260" style="background-color:#b7e2eb" width="260" title="" class="rounded-circle"
                                              :src="dpPlaceholder"
                                              data-original-title="Usuario">
                                     </div>
@@ -67,7 +73,7 @@
                             </span>
                         </div>
 
-                        <div class="card" style="margin-top:20px">
+                        <div class="card" style="margin-top:20px;border: none;">
                             <div class="card-header">
                                 Intro
                                 <a class="btn btn-sm justify-content-end" data-toggle="modal" data-target="#intro-modal">
@@ -77,7 +83,7 @@
                             </div>
                         </div>
 
-                        <div class="card" style="margin-top:20px">
+                        <div class="card" style="margin-top:20px;border: none;">
                             <div class="card-header">
                                 Knowledge
                                 <a class="btn btn-sm justify-content-end" data-toggle="modal" data-target="#knowledge-modal">
@@ -87,11 +93,11 @@
                             </div>
                         </div>
 
-                        <div class="card" style="margin-top:20px">
+                        <div class="card" style="margin-top:20px;border: none;">
                             <input type="text" class="form-control" v-model="UserInfo.Profession" placeholder="I am a...">
                         </div>
 
-                        <div class="card" style="margin-top:20px">
+                        <div class="card" style="margin-top:20px;border: none;background-color:inherit;">
                             <label class="text-dark" style="font-family:Courier New, Courier, monospace; font-size:larger"> Select Template </label>
                             <select class="custom-select my-1 mr-sm-2" v-model="UserInfo.Template" id="inlineFormCustomSelectPref">
                                 <option value="1">One</option>
@@ -108,13 +114,13 @@
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Add Education</h5>
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Add Introduction</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <label for="exampleFormControlTextarea1">Edit Intro</label>
+                                        <label for="exampleFormControlTextarea1">Edit Introduction</label>
                                         <textarea class="form-control" id="" name="Intro" rows="5" v-model=UserInfo.Intro></textarea>
                                     </div>
                                     <div class="modal-footer">
@@ -146,9 +152,9 @@
                         </div>
                     </div>
                     <!--Profile Info-->
-                    <div class="col-md-6 card" style="background-color:#FFF">
-                        <div class="card-header">
-                            Update Profile
+                    <div class="col-md-8 card" style="background-color:#F7F7F7">
+                        <div class="card-header" style="background-color: inherit;font-size: 25px;">
+                            Information
                         </div>
                         <div class="table-responsive">
                             @*<form method="post" enctype="multipart/form-data" asp-controller="Profile" asp-action="Index">*@
@@ -329,7 +335,7 @@
                     </div>
 
                     <!--Education-->
-                    <div class="col-md-10">
+                    <div class="col-md-10 center">
                         <div class="card shadow-lg" style="margin-top:20px">
                             <div class="row">
                                 <div class="col-md-10" style="padding-left: 30px;padding-top: 15px;">
@@ -344,7 +350,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-10 center">
                         <div v-if="UserInfo.Educations.length" class="card shadow-lg" style="margin-top:5px">
                             <div v-for="edu in UserInfo.Educations">
                                 <div class="col-md-12">
@@ -380,7 +386,7 @@
                     </div>
 
                     <!--Work Experience-->
-                    <div class="col-md-10">
+                    <div class="col-md-10 center">
                         <div class="card shadow-lg" style="margin-top:20px">
                             <div class="row">
                                 <div class="col-md-10" style="padding-left: 30px;padding-top: 15px;">
@@ -394,7 +400,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-10 center">
                         <div v-if="UserInfo.Experiences.length" class="card shadow-lg" style="margin-top:5px">
                             <div v-for="exp in UserInfo.Experiences">
                                 <div class="col-md-12">
@@ -432,7 +438,7 @@
                     </div>
 
                     <!--Skill-->
-                    <div class="col-md-10">
+                    <div class="col-md-10 center">
                         <div class="card shadow-lg" style="margin-top:20px">
                             <div class="row">
                                 <div class="col-md-10 card-text" style="padding-left: 30px;padding-top: 15px;">
@@ -446,7 +452,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-10 center">
                         <div v-if="UserInfo.Skills.length" style="display: flex; flex-wrap: wrap; padding-top:15px">
                             <div v-for="skill in UserInfo.Skills" style="padding:10px; margin-right:15px; margin-bottom:10px" class="badge badge-pill badge-info justify-content-center">
                                 <span style="font-size:15px; line-height:2.3">
@@ -462,7 +468,7 @@
                     </div>
 
                     <!--Interest-->
-                    <div class="col-md-10">
+                    <div class="col-md-10 center">
                         <div class="card shadow-lg" style="margin-top:20px">
                             <div class="row">
                                 <div class="col-md-10" style="padding-left: 30px;padding-top: 15px;">
@@ -476,7 +482,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-10 center">
                         <div v-if="UserInfo.Interests.length" class="card shadow-lg" style="margin-top:5px">
                             <div v-for="interest in UserInfo.Interests">
                                 <div class="col-md-12">
@@ -503,7 +509,7 @@
                     </div>
 
                     <!--Project-->
-                    <div class="col-md-10">
+                    <div class="col-md-10 center">
                         <div class="card shadow-lg" style="margin-top:20px">
                             <div class="row">
                                 <div class="col-md-10" style="padding-left: 30px;padding-top: 15px;">
@@ -517,7 +523,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-10 center">
                         <div v-if="UserInfo.Projects.length" class="card shadow-lg" style="margin-top:5px">
                             <div v-for="project in UserInfo.Projects">
                                 <div class="col-md-12">
@@ -549,7 +555,7 @@
                     </div>
 
                     <!--Contribution-->
-                    <div class="col-md-10">
+                    <div class="col-md-10 center">
                         <div class="card shadow-lg" style="margin-top:20px">
                             <div class="row">
                                 <div class="col-md-10" style="padding-left: 30px;padding-top: 15px;">
@@ -563,7 +569,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-10 center">
                         <div v-if="UserInfo.Contributions.length" class="card shadow-lg" style="margin-top:5px">
                             <div v-for="contribution in UserInfo.Contributions">
                                 <div class="col-md-12">
@@ -806,7 +812,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-10">
+                    <div class="col-md-10 center">
                         <div style="margin-top:20px">
                             <div>
                                 <input type="button" class="btn btn-primary mb-3 float-right" v-on:click="update" value="Update"/>
