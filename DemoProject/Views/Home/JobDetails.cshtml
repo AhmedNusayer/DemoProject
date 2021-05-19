@@ -1,13 +1,13 @@
 ﻿<job-details inline-template postid="@ViewBag.PostId" postdetails="@ViewBag.PostDetails">
     <div class="row d-flex justify-content-center">
         <div class="col-lg-10">
-            <div class="card text-center">
-                <ul class="nav nav-tabs">
+            <div class="card text-center" style="border: none; background-color: initial;">
+                <ul class="nav nav-tabs" style="background-image: linear-gradient( 45deg, #61d75a, #b0aaaa);">
                     <li class="nav-item active">
-                        <a class="active nav-link" data-toggle="tab" href="#job">Job</a>
+                        <a class="active nav-link" style="color:black" data-toggle="tab" href="#job">Job</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#company">Company</a>
+                        <a class="nav-link" style="color:black" data-toggle="tab" href="#company">Company</a>
                     </li>
                 </ul>
 
@@ -43,7 +43,7 @@
                         <div style="text-align: right">
                             <br />
                             <br />
-                        <a class="btn btn-success" v-on:click="Apply">Apply now</a>
+                        <a class="btn btn-success" style="color:white" v-on:click="Apply">Apply now</a>
                         </div>
                     </div>
 
@@ -73,10 +73,7 @@
                         </p>
 
                     </div>
-                    <div id="menu2" class="tab-pane fade">
-                        <h3>Menu 2</h3>
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-                    </div>
+                    
                 </div>
             </div>
         </div>
