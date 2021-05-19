@@ -37,6 +37,10 @@ namespace WebProject.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -116,6 +120,10 @@ namespace WebProject.Controllers
         {
             var company = await _repository.GetAll();
             ViewBag.data = company;
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -159,6 +167,10 @@ namespace WebProject.Controllers
         [HttpGet]
         public IActionResult RegisterCompany()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 

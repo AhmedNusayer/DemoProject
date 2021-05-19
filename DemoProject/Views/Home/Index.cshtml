@@ -14,7 +14,7 @@
             position: relative;
             top: 0;
             text-shadow: -1px -1px 0px #f3f3ef, 1px 1px 0px #000000;
-
+            font-family: monospace;
 
 
             /*animation*/
@@ -22,7 +22,7 @@
             -moz-animation:move 5s;
             -ms-animation:move 5s;
             -o-animation:move 5s;
-            animation:move 5s;
+            animation:move 10s;
             /*animation-iteration-count*/
             -webkit-animation-iteration-count:infinite;
             -moz-animation-iteration-count:infinite;
@@ -30,11 +30,11 @@
             -o-animation-iteration-count:infinite;
             animation-iteration-count:infinite;
             /*animation-delay*/
-            -webkit-animation-delay:1s;
-            -moz-animation-delay:1s;
-            -ms-animation-delay:1s;
-            -o-animation-delay:1s;
-            animation-delay:1s;
+            -webkit-animation-delay:2s;
+            -moz-animation-delay:2s;
+            -ms-animation-delay:2s;
+            -o-animation-delay:2s;
+            animation-delay:2s;
             }
             @@keyframes move{
             0%  { top: 0px; }
@@ -74,7 +74,7 @@
             }
         </component>
 
-        <div style="background-image: url(/Images/CoverImage1.jpg); font-family: 'Rancho'; text-align: center; padding: 120px; height: 500px; top: 60px; width: 100%; position: absolute; background-repeat: no-repeat; background-size: cover">
+        <div style="background-image: url(/Images/CoverImage1.jpg); font-family: 'Rancho'; text-align: center; padding: 120px; height: 500px; top: 58px; width: 100%; position: absolute; background-repeat: no-repeat; background-size: cover">
             <h1 style="font-size: 90px; text-shadow: 3px 3px 0px #eff1f3" class="display-4">Welcome to the Job Portal</h1>
             <div class="Iamb">
                 <div class="innerIam">
@@ -86,23 +86,26 @@
                 </div>
             </div>
         </div>
-        <div style="margin-top: 530px" class="container"></div>
-        <div class="container" v-if="isemployer">
+        <div style="background-image: url(/Images/JobPost4.jpg); font-family: monospace; text-align: center; padding: 120px; height: 350px; top: 558px; width: 100%; position: absolute; background-repeat: no-repeat; background-size: cover">
+            <div style="width: 60%; margin-left: 40%; margin-top:-60px; text-align: initial;">
+                <h2 style="font-size:30px" class="lead">Employers</h2>
+                <h1 style="font-size: 50px; text-shadow: rgb(255 165 0) 2px 2px 0px" class="display-4">Looking to post a job?</h1>
+                <h2 v-if="!isemployer" style="font-size:30px" class="lead">Sign In as employer to Post Jobs</h2>
+                <a v-if="!(isemployer || isuser)" asp-controller="Account" asp-action="RegisterEmployer" class="btn btn-lg" style="border-color: darkblue;">Get Started</a>
+                <a v-if="isemployer" class="btn btn-lg btn-outline-dark" data-toggle="collapse" href="#collapseExample"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    Post A Job
+                </a>
+
+            </div>
+        </div>
+        
+        <div style="margin-top:826px" class="container" v-if="isemployer">
             <post-job inline-template user="@ViewBag.user">
 
                 <div class="row d-flex justify-content-center">
-                    <div class="col-lg-8">
+                    <div class="col-lg-10">
                         <div class="card">
-                            <div class="card-header">
-                                <div style="float: left; font-size: 20px;">
-                                    Hello {{User.Name}}
-                                </div>
-
-                                <button class="btn btn-success" style="float: right; width: 150px;" data-toggle="collapse" href="#collapseExample" role="button"
-                                        aria-expanded="false" aria-controls="collapseExample">
-                                    Post A Job
-                                </button>
-                            </div>
                             <form role="form" asp-action="PostJob" asp-controller="Home" method="post">
                                 <div class="collapse" id="collapseExample">
                                     <div class="card card-body">
@@ -176,17 +179,19 @@
             <br />
         </div>
 
+        <div v-else style="margin-top: 850px" class="container"></div>
+
         <jobpost-card inline-template jobpost="@ViewBag.posts" sort="@ViewBag.sort">
             <div class="row col-lg-12 d-flex">
-                <div class="col-lg-8" style="margin-top:20px; margin-left:auto; margin-right:auto">
+                <div class="col-lg-10" style="margin-top:20px; margin-left:auto; margin-right:auto">
                     <div class="float-left" v-if="JobPost.length!=0" style="width:70%">
 
                         <form asp-controller="Home" asp-action="Index">
                             <div class="input-group rounded">
-                                <input type="search" class="form-control-lg form rounded" style="width:90%" placeholder="Search with Job Title, Location..." name="SearchString" aria-label="Search"
+                                <input type="search" class="form-control-lg form rounded" style="width:75%; background-color: beige;" placeholder="Search with Job Title, Location..." name="SearchString" aria-label="Search"
                                        aria-describedby="search-addon" />
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-search"></i>
+                                <button type="submit" class="btn btn-primary" style="background-image: linear-gradient( 88deg, #0cfa20, #21a712); width:20%">
+                                    <i class="fas fa-search"></i> Search
                                 </button>
                             </div>
                         </form>
