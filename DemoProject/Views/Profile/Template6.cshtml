@@ -6,8 +6,9 @@
         <component :is="'style'" scoped>
             .resume {
             font-family:'Roboto';
-            background:#16151c;
-            display: flow-root;
+            display: flex;
+            height:100%;
+            width:100%;
             }
 
             a {
@@ -34,13 +35,13 @@
             .username{
             text-transform:uppercase;
             display:block;
-            font-size:1.7em;
+            font-size:1.9em;
             color:white;
             color:rgba(0,0,0,0.7);
             padding-top:0;
             margin-top:0;
             letter-spacing:10px;
-            font-weight:400;
+            font-weight:600;
             }
 
             .description {
@@ -52,7 +53,7 @@
 
             .section-headline {
             text-transform:uppercase;
-            font-weight:500;
+            font-weight:600;
             letter-spacing:3px;
             font-size:15pt;
             opacity:0.8;
@@ -108,7 +109,6 @@
 
             .rightCol {
             width:65%;
-            height:100%;
             float:right;
             display:flex;
             flex-direction:column;
@@ -142,7 +142,7 @@
             .headline {
             font-weight:300;
             display:block;
-            font-size:15px;
+            font-size:18px;
             color:rgba(0,0,0,0.870588);
             }
 
@@ -162,7 +162,6 @@
 
             .leftCol {
             width:35%;
-            height:100%;
             float:left;
             padding:0;
             text-align:left;
@@ -170,6 +169,7 @@
             color:rgba(255,255,255,0.59);
             overflow:hidden;
             display:block;
+            background-color:#16151c;
             }
 
             a {
@@ -398,38 +398,38 @@
 
                 <div class="section-headline experience" v-if="User.Experiences.length"> Experience </div>
                 <div class="block" v-for="experience in User.Experiences" :key="experience.GUID">
-                    <a>
+                    <div>
                         <div class="block-helper"></div>
                         <h3 class="headline">{{experience.Title}} <span v-if="experience.Company">- {{experience.Company}}</span></h3>
                         <div class="subheadline">{{new Date(experience.StartDate).getFullYear()}} <span v-if="experience.EndDate"> - {{new Date(experience.EndDate).getFullYear()}}</span></div>
                         <p class="info">
                             {{experience.Description}}
                         </p>
-                    </a>
+                    </div>
                 </div>
 
                 <div class="section-headline" v-if="User.Educations.length"> Education </div>
                 <div class="block" v-for="education in User.Educations" :key="education.GUID">
-                    <a>
+                    <div>
                         <div class="block-helper"></div>
                         <div class="headline">{{education.Degree}}</div>
                         <div class="subheadline">{{education.Institution}} <span v-if="education.StartDate"> | {{new Date(education.StartDate).getFullYear()}}</span> <span v-if="education.EndDate"> - {{new Date(education.EndDate).getFullYear()}}</span></div>
                         <p class="info">
                            {{education.Description}}
                         </p>
-                    </a>
+                    </div>
                 </div>
 
                 <div class="section-headline" v-if="User.Projects.length"> Project </div>
                 <div class="block" v-for="project in User.Projects" :key="project.GUID">
-                    <a >
+                    <div >
                         <div class="block-helper"></div>
                         <div class="headline">{{project.Name}} </div>
                         <div class="subheadline">{{project.Year}} <span v-if="project.Url"> | Project Link: <a style="color:inherit;"  :href="project.Url"> {{project.Url}}</a> </span></div>
                         <p class="info">
                             {{project.Description}}
                         </p>
-                    </a>
+                    </div>
                 </div>
 
             </div>
