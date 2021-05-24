@@ -238,6 +238,14 @@
         },
         viewcv() {
             window.location.href = '/' + this.UserInfo.UserName
+        },
+
+        copyToClipboard() {
+            var copyText = document.getElementById("cvurl");
+            navigator.clipboard.writeText(copyText.innerText)
+            var x = document.getElementById("snac");
+            x.className = "snackbar_show";
+            setTimeout(function () { x.className = x.className.replace("snackbar_show", "snackbar"); }, 2000);
         }
     }
 })

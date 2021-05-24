@@ -167,10 +167,6 @@ namespace WebProject.Controllers
         [HttpGet]
         public IActionResult RegisterCompany()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
             return View();
         }
 

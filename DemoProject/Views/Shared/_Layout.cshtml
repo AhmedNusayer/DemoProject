@@ -42,7 +42,7 @@
                                     @{
                                         if (picture != null)
                                         {
-                                            <img src="~/@picture.ProfilePicturePath" title="@user.Name &#013; @user.Email" height="30" width="30" class="rounded-circle">
+                                            <img src="~/@picture.ProfilePicturePath" title="@user.Name &#013; @user.Email" style="background-color:white" height="30" width="30" class="rounded-circle">
                                         }
                                         else
                                         {
@@ -94,15 +94,107 @@
         </nav>
     </header>
 
-    <div class="container" id="app">
+    <div class="container" id="app" style="padding-bottom:310px">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer" style="background-color: rgb(22 22 24 / 0.91)">
-        <div class="container" style="color: #f0eff6">
-            &copy; 2021 - Job Portal - <a style="color: #f0eff6" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer id="footer" class="fixed-bottom" style="height:310px; padding-top:30px; background-color: rgb(22 22 24 / 0.91); color:white; position:absolute">
+        <div class="main-footer widgets-dark typo-light">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="widget subscribe no-box">
+                            <h5 class="widget-title">JOB PORTAL<span></span></h5>
+                            <p>Find jobs, Post jobs, Create CV, View CV.... </p>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="widget no-box">
+                            <h5 class="widget-title">Quick Links<span></span></h5>
+                            <ul class="thumbnail-widget">
+                                <li>
+                                    <div class="thumb-content">
+                                        <a style="color: inherit;" asp-controller="Home" asp-action="Index">Home</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="thumb-content">
+                                        <a style="color: inherit;" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="thumb-content">
+                                        <a style="color: inherit;" asp-controller="Account" asp-action="RegisterCompany">Register Company</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="thumb-content">
+                                        <a style="color: inherit;" asp-controller="Profile" asp-action="Index">View Profile</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="thumb-content">
+                                        <a style="color: inherit;" asp-controller="Profile" asp-action="Update">Update Profile</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="thumb-content">
+                                        <a style="color: inherit;" asp-controller="Profile" asp-action="Notification">Notification</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+
+                        <div class="widget no-box">
+                            <h5 class="widget-title">Contact Us<span></span></h5>
+
+                            <p><a style="color: inherit;" href="mailto:webproject.test123@gmail.com" title="glorythemes">webproject.test123@gmail.com</a></p>
+                            <ul class="social-footer2" style="font-size:25px;">
+                                <li class="">
+                                    <a style="color:red" title="youtube" target="_blank" href="https://www.youtube.com/">
+                                        <i class="fab fa-youtube"></i>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a style="color:blue" href="https://www.facebook.com/" target="_blank" title="Facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a style="color:deepskyblue" href="https://twitter.com" target="_blank" title="Twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a style="background: #d6249f;
+                                        background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+                                        -webkit-background-clip: text; -webkit-text-fill-color: transparent;" href="https://instagram.com" target="_blank" title="Twitter">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p>Copyright Job Portal &copy; 2021. All rights reserved.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
 

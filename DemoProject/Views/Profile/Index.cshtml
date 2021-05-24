@@ -136,6 +136,62 @@
             -webkit-transition: all 0.3s ease-in-out;
             transition: all 0.3s ease-in-out
             }
+
+            <!--Snacbar-->
+            .snackbar {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            text-align: center;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+            border-radius: 20px;
+            padding: 10px;
+            background-color: #dfb4b4;
+            color: #000000;
+            }
+
+            .snackbar_show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
+            animation: fadein 0.5s, fadeout 0.5s 1.5s;
+            min-width: 250px;
+            margin-left: -125px;
+            text-align: center;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+            border-radius: 20px;
+            padding: 10px;
+            background-color: #dfb4b4;
+            color: #000000;
+            }
+
+            @@-webkit-keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+            }
+
+            @@keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+            }
+
+            @@-webkit-keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+            }
+
+            @@keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+            }
+
         </component>
 
         <div class="page-content page-container" id="page-content">
@@ -152,11 +208,16 @@
                                                  :src="dpPlaceholder" style="background-color:#b7e1ea;"
                                                  data-original-title="Usuario">
                                         </div>
-                                        <h5 style="font-size: 30px; font-weight:700;" >{{UserInfo.Name}}</h5>
+                                        <h5 style="font-size: 30px; font-weight:700;">{{UserInfo.Name}}</h5>
                                         <p>{{UserInfo.Profession}}</p>
                                         <br />
                                         <p>{{UserInfo.Intro}}</p>
                                         <br />
+                                        <div id="snac" class="snackbar">CV Url Copied to Clipboard</div>
+                                        <p>
+                                            <a class="btn" v-on:click="copyToClipboard"><i class="far fa-copy"></i></a>
+                                            Public CV Url: <a id="cvurl" :href="'@Url.Content("~/")'+UserInfo.UserName" style="color:inherit">@Url.Action("Index", "Home", null, "https"){{UserInfo.UserName}}</a>
+                                        </p>
                                         <br />
                                         <div class="text-left">
                                             <h5 class="h-w-s" style="padding-left:20px">Skills</h5>
