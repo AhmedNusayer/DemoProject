@@ -12,6 +12,7 @@ using System.Net.Mail;
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Concurrent;
+using System.Text.RegularExpressions;
 
 namespace WebProject.Controllers
 {
@@ -234,7 +235,11 @@ namespace WebProject.Controllers
         [HttpGet]
         public async Task<ActionResult> IsUserExists(string username)
         {
-          if(username == null)
+            if(username == null)
+            {
+                return Json("false");
+            }
+            if (!Regex.IsMatch(username, "^[a-zA-Z0-9@_.]*$"))
             {
                 return Json("false");
             }

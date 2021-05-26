@@ -37,7 +37,7 @@
                 success: function (result) {
                     self.IsUnique = !result
                     if (result) {
-                        self.Error = "Username already exists. Please enter a different one"
+                        self.Error = "Username already exists or invalid username. Please enter a different one"
                     }
                     else {
                         self.Error = ""

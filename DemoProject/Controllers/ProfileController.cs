@@ -15,21 +15,24 @@ using InfrastructureProject.Data;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace WebProject.Controllers
 {
     public class ProfileController : Controller
     {
         //private readonly AppDbContext _context;
+        private IMemoryCache _cache;
         private readonly IWebHostEnvironment _hostingEnv;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IRepository<ProfilePicture> _repository;
         private readonly IRepository<Education> _education;
         private readonly IRepository<Notification> _notificationRepository;
 
-        public ProfileController(IWebHostEnvironment hostingEnv, UserManager<ApplicationUser> userManager, AppDbContext context)
+        public ProfileController(IWebHostEnvironment hostingEnv, UserManager<ApplicationUser> userManager, AppDbContext context, IMemoryCache memoryCache)
         {
             //_context = context;
+            _cache = memoryCache;
             _hostingEnv = hostingEnv;
             _userManager = userManager;
             _repository = new GenericRepository<ProfilePicture>(context);
@@ -72,12 +75,34 @@ namespace WebProject.Controllers
         public async Task<IActionResult> ViewCV(string username)
         {
             string template = "";
-            ApplicationUser user = await _userManager.FindByNameAsync(username);
+
+            ApplicationUser user;
+
+            if (!_cache.TryGetValue(username, out user))
+            {
+                user = await _userManager.FindByNameAsync(username);
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
+
+                _cache.Set(username, user, cacheEntryOptions);
+            }
 
             if (user != null)
             {
                 ViewBag.user = JsonConvert.SerializeObject(user);
-                var picture = _repository.Find(item => item.UserProfile.Id == user.Id).FirstOrDefault();
+                ProfilePicture picture; 
+
+                if (!_cache.TryGetValue(user.Id, out picture))
+                {
+                    picture = _repository.Find(item => item.UserProfile.Id == user.Id).FirstOrDefault();
+
+                    var cacheEntryOptions = new MemoryCacheEntryOptions()
+                        .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
+
+                    _cache.Set(user.Id, picture, cacheEntryOptions);
+                }
+
                 if (picture != null)
                 {
                     ViewBag.ProfilePicturePath = picture.ProfilePicturePath;
@@ -119,7 +144,7 @@ namespace WebProject.Controllers
         public async Task<ActionResult> AddPicture(IFormFile file)
         {
             var picPath = "";
-            ApplicationUser user3 = await _userManager.GetUserAsync(User);
+            ApplicationUser user = await _userManager.GetUserAsync(User);
             if (file != null)
             {
                 if (file.Length > 0)
@@ -134,7 +159,7 @@ namespace WebProject.Controllers
                     }
 
                     //var entity = _context.profilePictures.Where(item => item.UserProfile.Id == user.Id).FirstOrDefault();
-                    ProfilePicture entity = _repository.Find(item => item.UserProfile.Id == user3.Id).FirstOrDefault();
+                    ProfilePicture entity = _repository.Find(item => item.UserProfile.Id == user.Id).FirstOrDefault();
                     if (entity != null)
                     {
                         var path = Path.Combine(webRootPath, entity.ProfilePicturePath);
@@ -142,26 +167,28 @@ namespace WebProject.Controllers
                         {
                             System.IO.File.Delete(path);
                         }
-                        entity.ProfilePicturePath = "Images/" + user3.Id + "_" + fileName;
+                        entity.ProfilePicturePath = "Images/" + user.Id + "_" + fileName;
                         await _repository.Update(entity);
                         picPath = entity.ProfilePicturePath;
                     }
                     else
                     {
                         ProfilePicture profilePicture = new ProfilePicture();
-                        profilePicture.UserProfile = user3;
-                        profilePicture.ProfilePicturePath = "Images/" + user3.Id + "_" + fileName;
+                        profilePicture.UserProfile = user;
+                        profilePicture.ProfilePicturePath = "Images/" + user.Id + "_" + fileName;
                         //_context.profilePictures.Add(profilePicture);
                         await _repository.Add(profilePicture);
                         picPath = profilePicture.ProfilePicturePath;
                     }
 
-                    string fullPath = Path.Combine(newPath, user3.Id + "_" + fileName);
+                    string fullPath = Path.Combine(newPath, user.Id + "_" + fileName);
 
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
                         await file.CopyToAsync(stream);
                     }
+
+                    _cache.Remove(user.Id);
                 }
             }
             return Json(picPath);
@@ -199,6 +226,8 @@ namespace WebProject.Controllers
                 user.BloodGroup = model.UserDetails.BloodGroup;
 
                 IdentityResult result = await _userManager.UpdateAsync(user);
+
+                _cache.Remove(user.UserName);
 
             }
             return Json("/Profile/Index");
