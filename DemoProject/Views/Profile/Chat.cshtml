@@ -1,12 +1,29 @@
 ﻿
-<chat-hub inline-template>
+<chat-hub inline-template 
+          userid="@ViewBag.UserId" username="@ViewBag.UserName" 
+          name="@ViewBag.Name" picpath="@ViewBag.ProfilePicturePath"
+          touserid="@ViewBag.ToUserId" tousername="@ViewBag.ToUserName" 
+          toname="@ViewBag.ToName" topicpath="@ViewBag.ToProfilePicturePath">
     <div>
         <div class="container">
+            <div class="col-4 hide"><input type="text" id="userId" v-model="UserId" /></div>
+            <div class="col-4 hide"><input type="text" id="username" v-model="UserName" /></div>
+            <div class="col-4 hide"><input type="text" id="name" v-model="Name" /></div>
+
+            <div class="col-4 hide"><input type="text" id="touserId" v-model="ToUserId" /></div>
+            <div class="col-4 hide"><input type="text" id="tousername" v-model="ToUserName" /></div>
+            <div class="col-4 hide"><input type="text" id="toname" v-model="ToName" /></div>
+
+
             <div class="row">&nbsp;</div>
-            <div class="row">
-                <div class="col-2">User</div>
-                <div class="col-4"><input type="text" id="userInput" /></div>
-            </div>
+            @*<div class="row">
+            <div class="col-2">UserId</div>
+            <div class="col-4"><input type="text" id="userId" /></div>
+        </div>*@
+            @*<div class="row">
+            <div class="col-2">User</div>
+            <div class="col-4"><input type="text" id="userInput" /></div>
+        </div>*@
             <div class="row">
                 <div class="col-2">Message</div>
                 <div class="col-4"><input type="text" id="messageInput" /></div>
@@ -14,7 +31,12 @@
             <div class="row">&nbsp;</div>
             <div class="row">
                 <div class="col-6">
-                    <input type="button" id="sendButton" value="Send Message" />
+                    <input type="button" id="sendButton" value="Send Message to all" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <input type="button" id="sendButton2" value="Send Private Message" />
                 </div>
             </div>
         </div>
@@ -25,7 +47,7 @@
         </div>
         <div class="row">
             <div class="col-6">
-                <ol id="messagesList"></ol>
+                <ul id="messagesList"></ul>
             </div>
         </div>
         <component :is="'script'" src="/js/Chat.js" async></component>

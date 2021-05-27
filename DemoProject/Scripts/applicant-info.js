@@ -10,6 +10,9 @@
     methods: {
         viewcv() {
             window.location.href = '/' + this.User.UserName
+        },
+        sendmsg() {
+            window.location.href = '/Profile/Chat?userid=' + this.User.Id
         }
     }
 })

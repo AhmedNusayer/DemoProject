@@ -16,14 +16,30 @@ connection.on("ReceiveMessage", function (user, message) {
 
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
+    var id = document.getElementById("userId").value;
+    var username = document.getElementById("username").value;
+    var name = document.getElementById("name").value;
+    connection.invoke("OnConnect", id, username, name).catch(function (err) {
+        return console.error(err.toString());
+    });
 }).catch(function (err) {
     return console.error(err.toString());
 });
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
-    var user = document.getElementById("userInput").value;
+    var user = document.getElementById("username").value;
     var message = document.getElementById("messageInput").value;
     connection.invoke("SendMessage", user, message).catch(function (err) {
+        return console.error(err.toString());
+    });
+    event.preventDefault();
+});
+
+document.getElementById("sendButton2").addEventListener("click", function (event) {
+    var user = document.getElementById("username").value;
+    var message = document.getElementById("messageInput").value;
+    var touser = document.getElementById("touserId").value;
+    connection.invoke("SendPrivateMessage", touser, user, message).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();

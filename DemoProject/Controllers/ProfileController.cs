@@ -269,8 +269,35 @@ namespace WebProject.Controllers
             return View();
         }
 
-        public IActionResult Chat()
+        [Authorize]
+        public async Task<IActionResult> Chat(string userid)
         {
+            ApplicationUser userto = await _userManager.FindByIdAsync(userid);
+            if (userto != null)
+            {
+                ViewBag.ToUserId = userid;
+                ViewBag.ToUserName = userto.UserName;
+                ViewBag.ToName = userto.Name;
+                var picture = _repository.Find(item => item.UserProfile.Id == userid).FirstOrDefault();
+                if (picture != null)
+                {
+                    ViewBag.ToProfilePicturePath = picture.ProfilePicturePath;
+                }
+            }
+
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                ViewBag.UserId = user.Id;
+                ViewBag.UserName = user.UserName;
+                ViewBag.Name = user.Name;
+                var picture = _repository.Find(item => item.UserProfile.Id == user.Id).FirstOrDefault();
+                if (picture != null)
+                {
+                    ViewBag.ProfilePicturePath = picture.ProfilePicturePath;
+                }
+            }
+
             return View();
         }
 
