@@ -18,6 +18,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using InfrastructureProject.Data;
+using WebProject.Hubs;
 
 namespace WebProject
 {
@@ -36,9 +37,9 @@ namespace WebProject
             services.AddDbContext<AppDbContext>(options =>
             options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
             services.AddControllers();
+            services.AddSignalR();
             services.AddMvcCore();
             services.AddControllersWithViews();
-
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
@@ -87,6 +88,7 @@ namespace WebProject
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<ChatHub>("/chathub");
             });
         }
     }
