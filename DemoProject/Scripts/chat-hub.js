@@ -12,11 +12,14 @@
             TopicturePath: this.topicpath,
             dpPlaceholder: "/Images/dp_placeholder.png",
             Message: "",
-            Messages: JSON.parse(this.msg)
+            Messages: JSON.parse(this.msg),
+            msgsender: "",
+            receivedmsg: ""
         }
     },
     methods: {
         sendMessage() {
+
             var self = this
             var B = {
                 FromUserID: self.UserId,
@@ -31,8 +34,37 @@
                     model: B
                 },
                 success: function (result) {
+                    self.Messages.push({
+                        GUID: Date.now().toString(),
+                        MessageDetails: self.Message,
+                        Time: Date.now(),
+                        UserFrom: {
+                            Id: self.UserId
+                        },
+                        UserTo: {
+                            Id: self.ToUserId
+                        }
+                    })
+                    self.Message = ""
                 },
             })
+        }
+    },
+    watch: {
+        receivedmsg: function (newValue) {
+            this.Messages.push({
+                GUID: Date.now().toString(),
+                MessageDetails: newValue,
+                Time: Date.now(),
+                UserFrom: {
+                    Id: this.msgsender
+                },
+                UserTo: {
+                    Id: this.UserId
+                }
+            })
+
+            this.receivedmsg = newValue
         }
     }
 })

@@ -41,8 +41,8 @@
                             var picture = repository.Find(c => c.UserProfile.Id == user.Id).FirstOrDefault();
                             <ul class="navbar-nav nav ml-auto">
                                 <li class="nav-item">
-                                    <a asp-area="" asp-controller="Profile" asp-action="ChatList">
-                                        <i style="font-size: 30px; padding-top: 10px; padding-right: 10px; color: seashell;" class="far fa-comment-dots"></i>
+                                    <a asp-area="" asp-controller="Profile" asp-action="ChatList" onclick="changecolor">
+                                        <i id="messageicon" style="font-size: 30px; padding-top: 10px; padding-right: 10px; color: seashell;" class="fas fa-comment-dots"></i>
                                     </a>
                                 </li>
 

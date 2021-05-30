@@ -12,3 +12,11 @@ connection.start().then(function () {
 }).catch(function (err) {
     return console.error(err.toString());
 });
+
+connection.on("ReceiveMessage", function (userid, message) {
+    document.getElementById("messageicon").style.color = "red";
+});
+
+function changecolor() {
+    document.getElementById("messageicon").style.color = "seashell";
+}

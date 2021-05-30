@@ -330,10 +330,10 @@ namespace WebProject.Controllers
         public async Task<IActionResult> ChatList()
         {
             ApplicationUser user = await _userManager.GetUserAsync(User);
-            var mymessage = _msgrepository.Find(x => x.UserFrom.Id == user.Id);//.GroupBy(x => x.UserTo.Id).Select(g => g.FirstOrDefault());
-            var tomessage = _msgrepository.Find(x => x.UserTo.Id == user.Id);//.GroupBy(x => x.UserFrom.Id).Select(g => g.FirstOrDefault()).ToList();
+            var mymessage = _msgrepository.Find(x => x.UserFrom.Id == user.Id);
+            var tomessage = _msgrepository.Find(x => x.UserTo.Id == user.Id);
 
-            var messages = mymessage.Concat(tomessage);//.ToListAsync();  // tomessage; //_msgrepository.Find(x => x.UserFrom.Id == user.Id || x.UserTo.Id == user.Id); //.OrderBy(x => x.Time);
+            var messages = mymessage.Concat(tomessage);
 
             List<Message> finalmessages = new List<Message>();
             List<string> alreadyase = new List<string>();
