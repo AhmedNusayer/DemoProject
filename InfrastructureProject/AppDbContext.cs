@@ -33,6 +33,7 @@ namespace InfrastructureProject
 
         public DbSet<Notification> notifications { get; set; }
 
+        public DbSet<Message> messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

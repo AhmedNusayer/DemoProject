@@ -28,6 +28,7 @@ namespace WebProject.Controllers
         private readonly IRepository<ProfilePicture> _repository;
         private readonly IRepository<Education> _education;
         private readonly IRepository<Notification> _notificationRepository;
+        private readonly IRepository<Message> _msgrepository;
 
         public ProfileController(IWebHostEnvironment hostingEnv, UserManager<ApplicationUser> userManager, AppDbContext context, IMemoryCache memoryCache)
         {
@@ -38,7 +39,7 @@ namespace WebProject.Controllers
             _repository = new GenericRepository<ProfilePicture>(context);
             _education = new GenericRepository<Education>(context);
             _notificationRepository = new GenericRepository<Notification>(context);
-
+            _msgrepository = new GenericRepository<Message>(context);
         }
 
         [Authorize]
@@ -298,13 +299,69 @@ namespace WebProject.Controllers
                 }
             }
 
-            return View();
-        }
-        [Authorize]
-        public IActionResult ChatList()
-        {
+            var messages =  _msgrepository.Find(x=> (x.UserFrom.Id == user.Id && x.UserTo.Id == userto.Id) || (x.UserFrom.Id == userto.Id && x.UserTo.Id == user.Id)).OrderBy(x => x.Time);
+
+            ViewBag.Messages = JsonConvert.SerializeObject(messages);
+
             return View();
         }
 
+        [Authorize]
+        public async Task<IActionResult> SendMessage(MessageDetail model)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser fromuser = await _userManager.FindByIdAsync(model.FromUserID);
+                ApplicationUser touser = await _userManager.FindByIdAsync(model.ToUserID);
+
+                Message newmessage = new Message()
+                {
+                    MessageDetails = model.Message,
+                    UserFrom = fromuser,
+                    UserTo = touser,
+                    Time = DateTime.Now
+                };
+                await _msgrepository.Add(newmessage);
+            }
+            return Json("");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> ChatList()
+        {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+            var mymessage = _msgrepository.Find(x => x.UserFrom.Id == user.Id);//.GroupBy(x => x.UserTo.Id).Select(g => g.FirstOrDefault());
+            var tomessage = _msgrepository.Find(x => x.UserTo.Id == user.Id);//.GroupBy(x => x.UserFrom.Id).Select(g => g.FirstOrDefault()).ToList();
+
+            var messages = mymessage.Concat(tomessage);//.ToListAsync();  // tomessage; //_msgrepository.Find(x => x.UserFrom.Id == user.Id || x.UserTo.Id == user.Id); //.OrderBy(x => x.Time);
+
+            List<Message> finalmessages = new List<Message>();
+            List<string> alreadyase = new List<string>();
+
+            foreach (var msg in messages)
+            {
+                if(msg.UserFrom.Id == user.Id)
+                {
+                    if (!alreadyase.Contains(msg.UserTo.Id))
+                    {
+                        finalmessages.Add(msg);
+                        alreadyase.Add(msg.UserTo.Id);
+                    }
+                }
+                else
+                {
+                    if (!alreadyase.Contains(msg.UserFrom.Id))
+                    {
+                        finalmessages.Add(msg);
+                        alreadyase.Add(msg.UserFrom.Id);
+                    }
+                }
+            }
+
+            ViewBag.Messages = JsonConvert.SerializeObject(finalmessages);
+            ViewBag.UserId = user.Id;
+            return View();
+        }
+        
     }
 }

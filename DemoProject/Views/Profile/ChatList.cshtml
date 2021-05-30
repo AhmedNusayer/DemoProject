@@ -1,17 +1,20 @@
-﻿<chat-list inline-template >
+﻿<chat-list inline-template msg="@ViewBag.Messages" userid="@ViewBag.UserId">
     <div>
         <h3 style="font-weight: 600; font-size: 35px;">Messages</h3>
         <br />
-        @*<div v-if="!Notifications.length" style="font-size: 18px;">No notifications available..</div>
-        <div v-for="notification in Notifications">
-            <a class="card mb-3" v-on:click="viewinfo(notification.userfrom.Id)" style="background-image:linear-gradient(to right,rgb(4, 255, 255),#acb8b8);border-color: #04ffff;">
+        <div v-if="!Messages.length" style="font-size: 18px;">No Messages available..</div>
+        <div v-for="msg in Messages">
+            <a class="card mb-3" v-on:click="viewchat(msg)" style="background-image:linear-gradient(to right,rgb(4, 255, 255),#acb8b8);border-color: #04ffff;">
                 <div class="text-dark" style="padding:10px;">
-                    <p class="card-text">
-                        
+                    <p class="card-text" v-if="msg.UserFrom.Id == UserId">
+                        {{msg.UserTo.Name}}
+                    </p>
+                    <p class="card-text" v-if="msg.UserTo.Id == UserId">
+                        {{msg.UserFrom.Name}}
                     </p>
                 </div>
             </a>
-        </div>*@
+        </div>
     </div>
 </chat-list>
 

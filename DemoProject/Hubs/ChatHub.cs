@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using EntityProject;
+using InfrastructureProject;
+using InfrastructureProject.Data;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,12 +11,18 @@ using System.Threading.Tasks;
 
 namespace WebProject.Hubs
 {
-
     public class ChatHub : Hub
     {
+        /*private readonly UserManager<ApplicationUser> userManager;
+        private readonly IRepository<Message> _repository;*/
         static List<UserDetail> ConnectedUsers = new List<UserDetail>();
-        static List<MessageDetail> CurrentMessage = new List<MessageDetail>();
-        static string aa = "1";
+        
+        public ChatHub()//UserManager<ApplicationUser> userManager, AppDbContext context)
+        {
+            /*this.userManager = userManager;
+            _repository = new GenericRepository<Message>(context);*/
+        }
+
         public async Task SendMessage(string user, string message)
         {
             await Clients.All.SendAsync("ReceiveMessage", user, message);
@@ -32,60 +43,31 @@ namespace WebProject.Hubs
         }
 
 
-        public void SendPrivateMessage(string toUserId, string user, string message)
+        public async void SendPrivateMessage(string toUserId, string fromUserId, string message)
         {
-            var targetlist = getconnectionID(toUserId);
+            //ApplicationUser fromuser = await userManager.FindByIdAsync(fromUserId);
+            //ApplicationUser touser = await userManager.FindByIdAsync(toUserId);
+
+            /*Message newmessage = new Message()
+            {
+                MessageDetails = message,
+                UserFrom = null,
+                UserTo = null,
+                Time = DateTime.Now
+            };
+*/
+            List<UserDetail> targetlist = getconnectionID(toUserId);
             foreach (var targetid in targetlist)
             {
-                Clients.Clients(targetid.ConnectionId).SendAsync("ReceiveMessage", user, message);
+                await Clients.Clients(targetid.ConnectionId).SendAsync("ReceiveMessage", fromUserId, message);
             }
+            
+            //await _repository.Add(newmessage);
         }
 
-        private List<UserDetail> getconnectionID(string toUserId)
+        private List<UserDetail> getconnectionID(string userid)
         {
-            return ConnectedUsers.FindAll(x => x.UserID == toUserId);
+            return ConnectedUsers.FindAll(x => x.UserID == userid);
         }
-        /*
-public void RequestLastMessage(string FromUserID, string ToUserID)
-{
-   List<MessageDetail> CurrentChatMessages = (from u in CurrentMessage where ((u.FromUserID == FromUserID && u.ToUserID == ToUserID) || (u.FromUserID == ToUserID && u.ToUserID == FromUserID)) select u).ToList();
-   //send to caller user
-   Clients.Caller.GetLastMessages(ToUserID, CurrentChatMessages);
-}
-
-public void SendUserTypingRequest(string toUserId)
-{
-   string strfromUserId = (ConnectedUsers.Where(u => u.ConnectionId == Context.ConnectionId).Select(u => u.UserID).FirstOrDefault()).ToString();
-
-   List<UserDetail> ToUsers = ConnectedUsers.Where(x => x.UserID == toUserId).ToList();
-
-   foreach (var ToUser in ToUsers)
-   {
-       // send to                                                                                            
-       Clients.Client(ToUser.ConnectionId).ReceiveTypingRequest(strfromUserId);
-   }
-}
-
-public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)
-{
-   var item = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
-   if (item != null)
-   {
-       ConnectedUsers.Remove(item);
-       if (ConnectedUsers.Where(u => u.UserID == item.UserID).Count() == 0)
-       {
-           var id = item.UserID.ToString();
-           Clients.All.onUserDisconnected(id, item.UserName);
-       }
-   }
-   return base.OnDisconnected(stopCalled);
-}
-
-private void AddMessageinCache(MessageDetail _MessageDetail)
-{
-   CurrentMessage.Add(_MessageDetail);
-   if (CurrentMessage.Count > 100)
-       CurrentMessage.RemoveAt(0);
-}*/
     }
 }
