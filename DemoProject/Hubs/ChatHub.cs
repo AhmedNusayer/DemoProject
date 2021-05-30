@@ -20,9 +20,7 @@ namespace WebProject.Hubs
         public void OnConnect(string userid, string username, string name)
         {
             var id = Context.ConnectionId;
-            userid = userid;
             ConnectedUsers.Add(new UserDetail { ConnectionId = id, UserID=userid, UserName=username, Name=name});
-            
         }
 
         public override Task OnDisconnectedAsync(Exception exception)

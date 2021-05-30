@@ -13,7 +13,8 @@ import "./apply-form.js"
 import "./notification-list.js"
 import "./applicant-info.js"
 import "./access-denied.js"
-import "./chat-hub.js";
+import "./chat-hub.js"
+import "./chat-list.js"
 
 new Vue({
     el: "#app",

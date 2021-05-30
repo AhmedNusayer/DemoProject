@@ -1,9 +1,7 @@
 ﻿"use strict";
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
-
 //Disable send button until connection is established
-document.getElementById("sendButton").disabled = true;
+//document.getElementById("sendButton").disabled = true;
 
 connection.on("ReceiveMessage", function (user, message) {
     var li = document.createElement("li");
@@ -14,17 +12,6 @@ connection.on("ReceiveMessage", function (user, message) {
     li.textContent = `${user} says ${message}`;
 });
 
-connection.start().then(function () {
-    document.getElementById("sendButton").disabled = false;
-    var id = document.getElementById("userId").value;
-    var username = document.getElementById("username").value;
-    var name = document.getElementById("name").value;
-    connection.invoke("OnConnect", id, username, name).catch(function (err) {
-        return console.error(err.toString());
-    });
-}).catch(function (err) {
-    return console.error(err.toString());
-});
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var user = document.getElementById("username").value;

@@ -300,6 +300,11 @@ namespace WebProject.Controllers
 
             return View();
         }
+        [Authorize]
+        public IActionResult ChatList()
+        {
+            return View();
+        }
 
     }
 }
