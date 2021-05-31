@@ -43,8 +43,10 @@ document.getElementById("send").addEventListener("click", function (event) {
     var user = document.getElementById("userId").value;
     var message = document.getElementById("messageInput").value;
     var touser = document.getElementById("touserId").value;
-    connection.invoke("SendPrivateMessage", touser, user, message).catch(function (err) {
-        return console.error(err.toString());
-    });
+    if (message != "") {
+        connection.invoke("SendPrivateMessage", touser, user, message).catch(function (err) {
+            return console.error(err.toString());
+        });
+    }
     event.preventDefault();
 });

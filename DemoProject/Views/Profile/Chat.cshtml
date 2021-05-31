@@ -45,8 +45,8 @@
             }
 
             @*h4.card-title {
-                font-size: 17px
-                }*@
+        font-size: 17px
+        }*@
 
             .card-header>*:last-child {
             margin-right: 0
@@ -139,7 +139,7 @@
             background-color: #f5f6f7;
             border-radius: 3px;
             font-weight: 100;
-            color: #9b9b9b
+            color: black;
             }
 
             .media>* {
@@ -214,7 +214,7 @@
             .media-chat.media-chat-reverse .media-body p {
             float: right;
             clear: right;
-            background-color: #48b0f7;
+            background-color: #4380a9;
             color: #fff
             }
 
@@ -261,16 +261,16 @@
             }
 
             @*button,
-                input,
-                optgroup,
-                select,
-                textarea {
-                font-family: Roboto, sans-serif;
-                font-weight: 300
-                }*@
+        input,
+        optgroup,
+        select,
+        textarea {
+        font-family: Roboto, sans-serif;
+        font-weight: 300
+        }*@
 
             .publisher-btn {
-            background-color: transparent;
+            background-color: #c9ece2;
             border: none;
             color: #8b95a5;
             font-size: 16px;
@@ -358,15 +358,15 @@
                     <div class="row container d-flex justify-content-center">
                         <div class="col-md-10">
                             <div class="card card-bordered">
-                                <div class="card-header">
+                                <div class="card-header" style="background-color: deepskyblue;">
                                     <h4 class="card-title">
-                                        <strong>{{ToName}}</strong>
+                                        <strong style="font-weight:700;">{{ToName}}</strong>
                                         <p style="font-size:13px" class="card-title">{{ToUserName}}</p>
                                     </h4>
                                     @*<a class="btn btn-xs btn-secondary" href="#" data-abc="true">Let's Chat App</a>*@
 
                                 </div>
-                                <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:450px !important;">
+                                <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:450px !important;background-color: aquamarine;">
 
                                     <div v-for="msg in Messages" :key="msg.GUID">
                                         <div v-if="msg.UserFrom.Id == ToUserId" class="media media-chat" style="padding: 2px;">

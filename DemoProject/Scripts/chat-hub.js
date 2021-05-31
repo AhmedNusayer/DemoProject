@@ -19,50 +19,54 @@
     },
     methods: {
         sendMessage() {
+            if (this.Messages != "") {
 
-            var self = this
-            var B = {
-                FromUserID: self.UserId,
-                ToUserID: self.ToUserId,
-                Message: self.Message
+                var self = this
+                var B = {
+                    FromUserID: self.UserId,
+                    ToUserID: self.ToUserId,
+                    Message: self.Message
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Profile/SendMessage",
+                    data: {
+                        model: B
+                    },
+                    success: function (result) {
+                        self.Messages.push({
+                            GUID: Date.now().toString(),
+                            MessageDetails: self.Message,
+                            Time: Date.now(),
+                            UserFrom: {
+                                Id: self.UserId
+                            },
+                            UserTo: {
+                                Id: self.ToUserId
+                            }
+                        })
+                        self.Message = ""
+                    },
+                })
             }
-
-            $.ajax({
-                type: "POST",
-                url: "/Profile/SendMessage",
-                data: {
-                    model: B
-                },
-                success: function (result) {
-                    self.Messages.push({
-                        GUID: Date.now().toString(),
-                        MessageDetails: self.Message,
-                        Time: Date.now(),
-                        UserFrom: {
-                            Id: self.UserId
-                        },
-                        UserTo: {
-                            Id: self.ToUserId
-                        }
-                    })
-                    self.Message = ""
-                },
-            })
         }
     },
     watch: {
         receivedmsg: function (newValue) {
-            this.Messages.push({
-                GUID: Date.now().toString(),
-                MessageDetails: newValue,
-                Time: Date.now(),
-                UserFrom: {
-                    Id: this.msgsender
-                },
-                UserTo: {
-                    Id: this.UserId
-                }
-            })
+            if (this.msgsender == this.ToUserId) {
+                this.Messages.push({
+                    GUID: Date.now().toString(),
+                    MessageDetails: newValue,
+                    Time: Date.now(),
+                    UserFrom: {
+                        Id: this.msgsender
+                    },
+                    UserTo: {
+                        Id: this.UserId
+                    }
+                })
+            }
 
             this.receivedmsg = newValue
         }
