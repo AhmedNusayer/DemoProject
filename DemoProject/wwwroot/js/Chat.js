@@ -50,3 +50,12 @@ document.getElementById("send").addEventListener("click", function (event) {
     }
     event.preventDefault();
 });
+
+
+var element = document.getElementById("chat-content");
+element.scrollTop = element.scrollHeight;
+/*function updateScroll() {
+    var element = document.getElementById("chat-content");
+    element.scrollTop = element.scrollHeight;
+}
+setInterval(updateScroll, 1000);*/

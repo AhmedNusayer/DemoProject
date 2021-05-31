@@ -47,9 +47,17 @@
                             }
                         })
                         self.Message = ""
+                        setTimeout(self.scrolldown, 500);
                     },
                 })
             }
+        },
+        scrolldown() {
+            var element = document.getElementById("chat-content");
+            element.scrollTop = element.scrollHeight;
+        },
+        viewcv() {
+            window.location.href = '/' + this.ToUserName
         }
     },
     watch: {
@@ -67,8 +75,9 @@
                     }
                 })
             }
-
+            setTimeout(this.scrolldown, 500);
             this.receivedmsg = newValue
         }
-    }
+    },
+
 })

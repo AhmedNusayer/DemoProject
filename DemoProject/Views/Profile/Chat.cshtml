@@ -359,10 +359,12 @@
                         <div class="col-md-10">
                             <div class="card card-bordered">
                                 <div class="card-header" style="background-color: deepskyblue;">
-                                    <h4 class="card-title">
-                                        <strong style="font-weight:700;">{{ToName}}</strong>
-                                        <p style="font-size:13px" class="card-title">{{ToUserName}}</p>
-                                    </h4>
+                                    <a v-on:click="viewcv">
+                                        <h4 class="card-title" >
+                                            <strong style="font-weight:700;">{{ToName}}</strong>
+                                            <p style="font-size:13px" class="card-title">{{ToUserName}}</p>
+                                        </h4>
+                                    </a>
                                     @*<a class="btn btn-xs btn-secondary" href="#" data-abc="true">Let's Chat App</a>*@
 
                                 </div>
@@ -372,14 +374,14 @@
                                         <div v-if="msg.UserFrom.Id == ToUserId" class="media media-chat" style="padding: 2px;">
                                             <img class="avatar" v-if="TopicturePath" :src="'/' + TopicturePath" alt="...">
                                             <img class="avatar" v-if="!TopicturePath" :src="dpPlaceholder" alt="...">
-                                            <div class="media-body">
+                                            <div class="media-body" :title="new Date(msg.Time).toUTCString()">
                                                 <p>{{msg.MessageDetails}}</p>
                                                 @*<p class="meta"><time datetime="2018">00:12</time></p>*@
                                             </div>
                                         </div>
 
                                         <div v-if="msg.UserFrom.Id == UserId" class="media media-chat media-chat-reverse" style="padding: 2px;">
-                                            <div class="media-body">
+                                            <div class="media-body" :title="new Date(msg.Time).toUTCString()">
                                                 <p>{{msg.MessageDetails}}</p>
                                                 @*<p class="meta"><time datetime="2018">00:12</time></p>*@
                                             </div>
