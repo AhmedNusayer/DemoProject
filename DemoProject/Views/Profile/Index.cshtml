@@ -3,28 +3,380 @@
     ViewBag.Title = "Profile";
 }
 
-<profile-info inline-template picpath="@ViewBag.ProfilePicturePath" 
-              name="@ViewBag.user.Name" username="@ViewBag.user.UserName" 
-              email="@ViewBag.user.Email" phonenumber="@ViewBag.user.PhoneNumber"
-              address="@ViewBag.user.Address" dateofbirth="@ViewBag.user.DateofBirth">
-    <div class="row">
-        <div class="col-md-5">
-            <div>
-                <img v-if="picturePath" :src="'/' + picturePath" height="260" width="260" class="rounded-circle" data-original-title="Usuario">
-                <img v-if="!picturePath" alt="" height="260" width="260" title="" class="rounded-circle"
-                     :src="dpPlaceholder"
-                     data-original-title="Usuario">
+<profile-info inline-template picpath="@ViewBag.ProfilePicturePath"
+              user="@ViewBag.user">
+    <div>
+        <component :is="'style'" scoped>
 
-                <h1>Hello {{Name}}</h1>
-                <p>User Name : {{UserName}}</p>
-                <p> Email : {{Email}}</p>
-                <p>Phone Number : {{PhoneNumber}}</p>
-                <p>Address : {{Address}}</p>
-                <p>Date of Birth : {{DateofBirth}}</p>
-                <form method="post" asp-controller="Profile" asp-action="Update">
-                    <input type='submit' value="Update Profile" />
-                </form>
+            body {
+            background-color: #f9f9fa
+            }
+
+            .padding {
+            padding: 0.5rem
+            }
+
+            .user-card-full {
+            overflow: hidden
+            }
+
+            .card {
+            border-radius: 5px;
+            -webkit-box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+            box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+            border: none;
+            margin-bottom: 30px
+            }
+
+            .m-r-0 {
+            margin-right: 0px
+            }
+
+            .m-l-0 {
+            margin-left: 0px
+            }
+
+            .bg-c-lite-green {
+            background: -webkit-gradient(linear, left top, right top, from(#f29263), to(#ee5a6f));
+            background: linear-gradient(to right, #ee5a6f, #f29263)
+            }
+
+            .user-profile {
+            padding: 20px 0
+            }
+
+            .card-block {
+            padding: 1.25rem
+            }
+
+            .m-b-25 {
+            margin-bottom: 25px
+            }
+
+            .img-radius {
+            border-radius: 5px
+            }
+
+            h6 {
+            font-size: 14px
+            }
+
+            .card .card-block p {
+            line-height: 25px
+            }
+
+            .card-block {
+            padding: 1.25rem
+            }
+
+            .b-b-default {
+            border-bottom: 1px solid #e0e0e0
+            }
+
+            .m-b-20 {
+            margin-bottom: 20px
+            }
+
+            .p-b-5 {
+            padding-bottom: 5px !important
+            }
+
+            .card .card-block p {
+            line-height: 25px
+            }
+
+            .m-b-10 {
+            margin-bottom: 10px
+            }
+
+            .text-muted {
+            color: #919aa3 !important
+            }
+
+            .b-b-default {
+            border-bottom: 1px solid #e0e0e0
+            }
+
+            .f-w-600 {
+            font-weight: 600
+            }
+
+            .h-w-s {
+            font-weight: 700;
+            font-size: 22px
+            }
+
+            .m-b-20 {
+            margin-bottom: 20px
+            }
+
+            .m-t-40 {
+            margin-top: 20px
+            }
+
+            .p-b-5 {
+            padding-bottom: 5px !important
+            }
+
+            .m-b-10 {
+            margin-bottom: 10px
+            }
+
+            .m-t-40 {
+            margin-top: 20px
+            }
+
+            .user-card-full .social-link li {
+            display: inline-block
+            }
+
+            .user-card-full .social-link li a {
+            font-size: 20px;
+            margin: 0 10px 0 0;
+            -webkit-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out
+            }
+
+            <!--Snacbar-->
+            .snackbar {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            text-align: center;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+            border-radius: 20px;
+            padding: 10px;
+            background-color: #dfb4b4;
+            color: #000000;
+            }
+
+            .snackbar_show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
+            animation: fadein 0.5s, fadeout 0.5s 1.5s;
+            min-width: 250px;
+            margin-left: -125px;
+            text-align: center;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+            border-radius: 20px;
+            padding: 10px;
+            background-color: #dfb4b4;
+            color: #000000;
+            }
+
+            @@-webkit-keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+            }
+
+            @@keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+            }
+
+            @@-webkit-keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+            }
+
+            @@keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+            }
+
+        </component>
+
+        <div class="page-content page-container" id="page-content">
+            <div class="padding">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-xl-12 col-md-12">
+                        <div class="card user-card-full">
+                            <div class="row m-l-0 m-r-0">
+                                <div class="col-sm-4 bg-c-lite-green user-profile">
+                                    <div class="card-block text-center text-white">
+                                        <div class="m-b-25">
+                                            <img v-if="picturePath" :src="'/' + picturePath" height="200" width="200" class="rounded-circle" data-original-title="Usuario" style="background-color:#b7e1ea;">
+                                            <img v-if="!picturePath" alt="" height="200" width="200" title="" class="rounded-circle"
+                                                 :src="dpPlaceholder" style="background-color:#b7e1ea;"
+                                                 data-original-title="Usuario">
+                                        </div>
+                                        <h5 style="font-size: 30px; font-weight:700;">{{UserInfo.Name}}</h5>
+                                        <p>{{UserInfo.Profession}}</p>
+                                        <br />
+                                        <p>{{UserInfo.Intro}}</p>
+                                        <br />
+                                        <div id="snac" class="snackbar">CV Url Copied to Clipboard</div>
+                                        <p>
+                                            <a class="btn" v-on:click="copyToClipboard"><i class="far fa-copy"></i></a>
+                                            Public CV Url: <a id="cvurl" :href="'@Url.Content("~/")'+UserInfo.UserName" style="color:inherit">@Url.Action("Index", "Home", null, "https"){{UserInfo.UserName}}</a>
+                                        </p>
+                                        <br />
+                                        <div class="text-left">
+                                            <h5 class="h-w-s" style="padding-left:20px">Skills</h5>
+                                            <ul>
+                                                <li v-for="skill in UserInfo.Skills">
+                                                    {{skill.SkillName}}
+                                                    -
+                                                    {{skill.Level}}%
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <h6 class="f-w-600">
+                                            {{UserInfo.Knowledge}}
+                                        </h6>
+                                        <h6 class="f-w-600" style="position:absolute; bottom:10px; margin-left:70px">
+                                            Selected Template:
+                                            {{UserInfo.Template}}
+                                        </h6>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-8" style="background-image: linear-gradient(to right, white,ivory);">
+                                    <div class="card-block">
+                                        <h5 class="m-b-20 p-b-5 b-b-default h-w-s">Information</h5>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">UserName</p>
+                                                <h6 class="text-muted f-w-400">{{UserInfo.UserName}}</h6>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">Email</p>
+                                                <a class="text-muted f-w-400 h6" :href='"mailto:" + UserInfo.Email'>{{UserInfo.Email}}</a>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">PhoneNumber</p>
+                                                <h6 class="text-muted f-w-400">{{UserInfo.PhoneNumber}}</h6>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">Address</p>
+                                                <h6 class="text-muted f-w-400">{{UserInfo.Address}}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">DateofBirth</p>
+                                                <h6 class="text-muted f-w-400">{{UserInfo.DateofBirth}}</h6>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">Nationality</p>
+                                                <h6 class="text-muted f-w-400">{{UserInfo.Nationality}}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">Gender</p>
+                                                <h6 class="text-muted f-w-400">{{UserInfo.Gender}}</h6>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">BloodGroup</p>
+                                                <h6 class="text-muted f-w-400">{{UserInfo.BloodGroup}}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">Github</p>
+                                                <a class="text-muted f-w-400 h6" :href="UserInfo.Github">{{UserInfo.Github}}</a>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">Linkedin</p>
+                                                <a class="text-muted f-w-400 h6" :href="UserInfo.Linkedin">{{UserInfo.Linkedin}}</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">Website</p>
+                                                <a class="text-muted f-w-400 h6" :href="UserInfo.Website">{{UserInfo.Website}}</a>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">Hobby</p>
+                                                <h6 class="text-muted f-w-400">{{UserInfo.Hobby}}</h6>
+                                            </div>
+                                        </div>
+
+                                        <h5 class="m-b-20 m-t-40 p-b-5 b-b-default h-w-s">Education</h5>
+                                        <div class="row">
+                                            <div v-for="education in UserInfo.Educations" class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">{{education.Degree}}</p>
+                                                <h6 class="text-muted f-w-400">{{education.Institution}}</h6>
+                                                <h6 class="text-muted f-w-400">{{education.FieldOfStudy}}</h6>
+                                                <h6 class="text-muted f-w-400">{{education.StartDate}} - {{education.EndDate}}</h6>
+                                                <h6 class="text-muted f-w-400">{{education.Grade}}</h6>
+                                                <h6 class="text-muted f-w-400">{{education.Description}}</h6>
+                                            </div>
+                                        </div>
+
+                                        <h5 class="m-b-20 m-t-40 p-b-5 b-b-default h-w-s">Experience</h5>
+                                        <div class="row">
+                                            <div v-for="experience in UserInfo.Experiences" class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">{{experience.Title}}</p>
+                                                <h6 class="text-muted f-w-400">{{experience.Company}}</h6>
+                                                <h6 class="text-muted f-w-400">{{experience.EmploymentType}}</h6>
+                                                <h6 class="text-muted f-w-400">{{experience.Location}}</h6>
+                                                <h6 class="text-muted f-w-400">{{experience.StartDate}} - {{experience.EndDate}}</h6>
+                                                <h6 class="text-muted f-w-400">{{experience.Description}}</h6>
+                                            </div>
+                                        </div>
+
+                                        <h5 class="m-b-20 m-t-40 p-b-5 b-b-default h-w-s">Project</h5>
+                                        <div class="row">
+                                            <div v-for="project in UserInfo.Projects" class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">{{project.Name}}</p>
+                                                <h6 class="text-muted f-w-400">
+                                                    {{project.Platform}}
+                                                    <span v-if="project.Year" class="text-muted f-w-400 h6"> | {{project.Year}}</span>
+                                                </h6>
+
+
+                                                <h6 class="text-muted f-w-400">{{project.Description}}</h6>
+                                                <h6 class="text-muted f-w-400">{{project.Url}}</h6>
+                                            </div>
+                                        </div>
+
+                                        <h5 class="m-b-20 m-t-40 p-b-5 b-b-default h-w-s">Contribution</h5>
+                                        <div class="row">
+                                            <div v-for="contribution in UserInfo.Contributions" class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">{{contribution.Name}}</p>
+                                                <h6 class="text-muted f-w-400">{{contribution.Description}}</h6>
+                                                <h6 class="text-muted f-w-400">{{contribution.Url}}</h6>
+                                            </div>
+                                        </div>
+
+                                        <h5 class="m-b-20 m-t-40 p-b-5 b-b-default h-w-s">Interest</h5>
+                                        <div class="row">
+                                            <div v-for="interest in UserInfo.Interests" class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">{{interest.Title}}</p>
+                                                <h6 class="text-muted f-w-400">{{interest.Description}}</h6>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-footer" style="background-image:linear-gradient(to right, rgb(238, 90, 111), rgb(170, 181, 182));">
+                                <a style="float:right; margin-left:10px" class="btn btn-success" asp-controller="Profile" asp-action="Update">Update Profile</a>
+                                <a style="color:white; float:right" class="btn btn-success" v-on:click="viewcv"> View CV </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
+
 </profile-info>

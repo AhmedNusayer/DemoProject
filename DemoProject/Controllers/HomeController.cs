@@ -20,6 +20,7 @@ namespace WebProject.Controllers
         private readonly IRepository<JobPost> _jobRepository;
         private readonly IRepository<Employer> _employerRepository;
         private readonly IRepository<Company> _companyRepository;
+        private readonly IRepository<Notification> _notificationRepository;
 
         public AppDbContext Context { get; }
 
@@ -30,6 +31,7 @@ namespace WebProject.Controllers
             _jobRepository = new GenericRepository<JobPost>(context);
             _employerRepository = new GenericRepository<Employer>(context);
             _companyRepository = new GenericRepository<Company>(context);
+            _notificationRepository = new GenericRepository<Notification>(context);
         }
 
         public IActionResult Privacy()
@@ -37,7 +39,7 @@ namespace WebProject.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string sort = null)
         {
 
             var user =  await userManager.GetUserAsync(User);
@@ -48,12 +50,55 @@ namespace WebProject.Controllers
                 ViewBag.user = JsonConvert.SerializeObject(user);
             }
 
-            var posts = await _jobRepository.GetAll(new string[] { "CompanyInfo", "PostAuthor" });
+            var posts = await _jobRepository.GetAll();
             var orderdPost = posts.OrderByDescending(x => x.TimeofPost);
-            string jsonString = JsonConvert.SerializeObject(orderdPost);
+            List<JobPost> searchedPosts = null;
+            var jsonString = "";
+            ViewBag.sort = "Sort";
+            if (sort == "newest")
+            {
+                orderdPost = posts.OrderByDescending(x => x.TimeofPost);
+                ViewBag.sort = "Newest";
+            }
+            else if (sort == "no_of_post")
+            {
+                orderdPost = posts.OrderByDescending(x => x.NoOfPosts);
+                ViewBag.sort = "Available Posts";
+            }
+            else if (sort == "by_salary")
+            {
+                orderdPost = posts.OrderBy(x => x.SalaryRangeStart);
+                ViewBag.sort = "By Salary (L-H)";
+            }
+            else if (sort == "by_salary_des")
+            {
+                orderdPost = posts.OrderByDescending(x => x.SalaryRangeStart);
+                ViewBag.sort = "By Salary (H-L)";
+            }
+            else
+            {
+                orderdPost = posts.OrderByDescending(x => x.TimeofPost);
+            }
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchedPosts = posts.Where(s => (s.JobTitle != null && s.JobTitle.Contains(searchString, StringComparison.OrdinalIgnoreCase)) 
+                                           || (s.JobLocation != null && s.JobLocation.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                                           || (s.JobType != null && s.JobType.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                                           || (s.CompanyInfo.CompanyName != null && s.CompanyInfo.CompanyName.Contains(searchString, StringComparison.OrdinalIgnoreCase)))
+                                           .ToList();
+            }
+
+            if (searchedPosts == null)
+            {
+                jsonString = JsonConvert.SerializeObject(orderdPost);
+            }
+            else
+            {
+                jsonString = JsonConvert.SerializeObject(searchedPosts);
+            }
 
             ViewBag.posts = jsonString;
-
             return View();
         }
 
@@ -63,7 +108,7 @@ namespace WebProject.Controllers
             if (ModelState.IsValid)
             {
                 var user = await userManager.GetUserAsync(User);
-                var employer = _employerRepository.Find(item => item.User == user, new string[] { "CompanyInfo" }).FirstOrDefault();
+                var employer = _employerRepository.Find(item => item.User == user).FirstOrDefault();
                 var company = employer.CompanyInfo;
 
                 var jobpost = new JobPost()
@@ -89,7 +134,7 @@ namespace WebProject.Controllers
         {
             ViewBag.PostId = id;
 
-            var post = _jobRepository.Find(x =>x.Id == id, new string[] { "CompanyInfo", "PostAuthor" }).FirstOrDefault();
+            var post = _jobRepository.Find(x =>x.Id == id).FirstOrDefault();
             if(post != null)
             {
                 string jsonString = JsonConvert.SerializeObject(post);
@@ -97,5 +142,31 @@ namespace WebProject.Controllers
             }
             return View();
         }
+
+        [Authorize(Roles = "User")]
+        public IActionResult Apply(string postid)
+        {
+            ViewBag.PostId = postid;
+            return View();
+        }
+
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> Submit(string postid)
+        {
+            var user = await userManager.GetUserAsync(User);
+            var post = _jobRepository.Find(x => x.Id == int.Parse(postid)).FirstOrDefault();
+
+            Notification notification = new Notification()
+            {
+                userfrom = user,
+                post = post,
+                Details = "applied for this post"
+            };
+
+            await _notificationRepository.Add(notification);
+
+            return RedirectToAction("JobDetails", "Home", new { id = postid });
+        }
+
     }
 }

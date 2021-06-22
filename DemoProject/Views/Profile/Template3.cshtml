@@ -1,0 +1,342 @@
+﻿@*cool*@
+
+<resume-info inline-template user="@ViewBag.user" picpath="@ViewBag.ProfilePicturePath">
+    <div>
+        <component :is="'style'" scoped>
+
+            .link {
+            color: inherit;
+            cursor: pointer;
+            text-decoration-line: none;
+
+            &:visited {
+            color: inherit;
+            }
+            }
+
+            .resume {
+            position: relative;
+            font-size: 0.9em;
+            }
+
+            .picture {
+            position: absolute;
+            top: 100px;
+            left: 24%;
+            width: 9vw;
+            height: 9vw;
+            border-radius: 50%;
+            border: 5px solid #34495E;
+            z-index: 2;
+            background-color: purple;
+            }
+
+            .banner {
+            width: 100%;
+            height: 200px;
+            padding: 30px;
+            background-color: #42b883;
+            color: white;
+            }
+
+            .content {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            }
+
+            .section-left-headline {
+            color: white;
+            font-size: 20px;
+            }
+
+            .content-left {
+            width: 30%;
+            color: rgba(255, 255, 255, 0.59);
+            background-color: #34495E;
+            padding: 30px;
+            }
+
+            .content-right{
+            height: 100%;
+            padding: 30px;
+            width:70%;
+            }
+
+            .section {
+            margin: 20px 0;
+            padding: 5px;
+            }
+
+            .section-link,
+            .section-headline {
+            display: flex;
+            align-items: center;
+            color: #34495E;
+            display: inline-block;
+            font-size: 1.2em;
+            margin: 8px 0;
+
+            &__icon {
+            margin-right: 8px;
+            font-size: 1.4em;
+            }
+            }
+
+            .section-link {
+            font-size: 1.1em;
+            color: rgba(255, 255, 255, 0.59) ;
+            margin-right: 8px;
+            }
+            .section-content__item {
+            display: block;
+            margin-bottom: 5px;
+            padding-bottom: 20px;
+            }
+
+            .section-content__item-grid {
+            flex: 1 1 0;
+            margin-bottom: 10px;
+            padding-right: 30px;
+            }
+
+            .section-content {
+            margin-top: 5px;
+            margin-right: 8px;
+            font-size: 14px;
+
+            &__item {
+            display: block;
+            margin-bottom: 5px;
+            padding-bottom: 20px;
+            }
+
+            &__plain,
+            &__text {
+            display: block;
+            font-size: 12px;
+            }
+
+            &__plain {
+            display: inline;
+            font-weight: 300;
+            }
+
+            &__item-grid {
+            flex: 1 1 0;
+            margin-bottom: 10px;
+            padding-right: 30px;
+            }
+
+            &--plain {
+            padding: 0;
+            }
+            }
+
+            .section-content-item-grid {
+            flex: 1 1 0;
+            margin-bottom: 5px;
+            padding-right: 5px;
+            }
+
+            .section-content-header {
+            display: block;
+            font-size: 1.1em;
+            font-weight: 700;
+            }
+
+            .section-content-subheader {
+            display: block;
+            font-weight: 550;
+            }
+
+            .section-content-plain {
+            display: inline;
+            font-weight: 300;
+            }
+
+            .section-content-text {
+            display: block;
+            font-size: 12px;
+            }
+
+            .section-content-text-light {
+            font-size: 12px;
+            }
+
+            .section-content-grid {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            }
+
+            .grid-item {
+            padding-right: 5px;
+            }
+
+            .squarred-grid-item {
+            display: block;
+            border: 1px solid white;
+            color: white;
+            margin-top: 5px;
+            padding: 5px;
+            }
+        </component>
+
+        <div class="resume">
+            <div class="banner">
+                <div style="font-size: 35px;font-weight: 700;">{{ User.Name}}</div>
+                <div style="font-size: 16px;">{{ User.Profession}}</div>
+                <div style="font-size: 12px;">{{ User.Address}}</div>
+            </div>
+
+            <div class="content">
+                <div class="content-left">
+                    <div class="section" v-if="User.Intro || User.Knowledge">
+                        <div class="section-left-headline">
+                            About Me
+                        </div>
+
+                        <div class="section-content section-content--plain">
+                            {{ User.Intro }}
+                            <br />
+                            <br />
+                            {{ User.Knowledge }}
+                        </div>
+                    </div>
+
+                    <div class="section" v-if="User.Skills.length">
+                        <div class="section-left-headline">
+                            Skills
+                        </div>
+
+                        <div class="section-content-grid">
+                            <a v-for="skill in User.Skills"
+                               class="grid-item"
+                               :key="skill.GUID">
+                                <span class="squarred-grid-item">
+                                    {{skill.SkillName}}
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-left-headline">
+                            Contact
+                        </div>
+
+                        <div class="section-content section-content--plain row">
+                            <div class="section-link col-lg-12" v-if="User.Address">
+                                <i class="section-link__icon fa fa-building"></i> {{ User.Address }}
+                            </div>
+
+                            <a class="section-link col-lg-12" :href='"mailto:" + User.Email'>
+                                <i class="section-link__icon fa fa-envelope" aria-hidden="true"></i> {{ User.Email }}
+                            </a>
+
+                            <div class="section-link col-lg-12" v-if="User.PhoneNumber">
+                                <i class='section-link__icon fa fa-phone-square' aria-hidden="true"></i> {{ User.PhoneNumber }}
+                            </div>
+
+                            <a class="section-link col-lg-12" v-if="User.Website" :href='User.Website'>
+                                <i class="section-link__icon fa fa-globe" aria-hidden="true"></i> {{ User.Website }}
+                            </a>
+
+                            <a class="section-link col-lg-12" v-if="User.Linkedin" :href='User.Linkedin'>
+                                <i class="section-link__icon fab fa-linkedin" aria-hidden="true"></i> {{ User.Linkedin }}
+                            </a>
+
+                            <a class="section-link col-lg-12" v-if="User.Github" :href='User.Github'>
+                                <i class="section-link__icon fab fa-github" aria-hidden="true"></i> {{ User.Github }}
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-right">
+                    <div class="section" v-if="User.Experiences.length">
+                        <div class="section-headline" style="font-size: 20px; font-weight: 600;">
+                            <i class="section-headline__icon fa fa-briefcase"></i> Experience
+                        </div>
+
+                        <div class="section-content">
+                            <div class="section-content__item"
+                               v-for="experience in User.Experiences"
+                               :key="experience.GUID">
+
+                                <span class="section-content-header">{{experience.Title}}</span>
+                                <span class="section-content-subheader">
+                                    {{experience.Company}}
+                                    <span class="section-content-plain"> {{experience.Location}} </span>
+                                </span>
+
+                                <div class="section-content-text"> {{new Date(experience.StartDate).getFullYear()}} <span v-if="experience.EndDate">- {{new Date(experience.EndDate).getFullYear()}}</span> </div>
+                                <span class="section-content-text-light"> {{experience.Description}} </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section"  v-if="User.Educations.length">
+                        <div class="section-headline" style="font-size: 20px; font-weight: 600;">
+                            <i class="section-headline__icon fa fa-graduation-cap"></i> Education
+                        </div>
+
+                        <div class="section-content">
+                            <div class="section-content__item"
+                               v-for="education in User.Educations"
+                               :key="education.GUID">
+
+                                <span class="section-content-header"> {{education.Institution}}  </span>
+                                <span class="section-content-subheader"> {{education.Degree}} </span>
+                                <span class="section-content-text"> {{new Date(education.StartDate).getFullYear()}} <span v-if="education.EndDate">- {{new Date(education.EndDate).getFullYear()}}</span> </span>
+                                <span class="section-content-text-light">  {{education.Description}}  </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section" v-if="User.Projects.length">
+                        <div class="section-headline" style="font-size: 20px; font-weight: 600;">
+                            <i class="section-headline__icon fa fa-code"></i> Projects
+                        </div>
+
+                        <div class="section-content-grid">
+                            <div class="section-content__item-grid"
+                               v-for="project in User.Projects" :key="project.GUID">
+                                <span class="section-content-header">  {{project.Name}}  </span>
+                                <span class="section-content-subheader"> {{project.Platform}} </span>
+                                <span class="section-content-text">  {{project.Description}}  </span>
+                                <a class="section-content-text" :href="project.Url">  {{project.Url}}  </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section" v-if="User.Contributions.length">
+                        <div class="section-headline" style="font-size: 20px; font-weight: 600;">
+                            <i class="section-headline__icon fa fa-heart"></i> Contributions
+                        </div>
+
+                        <div class="section-content-grid">
+                            <div class="section-content-item-grid"
+                               v-for="contribution in User.Contributions"
+                               :key="contribution.GUID"
+                               >
+                                <span class="section-content-header">  {{contribution.Name}}  </span>
+                                <span class="section-content-text">  {{contribution.Description}}  </span>
+                                <a class="section-content-text-light" style="word-break: break-all;" :href="contribution.Url">
+                                    {{contribution.Url}}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="picture" v-if="picturePath" :style='{content: "url(/" + picturePath + ")"}'></div>
+            <div class="picture" v-if="!picturePath" :style='{content: "url(" + dpPlaceholder + ")"}'></div>
+        </div>
+    </div>
+</resume-info>
+

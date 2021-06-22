@@ -1,26 +1,112 @@
 ﻿<profile-info inline-template picpath="@ViewBag.ProfilePicturePath"
-              name="@ViewBag.user.Name" username="@ViewBag.user.UserName"
-              email="@ViewBag.user.Email" phonenumber="@ViewBag.user.PhoneNumber"
-              address="@ViewBag.user.Address" dateofbirth="@ViewBag.user.DateofBirth.ToString("yyyy-MM-dd")">
+              user="@ViewBag.user">
     <form method="post" enctype="multipart/form-data" asp-controller="Profile" asp-action="Index">
         <div class="container">
+            <component  :is="'style'" scoped>
+                .center {
+                margin-left: auto;
+                margin-right: auto;
+                }
+            </component>
             <div class="panel-body inf-content">
                 <div class="row">
 
-                    <div class="col-md-4" style="margin-top:20px">
-                        <img v-if="picturePath" :src="'/' + picturePath" height="260" width="260" class="rounded-circle" data-original-title="Usuario">
-                        <img v-if="!picturePath" alt="" height="260" width="260" title="" class="rounded-circle"
-                             :src="dpPlaceholder"
-                             data-original-title="Usuario">
+                    <div class="col-md-4" style="padding-top:20px;background-color:#f7f7f7;border-radius:.25rem;">
+                        <div class="container">
+                            <img v-if="picturePath" :src="'/' + picturePath" height="260" width="260" style="background-color:#b7e2eb;" class="rounded-circle float-start" data-original-title="Usuario">
+                            <img v-if="!picturePath" alt="" height="260" style="background-color:#b7e2eb;" width="260" title="" class="rounded-circle"
+                                 :src="dpPlaceholder"
+                                 data-original-title="Usuario">
 
-                        <div class="card" style="margin-top:20px">
+
+                            <a class="btn btn-lg" style="position:absolute; right:100; top:0" data-toggle="modal" data-target="#picture-modal">
+                                <i class="far fa-edit"></i>
+                            </a>
+                        </div>
+
+                        <!--Picture Modal-->
+                        <div class="modal fade" data-keyboard="false" data-backdrop="static" id="picture-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Add Profile Picture</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body center">
+                                        <img v-if="picturePath" :src="'/' + picturePath" height="260" width="260" style="background-color:#b7e2eb" class="rounded-circle float-start" data-original-title="Usuario">
+                                        <img v-if="!picturePath" alt="" height="260" style="background-color:#b7e2eb" width="260" title="" class="rounded-circle"
+                                             :src="dpPlaceholder"
+                                             data-original-title="Usuario">
+                                    </div>
+                                    <div>
+                                        <div class="col-md-10">
+                                            <p>Upload profile picture</p>
+                                            <input id="fileId" name="File" type="file" />
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a class="btn btn-info btn-block close" v-on:click="updatePic" data-dismiss="modal">Update</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!--Github-Linkedin-Website-->
+                        <div style="margin-top:20px">
+                            <span v-if="UserInfo.Github">
+                                <a class="btn btn-lg" :href="UserInfo.Github">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </span>
+                            <span v-if="UserInfo.Linkedin">
+                                <a class="btn btn-lg" :href="UserInfo.Linkedin">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                            </span>
+                            <span v-if="UserInfo.Website">
+                                <a class="btn btn-lg" :href="UserInfo.Website">
+                                    <i class="fas fa-globe"></i>
+                                </a>
+                            </span>
+                        </div>
+
+                        <div class="card" style="margin-top:20px;border: none;">
                             <div class="card-header">
                                 Intro
                                 <a class="btn btn-sm justify-content-end" data-toggle="modal" data-target="#intro-modal">
                                     <i class="fas fa-pen fa-pen-indicateur"></i>
                                 </a>
-                                <textarea v-if="Intro" style="overflow-y: scroll; resize: none" v-model="Intro" class="form-control" readonly id="" name="Intro" rows="8"></textarea>
+                                <textarea v-if=UserInfo.Intro style="overflow-y: scroll; resize: none" v-model=UserInfo.Intro class="form-control" readonly id="" name="Intro" rows="4"></textarea>
                             </div>
+                        </div>
+
+                        <div class="card" style="margin-top:20px;border: none;">
+                            <div class="card-header">
+                                Knowledge
+                                <a class="btn btn-sm justify-content-end" data-toggle="modal" data-target="#knowledge-modal">
+                                    <i class="fas fa-pen fa-pen-indicateur"></i>
+                                </a>
+                                <textarea v-if=UserInfo.Knowledge style="overflow-y: scroll; resize: none" v-model=UserInfo.Knowledge class="form-control" readonly id="" name="Knowledge" rows="4"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="card" style="margin-top:20px;border: none;">
+                            <input type="text" class="form-control" v-model="UserInfo.Profession" placeholder="I am a...">
+                        </div>
+
+                        <div class="card" style="margin-top:20px;border: none;background-color:inherit;">
+                            <label class="text-dark" style="font-family:Courier New, Courier, monospace; font-size:larger"> Select Template </label>
+                            <select class="custom-select my-1 mr-sm-2" v-model="UserInfo.Template" id="inlineFormCustomSelectPref">
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                <option value="4">Four</option>
+                                <option value="5">Five</option>
+                                <option value="6">Six</option>
+                            </select>
                         </div>
 
                         <!--Intro Modal -->
@@ -28,14 +114,14 @@
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Add Education</h5>
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Add Introduction</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <label for="exampleFormControlTextarea1">Edit Intro</label>
-                                        <textarea class="form-control" id="" name="Intro" rows="5" v-model="Intro"></textarea>
+                                        <label for="exampleFormControlTextarea1">Edit Introduction</label>
+                                        <textarea class="form-control" id="" name="Intro" rows="5" v-model=UserInfo.Intro></textarea>
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-info btn-block close" data-dismiss="modal">Save</button>
@@ -44,10 +130,31 @@
                             </div>
                         </div>
 
+                        <!--Knowledge Modal-->
+                        <div class="modal fade" data-keyboard="false" data-backdrop="static" id="knowledge-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Add Knowledge</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label for="exampleFormControlTextarea1">Edit Knowledge</label>
+                                        <textarea class="form-control" id="" name="Knowledge" rows="5" v-model=UserInfo.Knowledge></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-info btn-block close" data-dismiss="modal">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 card" style="background-color:#FFF">
-                        <div class="card-header">
-                            Update Profile
+                    <!--Profile Info-->
+                    <div class="col-md-8 card" style="background-color:#F7F7F7">
+                        <div class="card-header" style="background-color: inherit;font-size: 25px;">
+                            Information
                         </div>
                         <div class="table-responsive">
                             @*<form method="post" enctype="multipart/form-data" asp-controller="Profile" asp-action="Index">*@
@@ -55,145 +162,213 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-user text-primary"></span>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
                                                 Name
                                             </strong>
                                         </td>
                                         <td class="text-primary">
                                             <p id='name'>
-                                                <input type='text' size="40" name="Name" :value=Name />
+                                                <input class="form-control" type='text' size="40" name="Name" v-model=UserInfo.Name />
                                             </p>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-bookmark text-primary"></span>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
                                                 Username
                                             </strong>
                                         </td>
                                         <td class="text-primary">
                                             <p id='email'>
-                                                <input type='text' size="40" name="UserName" :value="UserName" />
+                                                <input class="form-control" disabled type='text' size="40" name="UserName" v-model=UserInfo.UserName />
                                             </p>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-envelope text-primary"></span>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
                                                 Email
                                             </strong>
                                         </td>
                                         <td class="text-primary">
                                             <p id='email'>
-                                                <input type='text' size="40" name="Email" :value="Email" />
+                                                <input class="form-control" disabled type='text' size="40" name="Email" v-model=UserInfo.Email />
                                             </p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
                                                 Phone No
                                             </strong>
                                         </td>
                                         <td class="text-primary">
                                             <p id='phone-number'>
-                                                <input type='number' size="40" name="PhoneNumber" :value="PhoneNumber" />
+                                                <input class="form-control" type='number' size="40" name="PhoneNumber" v-model=UserInfo.PhoneNumber />
                                             </p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
                                                 Adderss
                                             </strong>
                                         </td>
                                         <td class="text-primary">
                                             <p id='present-address'>
-                                                <input type='text' size="40" name="Address" :value="Address" />
+                                                <input class="form-control" type='text' size="40" name="Address" v-model=UserInfo.Address />
                                             </p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-eye-open text-primary"></span>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
                                                 Date of Birth
                                             </strong>
                                         </td>
                                         <td class="text-primary">
                                             <p id='date-of-birth'>
-                                                <input type='date' size="40" name="DateofBirth" :value="DateofBirth" />
+                                                <input class="form-control" type='date' size="40" name="DateofBirth" :value="UserInfo.DateofBirth && new Date(UserInfo.DateofBirth).toISOString().split('T')[0]"
+                                                       v-on:input="UserInfo.DateofBirth = $event.target.valueAsDate.toISOString()"/>
                                             </p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-eye-open text-primary"></span>
-                                                Password
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
+                                                Website
                                             </strong>
                                         </td>
                                         <td class="text-primary">
-                                            <p id='password'>
-                                                <input type='password' size="40" name="Password" required />
+                                            <p id='website'>
+                                                <input class="form-control" type='text' size="40" name="Website" v-model=UserInfo.Website />
                                             </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
+                                                Github
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            <p id='github'>
+                                                <input class="form-control" type='text' size="40" name="Github" v-model=UserInfo.Github />
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
+                                                Linkedin
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            <p id='linkedin'>
+                                                <input class="form-control" type='text' size="40" name="Linkedin" v-model=UserInfo.Linkedin />
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
+                                                Hobby
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            <p id='hobby'>
+                                                <input class="form-control" type='text' size="40" name="Hobby" v-model=UserInfo.Hobby />
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
+                                                Nationality
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            <p id='nationality'>
+                                                <input class="form-control" type='text' size="40" v-model="UserInfo.Nationality" required />
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
+                                                Gender
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <select class="custom-select my-1 mr-sm-2" v-model="UserInfo.Gender" id="inlineFormCustomSelectPref">
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Others">Others</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong style="font-family:Courier New, Courier, monospace; font-size:larger">
+                                                Blood Group
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <select class="custom-select my-1 mr-sm-2" v-model="UserInfo.BloodGroup" id="inlineFormCustomSelectPref">
+                                                <option value="A+">A+</option>
+                                                <option value="A-">A-</option>
+                                                <option value="B+">B+</option>
+                                                <option value="B-">B-</option>
+                                                <option value="AB+">AB+</option>
+                                                <option value="AB-">AB-</option>
+                                                <option value="O+">O+</option>
+                                                <option value="O-">O-</option>
+                                            </select>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="form-group">
-                                <div class="col-md-10">
-                                    <p>Upload profile picture</p>
-                                    <input class="form-control" name="File" type="file" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-10">
-                                    <input class="btn btn-success" type="submit" value="Update" />
-                                </div>
-                            </div>
 
                         </div>
                     </div>
 
-                    <div class="col-md-10">
-                        <div class="card" style="margin-top:20px">
+                    <!--Education-->
+                    <div class="col-md-10 center">
+                        <div class="card shadow-lg" style="margin-top:20px">
                             <div class="row">
-                                <div class="col-md-8" style="margin-left:10px">
-                                    <p class="lead">Education</p>
+                                <div class="col-md-10" style="padding-left: 30px;padding-top: 15px;">
+                                    <p class="lead"><b>Education</b></p>
                                 </div>
-                                
+
                                 <div class="col-md-2">
-                                    <a class="btn btn-sm justify-content-end" v-on:click="addEducationClicked" style="float:right" data-toggle="modal" data-target="#education-modal">
+                                    <a class="btn justify-content-end" v-on:click="addEducationClicked" style="float:right; padding: 15px;" data-toggle="modal" data-target="#education-modal">
                                         <i class="fas fa-plus"></i>
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-10">
-                        <div v-if="Educations.length" class="card" style="margin-top:5px">
-                            <div v-for="edu in Educations">
-                                <div class="col-md-10">
+                    <div class="col-md-10 center">
+                        <div v-if="UserInfo.Educations.length" class="card shadow-lg" style="margin-top:5px">
+                            <div v-for="edu in UserInfo.Educations">
+                                <div class="col-md-12">
                                     <div class="row">
-                                        <div class="col-md-8">
+                                        <div class="col-md-10">
                                             <h4>{{edu.Institution}}</h4>
                                         </div>
                                         <div class="col-md-2">
-                                            <a v-on:click="getEdu(edu)" class="btn btn-sm justify-content-end" style="float:right" data-toggle="modal" data-target="#education-modal">
+                                            <a v-on:click="getEdu(edu)" class="btn" style="float:right" data-toggle="modal" data-target="#education-modal">
                                                 <i class="fas fa-pen fa-pen-indicateur"></i>
+                                            </a>
+                                            <a class="btn" v-on:click="deleteEducation(edu)">
+                                                <i class="far fa-trash-alt"></i>
                                             </a>
                                         </div>
                                     </div>
-                                    <p class="lead">
-                                        {{edu.Degree}}
+                                    <p class="lead" style="color:midnightblue; font-size:medium">
+                                        <b>{{edu.Degree}}</b>
                                         <span v-if="edu.Degree && (edu.StartDate || edu.EndDate)"> | </span>
                                         <span v-if="edu.StartDate">{{edu.StartDate}} -</span>
                                         {{edu.EndDate}}
@@ -205,68 +380,447 @@
                                         {{edu.Grade}}
                                     </p>
                                 </div>
-                                
-                                
-                                @*<p class="lead">
-                                    {{edu.Degree}}
-                                    <span v-if="edu.Degree && (edu.StartDate || edu.EndDate)"> | </span>
-                                    <span v-if="edu.StartDate">{{edu.StartDate}} -</span> 
-                                    {{edu.EndDate}}
-                                </p>
-
-                                <p class="text-secondary">
-                                    {{edu.FieldOfStudy}}
-                                    <span v-if="edu.FieldOfStudy && edu.Grade"> | </span>
-                                    {{edu.Grade}}
-                                </p>*@
-                                
                                 <hr class="my-4">
                             </div>
                         </div>
                     </div>
 
-                        <!--Education Modal -->
-                        <div class="modal fade" data-keyboard="false" data-backdrop="static" id="education-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Add Education</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <label class="text-secondary"> Institution </label>
-                                        <br />
-                                        <input class="form-control" type="text" name="Institution" v-model="Education.Institution" placeholder="" />
-                                        <br />
-                                        <label class="text-secondary"> Degree </label>
-                                        <br />
-                                        <input class="form-control" type="text" name="Degree" v-model="Education.Degree" placeholder="" />
-                                        <br />
-                                        <label class="text-secondary"> Field of Study </label>
-                                        <input class="form-control" type="text" name="FieldOfStudy" v-model="Education.FieldOfStudy" placeholder="" />
-                                        <br />
-                                        <label class="text-secondary"> Start Date </label>
-                                        <input class="form-control" type="date" name="StartDate" v-model="Education.StartDate" placeholder="" />
-                                        <br />
-                                        <label class="text-secondary"> End Date (or expected) </label>
-                                        <input class="form-control" type="date" name="EndDate" v-model="Education.EndDate" placeholder="" />
-                                        <br />
-                                        <label class="text-secondary"> Grade </label>
-                                        <input class="form-control" type="text" name="Grade" v-model="Education.Grade" placeholder="" />
-                                        <br />
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-info btn-block close" v-on:click="addEducation" v-if="!forUpdate" :disabled="!Education.Institution" data-dismiss="modal">Add</button>
-                                        <button class="btn btn-info btn-block close" v-if="forUpdate" data-dismiss="modal">Update</button>
-                                        <a v-on:click="deleteEducation" v-if="forUpdate" class="btn btn-info btn-block">Delete Education</a>
-                                    </div>
+                    <!--Work Experience-->
+                    <div class="col-md-10 center">
+                        <div class="card shadow-lg" style="margin-top:20px">
+                            <div class="row">
+                                <div class="col-md-10" style="padding-left: 30px;padding-top: 15px;">
+                                    <p class="lead"><b>Work Experience</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="btn justify-content-end" v-on:click="addExperienceClicked" style="float:right; padding: 15px;" data-toggle="modal" data-target="#experience-modal">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-
                     </div>
+                    <div class="col-md-10 center">
+                        <div v-if="UserInfo.Experiences.length" class="card shadow-lg" style="margin-top:5px">
+                            <div v-for="exp in UserInfo.Experiences">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <h4>{{exp.Title}}</h4>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a v-on:click="getExperiance(exp)" class="btn justify-content-end" style="float:right" data-toggle="modal" data-target="#experience-modal">
+                                                <i class="fas fa-pen fa-pen-indicateur"></i>
+                                            </a>
+                                            <a class="btn justify-content-end" v-on:click="deleteExperience(exp)">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="lead" style="color:midnightblue; font-size:medium">
+                                        <b>{{exp.Company}}</b>
+                                        <span v-if="exp.EmploymentType && exp.Company"> | {{exp.EmploymentType}} </span>
+                                        <span v-else>{{exp.EmploymentType}}</span>
+                                    </p>
+
+                                    <p class="text-secondary">
+                                        {{exp.StartDate}}
+                                        <span v-if="exp.StartDate && exp.EndDate"> - {{exp.EndDate}} </span>
+                                        <span v-else>{{exp.EndDate}}</span>
+                                    </p>
+                                    <p style="color:midnightblue; font-size:medium">
+                                        {{exp.Location}}
+                                    </p>
+                                </div>
+                                <hr class="my-4">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Skill-->
+                    <div class="col-md-10 center">
+                        <div class="card shadow-lg" style="margin-top:20px">
+                            <div class="row">
+                                <div class="col-md-10 card-text" style="padding-left: 30px;padding-top: 15px;">
+                                    <p class="lead"><b>Skill</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="btn justify-content-end" v-on:click="" style="float:right; padding: 15px;" data-toggle="modal" data-target="#skill-modal">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-10 center">
+                        <div v-if="UserInfo.Skills.length" style="display: flex; flex-wrap: wrap; padding-top:15px">
+                            <div v-for="skill in UserInfo.Skills" style="padding:10px; margin-right:15px; margin-bottom:10px" class="badge badge-pill badge-info justify-content-center">
+                                <span style="font-size:15px; line-height:2.3">
+                                    {{skill.SkillName}}
+                                    <span v-if="skill.Level">Level: {{skill.Level}}</span>
+
+                                </span>
+                                <a class="btn rounded justify-content-end" v-on:click="deleteSkill(skill)" style="float:right">
+                                    <i class="far fa-times-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Interest-->
+                    <div class="col-md-10 center">
+                        <div class="card shadow-lg" style="margin-top:20px">
+                            <div class="row">
+                                <div class="col-md-10" style="padding-left: 30px;padding-top: 15px;">
+                                    <p class="lead"><b>Interest</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="btn justify-content-end" v-on:click="addInterestClicked" style="float:right; padding: 15px;" data-toggle="modal" data-target="#interest-modal">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-10 center">
+                        <div v-if="UserInfo.Interests.length" class="card shadow-lg" style="margin-top:5px">
+                            <div v-for="interest in UserInfo.Interests">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <h4>{{interest.Title}}</h4>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a v-on:click="getInterest(interest)" class="btn justify-content-end" style="float:right" data-toggle="modal" data-target="#interest-modal">
+                                                <i class="fas fa-pen fa-pen-indicateur"></i>
+                                            </a>
+                                            <a class="btn justify-content-end" v-on:click="deleteInterest(interest)">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="lead" style="color:midnightblue; font-size:medium">
+                                        <b>{{interest.Description}}</b>
+                                    </p>
+                                </div>
+                                <hr class="my-4">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Project-->
+                    <div class="col-md-10 center">
+                        <div class="card shadow-lg" style="margin-top:20px">
+                            <div class="row">
+                                <div class="col-md-10" style="padding-left: 30px;padding-top: 15px;">
+                                    <p class="lead"><b>Project</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="btn justify-content-end" v-on:click="addProjectClicked" style="float:right; padding: 15px;" data-toggle="modal" data-target="#project-modal">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-10 center">
+                        <div v-if="UserInfo.Projects.length" class="card shadow-lg" style="margin-top:5px">
+                            <div v-for="project in UserInfo.Projects">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <h4>{{project.Name}}</h4>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a v-on:click="getProject(project)" class="btn justify-content-end" style="float:right" data-toggle="modal" data-target="#project-modal">
+                                                <i class="fas fa-pen fa-pen-indicateur"></i>
+                                            </a>
+                                            <a class="btn justify-content-end" v-on:click="deleteProject(project)">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="lead" style="color:midnightblue; font-size:medium">
+                                        <b>{{project.Platform}}</b>
+                                        <span v-if="project.Year"> | <b>{{project.Year}}</b></span>
+                                        <br />
+                                        <b>{{project.Description}}</b>
+                                        <br />
+                                        <b>{{project.Url}}</b>
+                                    </p>
+                                </div>
+                                <hr class="my-4">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Contribution-->
+                    <div class="col-md-10 center">
+                        <div class="card shadow-lg" style="margin-top:20px">
+                            <div class="row">
+                                <div class="col-md-10" style="padding-left: 30px;padding-top: 15px;">
+                                    <p class="lead"><b>Contribution</b></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="btn justify-content-end" v-on:click="addContributionClicked" style="float:right; padding: 15px;" data-toggle="modal" data-target="#contribution-modal">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-10 center">
+                        <div v-if="UserInfo.Contributions.length" class="card shadow-lg" style="margin-top:5px">
+                            <div v-for="contribution in UserInfo.Contributions">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <h4>{{contribution.Name}}</h4>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a v-on:click="getContribution(contribution)" class="btn justify-content-end" style="float:right" data-toggle="modal" data-target="#contribution-modal">
+                                                <i class="fas fa-pen fa-pen-indicateur"></i>
+                                            </a>
+                                            <a class="btn justify-content-end" v-on:click="deleteContribution(contribution)">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="lead" style="color:midnightblue; font-size:medium">
+                                        <b>{{contribution.Description}}</b>
+                                        <br />
+                                        <b>{{contribution.Url}}</b>
+                                    </p>
+                                </div>
+                                <hr class="my-4">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--Education Modal-->
+                    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="education-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Add Education</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label class="text-secondary"> Institution </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="Institution" v-model="Education.Institution" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Degree </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="Degree" v-model="Education.Degree" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Field of Study </label>
+                                    <input class="form-control" type="text" name="FieldOfStudy" v-model="Education.FieldOfStudy" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Start Date </label>
+                                    <input class="form-control" type="date" name="StartDate" :value="Education.StartDate && new Date(Education.StartDate).toISOString().split('T')[0]"
+                                                       v-on:input="Education.StartDate = $event.target.valueAsDate.toISOString()" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> End Date (or expected) </label>
+                                    <input class="form-control" type="date" name="EndDate" :value="Education.EndDate && new Date(Education.EndDate).toISOString().split('T')[0]"
+                                                       v-on:input="Education.EndDate = $event.target.valueAsDate.toISOString()" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Grade </label>
+                                    <input class="form-control" type="text" name="Grade" v-model="Education.Grade" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Description </label>
+                                    <textarea class="form-control" id="" name="Description" rows="5" v-model="Education.Description"></textarea>
+                                    <br />
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-info btn-block close" v-on:click="addEducation" v-if="!forEducationUpdate" :disabled="!Education.Institution" data-dismiss="modal">Add</button>
+                                    <button class="btn btn-success btn-block close" v-if="forEducationUpdate" :disabled="!Education.Institution" data-dismiss="modal">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Work Experience Modal -->
+                    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="experience-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Add Experience</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label class="text-secondary"> Title </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="Title" v-model="Experience.Title" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Employment Type </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="EmploymentType" v-model="Experience.EmploymentType" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Company </label>
+                                    <input class="form-control" type="text" name="Company" v-model="Experience.Company" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Location </label>
+                                    <input class="form-control" type="text" name="Location" v-model="Experience.Location" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Start Date </label>
+                                    <input class="form-control" type="date" name="StartDate" :value="Experience.StartDate && new Date(Experience.StartDate).toISOString().split('T')[0]"
+                                                       v-on:input="Experience.StartDate = $event.target.valueAsDate.toISOString()" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> End Date (or expected) </label>
+                                    <input class="form-control" type="date" name="EndDate" :value="Experience.EndDate && new Date(Experience.EndDate).toISOString().split('T')[0]"
+                                                       v-on:input="Experience.EndDate = $event.target.valueAsDate.toISOString()" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Description </label>
+                                    <textarea class="form-control" id="" name="Description" rows="5" v-model="Experience.Description"></textarea>
+                                    <br />
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-info btn-block close" v-on:click="addExperience" v-if="!forExperenceUpdate" :disabled="!Experience.Title" data-dismiss="modal">Add</button>
+                                    <button class="btn btn-info btn-block close" v-if="forExperenceUpdate" data-dismiss="modal">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Skill Modal-->
+                    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="skill-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Add Skill</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label class="text-secondary"> Skill </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="SkillName" v-model="Skill.SkillName" placeholder="" />
+                                    <br />
+                                    <label for="customRange1" class="text-secondary">Skill Level</label>
+                                    <br />
+                                    <input type="range" style="width:100%" class="form-range" min="0" max="100" value="0" name="Level" v-model="Skill.Level" id="">
+                                </div>
+                                
+                                <div class="modal-footer">
+                                    <button class="btn btn-info btn-block close" v-on:click="addSkill" data-dismiss="modal">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Interest Modal-->
+                    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="interest-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Add Interest</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label class="text-secondary"> Title </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="Title" v-model="Interest.Title" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Description </label>
+                                    <br />
+                                    <textarea class="form-control" id="" name="Description" rows="5" v-model="Interest.Description"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-info btn-block close" v-on:click="addInterest" v-if="!forInterestUpdate" :disabled="!Interest.Title" data-dismiss="modal">Add</button>
+                                    <button class="btn btn-info btn-block close" v-if="forInterestUpdate" data-dismiss="modal">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Project Modal-->
+                    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="project-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Add Project</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label class="text-secondary"> Name </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="Name" v-model="Project.Name" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Platform </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="Platform" v-model="Project.Platform" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Year </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="Year" v-model="Project.Year" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Url </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="Url" v-model="Project.Url" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Description </label>
+                                    <br />
+                                    <textarea class="form-control" id="" name="Description" rows="5" v-model="Project.Description"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-info btn-block close" v-on:click="addProject" v-if="!forProjectUpdate" :disabled="!Project.Name" data-dismiss="modal">Add</button>
+                                    <button class="btn btn-info btn-block close" v-if="forProjectUpdate" data-dismiss="modal">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Contribution Modal-->
+                    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="contribution-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Add Contribution</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label class="text-secondary"> Name </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="Name" v-model="Contribution.Name" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Url </label>
+                                    <br />
+                                    <input class="form-control" type="text" name="Url" v-model="Contribution.Url" placeholder="" />
+                                    <br />
+                                    <label class="text-secondary"> Description </label>
+                                    <br />
+                                    <textarea class="form-control" id="" name="Description" rows="5" v-model="Contribution.Description"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-info btn-block close" v-on:click="addContribution" v-if="!forContributionUpdate" :disabled="!Contribution.Name" data-dismiss="modal">Add</button>
+                                    <button class="btn btn-info btn-block close" v-if="forContributionUpdate" data-dismiss="modal">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-10 center">
+                        <div style="margin-top:20px">
+                            <div>
+                                <input type="button" class="btn btn-primary mb-3 float-right" v-on:click="update" value="Update"/>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </form>

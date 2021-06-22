@@ -1,0 +1,272 @@
+﻿
+@*side-bar*@
+
+<resume-info inline-template user="@ViewBag.user" picpath="@ViewBag.ProfilePicturePath">
+    <div>
+        <component :is="'style'" scoped>
+            .resume {
+            font-family:'Raleway', sans-serif;
+            padding-bottom:50px;
+            display: flow-root;
+            background-color: #f8fbff;
+            }
+
+            a, a:focus, a:hover, a:visited {
+            text-decoration:none;
+            }
+
+            h3 {
+            text-transform:uppercase;
+            padding-top:0;
+            margin-top:0;
+            letter-spacing:5px;
+            font-weight:400;
+            }
+
+            .top-row {
+            width:100%;
+            padding-top:100px;
+            padding-bottom:100px;
+            }
+
+            span {
+            width:100%;
+            font-weight:normal;
+            }
+
+            .person-name {
+            text-transform:uppercase;
+            font-size:50px;
+            letter-spacing:10px;
+            width:100%;
+            display:block;
+            text-align:center;
+            }
+
+            .person-position {
+            letter-spacing:5px;
+            width:100%;
+            display:block;
+            text-align:center;
+            }
+
+
+            .left-col {
+            width:50%;
+            float:left;
+            }
+
+            .person-image{
+            display:flex;
+            justify-content:center;
+            height:auto;
+            overflow:hidden;
+            }
+
+            .image-centerer {
+            height:220px;
+            width:220px;
+            }
+
+            .img {
+            background-position:center;
+            background-size:cover;
+            height:100%;
+            width:100%;
+            }
+
+            .contact h3 {
+            text-align:center;
+            margin-top:20px;
+            }
+
+            .contact .contact-row {
+            text-align:center;
+            letter-spacing:2px;
+            margin-bottom:3px;
+            }
+
+            a {
+            color:black;
+            }
+
+
+            .contact .contact-row:first-of-type {
+            margin-top:50px;
+            }
+
+            .contact .contact-row.dots {
+            margin-top:20px;
+            margin-bottom:15px;
+            font-size:10px;
+            color:rgba(153,153,153,0.6);
+            }
+
+
+            .right-col {
+            width:50%;
+            float:right;
+            }
+
+            .experience-block {
+            margin-bottom:10px;
+            }
+
+            .company {
+            text-transform:uppercase;
+            font-size:19px;
+            display:inline;
+            }
+
+            .job-title {
+            font-size:19px;
+            display:inline;
+            }
+
+
+            .education {
+            margin-top:50px;
+            }
+
+            .education-block {
+            margin-bottom:10px;
+            }
+
+            .degree {
+            font-size:19px;
+            text-transform:uppercase;
+            margin-bottom:3px;
+            }
+
+            .skills-block {
+            margin-top:50px;
+            position:relative;
+            }
+
+            .skills {
+            margin-bottom:10px;
+            margin-bottom:20px;
+            position:relative;
+            margin-left:auto;
+            margin-right:auto;
+            display:inline-block;
+            }
+
+            .skill {
+            width:80px;
+            height:80px;
+            border-radius:50%;
+            position:relative;
+            border:#333333 1px solid;
+            margin:3px;
+            float:left;
+            font-size:13px;
+            }
+
+            .skill-name {
+            text-align:center;
+            position:absolute;
+            top:50%;
+            transform:translateY(-50%);
+            width:100%;
+            }
+
+            .skills-other {
+            display:inline-block;
+            width:100%;
+            margin-top:20px;
+            }
+
+        </component>
+
+        <div class="resume">
+            <div class="top-row">
+                <span class="person-name">
+                    {{User.Name}}
+                </span>
+                <span class="person-position">
+                    {{User.Profession}}
+                </span>
+            </div>
+            <div class="left-col">
+                <div class="person-image">
+                    <div class="image-centerer">
+                        <div class="img" v-if="picturePath" :style='{"background-image": "url(/" + picturePath + ")"}'></div>
+                        <div class="img" v-if="!picturePath" :style='{"background-image": "url(" + dpPlaceholder + ")"}'></div>
+                    </div>
+                </div>
+                <div class="contact">
+                    <h3>Contact </h3>
+                    <div class="contact-row">
+                        <a :href='"mailto:" + User.Email'> {{User.Email}} </a>
+                    </div>
+                    <div v-if="User.PhoneNumber" class="contact-row dots">
+                        <i class="fa fa-circle" aria-hidden="true"></i>
+                        <i class="fa fa-circle" aria-hidden="true"></i>
+                        <i class="fa fa-circle" aria-hidden="true"></i>
+                    </div>
+                    <div class="contact-row">
+                        <a> {{User.PhoneNumber}} </a>
+                    </div>
+                    <div v-if="User.Address" class="contact-row dots">
+                        <i class="fa fa-circle" aria-hidden="true"></i>
+                        <i class="fa fa-circle" aria-hidden="true"></i>
+                        <i class="fa fa-circle" aria-hidden="true"></i>
+                    </div>
+                    <div class="contact-row">
+                        {{User.Address}}
+                    </div>
+                    <div v-if="User.Github" class="contact-row dots">
+                        <i class="fa fa-circle" aria-hidden="true"></i>
+                        <i class="fa fa-circle" aria-hidden="true"></i>
+                        <i class="fa fa-circle" aria-hidden="true"></i>
+                    </div>
+                    <div v-if="User.Github" class="contact-row">
+                        <a :href="User.Github"> {{User.Github}} </a>
+                    </div>
+                </div>
+            </div>
+            <div class="right-col">
+                <div class="experience" v-if="User.Experiences.length">
+                    <h3>Experience </h3>
+                    <div class="experience-block" v-for="experience in User.Experiences" :key="experience.GUID">
+                        <div>
+                            <span class="company" v-if="experience.Company" > {{experience.Company}} - </span>
+                            <span class="job-title"> {{experience.Title}} </span>
+                        </div>
+                        <div>
+                            <span class="time-period"> {{new Date(experience.StartDate).getFullYear()}} <span v-if="experience.EndDate"> - {{new Date(experience.EndDate).getFullYear()}} </span></span>
+                        </div>
+                        <div>
+                            <span class="job-description"> {{experience.Description}} </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="education" v-if="User.Educations.length">
+                    <h3>Education </h3>
+                    <div class="education-block" v-for="education in User.Educations" :key="education.GUID">
+                        <div>
+                            <span class="degree"> {{education.Degree}} </span>
+                        </div>
+                        <div>
+                            <span class="degree-description"> {{education.Institution}} </span>
+                            <br />
+                            <span class="time-period"> {{new Date(education.StartDate).getFullYear()}} <span v-if="education.EndDate"> - {{new Date(education.EndDate).getFullYear()}} </span></span>
+                            <br />
+                            <span class="degree-description"> {{education.Description}} </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skills-block" v-if="User.Skills.length">
+                    <h3>Skills </h3>
+                    <div class="skills">
+                        <div class="skill" v-for="skill in User.Skills" :key="skill.GUID">
+                            <span class="skill-name"> {{skill.SkillName}} </span>
+                        </div>
+                    </div>
+                    <span class="skills-other"> {{User.Knowledge}} </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</resume-info>

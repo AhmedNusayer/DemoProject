@@ -3,10 +3,21 @@
 }
 
 
-<signin-user inline-template>
+<signin-user inline-template error="@ViewBag.Error">
     <div class="container">
         <div class="row d-flex justify-content-center">
+            <div class="col-lg-6 mt-lg-5" style="font-family:monospace">
+                <h3 style="margin-top:110px; font-size:40px">Sign In</h3>
+                <h4>View available jobs, search for your dream job and much more</h4>
+            </div>
             <div class="col-lg-6">
+                <p class="card-text text-secondary text-danger lead float-left" style="font-weight:600">
+                    @Html.ValidationMessage("Error")
+                </p>
+                <p class="card-text lead float-left" style="color: #a37b31; font-weight:600">
+                    {{Error}}
+                </p>
+
                 <div class="card text-center shadow-lg mt-lg-5">
                     <div class="card-header">
                         Job Portal

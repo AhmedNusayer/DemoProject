@@ -16,7 +16,7 @@ namespace InfrastructureProject.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.4")
+                .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("EntityProject.ApplicationUser", b =>
@@ -30,11 +30,14 @@ namespace InfrastructureProject.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("BloodGroup")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateofBirth")
+                    b.Property<DateTime?>("DateofBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -44,6 +47,24 @@ namespace InfrastructureProject.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Github")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hobby")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Intro")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Knowledge")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Linkedin")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -51,6 +72,9 @@ namespace InfrastructureProject.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nationality")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
@@ -70,7 +94,13 @@ namespace InfrastructureProject.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Profession")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Template")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -79,6 +109,9 @@ namespace InfrastructureProject.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Website")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -120,6 +153,68 @@ namespace InfrastructureProject.Migrations
                     b.ToTable("companies");
                 });
 
+            modelBuilder.Entity("EntityProject.Contribution", b =>
+                {
+                    b.Property<Guid>("GUID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GUID");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("contributions");
+                });
+
+            modelBuilder.Entity("EntityProject.Education", b =>
+                {
+                    b.Property<Guid>("GUID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Degree")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FieldOfStudy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Grade")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Institution")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("GUID");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("educations");
+                });
+
             modelBuilder.Entity("EntityProject.Employer", b =>
                 {
                     b.Property<int>("Id")
@@ -140,6 +235,65 @@ namespace InfrastructureProject.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("employers");
+                });
+
+            modelBuilder.Entity("EntityProject.Experience", b =>
+                {
+                    b.Property<Guid>("GUID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Company")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmploymentType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GUID");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("experiences");
+                });
+
+            modelBuilder.Entity("EntityProject.Interest", b =>
+                {
+                    b.Property<Guid>("GUID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GUID");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("interests");
                 });
 
             modelBuilder.Entity("EntityProject.JobPost", b =>
@@ -188,6 +342,62 @@ namespace InfrastructureProject.Migrations
                     b.ToTable("jobposts");
                 });
 
+            modelBuilder.Entity("EntityProject.Message", b =>
+                {
+                    b.Property<Guid>("GUID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("MessageDetails")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Time")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserFromId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserToId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("GUID");
+
+                    b.HasIndex("UserFromId");
+
+                    b.HasIndex("UserToId");
+
+                    b.ToTable("messages");
+                });
+
+            modelBuilder.Entity("EntityProject.Notification", b =>
+                {
+                    b.Property<Guid>("GUID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("postId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("userfromId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("usertoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("GUID");
+
+                    b.HasIndex("postId");
+
+                    b.HasIndex("userfromId");
+
+                    b.HasIndex("usertoId");
+
+                    b.ToTable("notifications");
+                });
+
             modelBuilder.Entity("EntityProject.ProfilePicture", b =>
                 {
                     b.Property<int>("PhotoId")
@@ -206,6 +416,59 @@ namespace InfrastructureProject.Migrations
                     b.HasIndex("UserProfileId");
 
                     b.ToTable("profilePictures");
+                });
+
+            modelBuilder.Entity("EntityProject.Project", b =>
+                {
+                    b.Property<Guid>("GUID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Platform")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("GUID");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("projects");
+                });
+
+            modelBuilder.Entity("EntityProject.Skill", b =>
+                {
+                    b.Property<Guid>("GUID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SkillName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GUID");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("skills");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -339,6 +602,20 @@ namespace InfrastructureProject.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("EntityProject.Contribution", b =>
+                {
+                    b.HasOne("EntityProject.ApplicationUser", null)
+                        .WithMany("Contributions")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("EntityProject.Education", b =>
+                {
+                    b.HasOne("EntityProject.ApplicationUser", null)
+                        .WithMany("Educations")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
             modelBuilder.Entity("EntityProject.Employer", b =>
                 {
                     b.HasOne("EntityProject.Company", "CompanyInfo")
@@ -352,6 +629,20 @@ namespace InfrastructureProject.Migrations
                     b.Navigation("CompanyInfo");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EntityProject.Experience", b =>
+                {
+                    b.HasOne("EntityProject.ApplicationUser", null)
+                        .WithMany("Experiences")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("EntityProject.Interest", b =>
+                {
+                    b.HasOne("EntityProject.ApplicationUser", null)
+                        .WithMany("Interests")
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("EntityProject.JobPost", b =>
@@ -369,6 +660,42 @@ namespace InfrastructureProject.Migrations
                     b.Navigation("PostAuthor");
                 });
 
+            modelBuilder.Entity("EntityProject.Message", b =>
+                {
+                    b.HasOne("EntityProject.ApplicationUser", "UserFrom")
+                        .WithMany()
+                        .HasForeignKey("UserFromId");
+
+                    b.HasOne("EntityProject.ApplicationUser", "UserTo")
+                        .WithMany()
+                        .HasForeignKey("UserToId");
+
+                    b.Navigation("UserFrom");
+
+                    b.Navigation("UserTo");
+                });
+
+            modelBuilder.Entity("EntityProject.Notification", b =>
+                {
+                    b.HasOne("EntityProject.JobPost", "post")
+                        .WithMany()
+                        .HasForeignKey("postId");
+
+                    b.HasOne("EntityProject.ApplicationUser", "userfrom")
+                        .WithMany()
+                        .HasForeignKey("userfromId");
+
+                    b.HasOne("EntityProject.ApplicationUser", "userto")
+                        .WithMany()
+                        .HasForeignKey("usertoId");
+
+                    b.Navigation("post");
+
+                    b.Navigation("userfrom");
+
+                    b.Navigation("userto");
+                });
+
             modelBuilder.Entity("EntityProject.ProfilePicture", b =>
                 {
                     b.HasOne("EntityProject.ApplicationUser", "UserProfile")
@@ -376,6 +703,20 @@ namespace InfrastructureProject.Migrations
                         .HasForeignKey("UserProfileId");
 
                     b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("EntityProject.Project", b =>
+                {
+                    b.HasOne("EntityProject.ApplicationUser", null)
+                        .WithMany("Projects")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("EntityProject.Skill", b =>
+                {
+                    b.HasOne("EntityProject.ApplicationUser", null)
+                        .WithMany("Skills")
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -427,6 +768,21 @@ namespace InfrastructureProject.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("EntityProject.ApplicationUser", b =>
+                {
+                    b.Navigation("Contributions");
+
+                    b.Navigation("Educations");
+
+                    b.Navigation("Experiences");
+
+                    b.Navigation("Interests");
+
+                    b.Navigation("Projects");
+
+                    b.Navigation("Skills");
                 });
 #pragma warning restore 612, 618
         }

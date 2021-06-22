@@ -1,0 +1,230 @@
+﻿
+@*green*@
+
+<resume-info inline-template user="@ViewBag.user" picpath="@ViewBag.ProfilePicturePath">
+    <div>
+        <component :is="'style'" scoped>
+
+            .template1 {
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
+            background-color: whitesmoke;
+            }
+
+            p {
+            margin:0;
+            }
+
+            ul li {
+            color:#008000;
+            font-size:12px;
+            }
+
+            a {
+            color:#FFF;
+            text-decoration:none;
+            }
+
+            .list-item-black {
+            color:black;
+            }
+
+            .resume-header {
+            color: white;
+            height: 200px;
+            background-color: green;
+            box-shadow: inset 0px 0px 200px #412b41;
+            padding: 40px 100px 25px;
+            }
+
+            .header-left {
+            /*width: 465px;*/
+            width:80%;
+            float: left;
+            }
+
+            .header1 {
+            font-size:60px;
+            color:white;
+            text-transform:uppercase;
+            line-height:56px;
+            }
+
+            .header2 {
+            font-size:25px;
+            color:white;
+            }
+
+
+            .info-flex {
+            display:flex;
+            margin-top:20px;
+            font-size:14px;
+            }
+
+            span {
+            margin-right:10px;
+            }
+
+            i {
+            margin-right:5px;
+            }-->
+
+            .header-right {
+            width: 125px;
+            float: right;
+            margin: 0px;
+            box-sizing: border-box;
+            height: 140px;
+            background-color: #FFF;
+            padding: 5px;
+            }
+
+            .headshot {
+            width: 100%;
+            height: 100%;
+            background-position:center;
+            background-size:cover;
+            }
+
+            .resume-body {
+            padding: 40px 100px;
+            }
+            .experience-title, .education-title, .skills-title {
+            font-size:26px;
+            text-transform:uppercase;
+            margin:0;
+            color: #008000;
+            }
+
+            .experience {
+            margin: 10px 0 10px 50px;
+            }
+
+            .company, .education-description, .skill-description {
+            font-size:20px;
+            cololr: #008000;
+            }
+
+            .job-info {
+            margin-bottom:5px;
+            }
+
+
+
+            .job-title, .degree {
+            font-weight:700;
+            color: #008000;
+            font-size:16px;
+            }
+
+            .experience-timeperiod, .education-timeperiod {
+            font-weight:100;
+            color: #008000;
+            font-size:16px;
+            }
+
+            .education {
+            margin: 10px 0 10px 50px;
+            }
+
+            .skill-list {
+            column-count: 3;
+            list-style-position: inside;
+            }
+
+            .education-container{
+            margin-top: 20px;
+            }
+
+            .skills-container {
+            margin-top: 20px;
+            }
+
+            .resume-footer {
+            padding: 20px 100px;
+            height: 135px;
+            background-color: green;
+            box-shadow: inset 0px 0px 100px #412b41;
+            box-sizing: border-box;
+
+            bottom: 0px;
+            width: 100%;
+            }
+
+            .spacer {
+            width:100%;
+            border-bottom:1px solid #008000;
+            margin:5px 0 10px;
+            }
+        </component>
+
+        <div class="template1" id="template1">
+            <div class="resume-header">
+                <div class="header-left">
+                    <h2 id="position" class="header2">
+                        {{User.Profession}}
+                    </h2>
+                    <h1 id="name" class="header1">
+                        {{User.Name}}
+                    </h1>
+                    <div class="info-flex">
+                        <span id="email"><a :href='"mailto:" + User.Email'><i class="fa fa-envelope" aria-hidden="true"></i> {{User.Email}}</a></span>
+                        <span id="phone" v-if="User.PhoneNumber"><a><i class='fa fa-phone-square' aria-hidden="true"></i> {{User.PhoneNumber}}</a></span>
+                        <span id="website" v-if="User.Website"><a :href='User.Website'><i class="fa fa-home" aria-hidden="true"></i>  {{User.Website}}</a></span>
+                        <span id="github" v-if="User.Github"><a :href='User.Github'><i class="fab fa-github" aria-hidden="true"></i>  {{User.Github}}</a></span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div v-if="picturePath" :style='{background: "url(/" + picturePath + ")", width: "100%", height: "100%", "background-position": "center", "background-size": "cover"}'></div>
+                    <div v-if="!picturePath" :style='{background: "url(" + dpPlaceholder + ")", width: "100%", height: "100%", "background-position": "center", "background-size": "cover"}'></div>
+                </div>
+            </div>
+            <div class="resume-body">
+                <div class="experience-container" v-if="User.Experiences.length">
+                    <h2 class="experience-title">Experience</h2>
+                    <div class="spacer"></div>
+                    <div class="experience" v-for="experience in User.Experiences" :key="experience.GUID">
+                        <h2 class="company">{{experience.Company}}</h2>
+                        <p class="job-info"><span class="job-title">{{experience.Title}} | </span><span class="experience-timeperiod"> {{new Date(experience.StartDate).getFullYear()}} <span v-if="experience.EndDate">- {{new Date(experience.EndDate).getFullYear()}}</span></span></p>
+                        <p class="job-description" v-if="experience.Description">{{experience.Description}}</p>
+                        @*<ul style="margin: 5px 0 0 0;">
+                                <li>
+                                    <span class="list-item-black">
+                                        item
+                                    </span>
+                                </li>
+                            </ul>*@
+                    </div>
+                </div>
+                <div class="education-container" v-if="User.Educations.length">
+                    <h2 class="education-title">Education</h2>
+                    <div class="spacer"></div>
+                    <div class="education" v-for="education in User.Educations" :key="education.GUID">
+                        <h2 class="education-description">{{education.Description}}</h2>
+                        <p><span class="degree">{{education.Degree}} | </span><span class="education-timeperiod"> {{new Date(education.StartDate).getFullYear()}} <span v-if="education.EndDate">- {{new Date(education.EndDate).getFullYear()}}</span></span></p>
+                    </div>
+                </div>
+                <div class="skills-container" v-if="User.Skills.length">
+                    <h2 class="skills-title">Skills</h2>
+                    <div class="spacer"></div>
+                    <p class="skill-description">{{User.Knowledge}}</p>
+                    <ul class="skill-list">
+                        <li class="skill" v-for="skill in User.Skills" :key="skill.GUID" style="font-size: 14px;">
+                            <span class="list-item-black">
+                                {{skill.SkillName}}
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="resume-footer">
+                <div v-if="User.Intro">
+                    <h2 style="color: white;">About Me</h2>
+                    <p style="color: white;">{{User.Intro}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</resume-info>
+

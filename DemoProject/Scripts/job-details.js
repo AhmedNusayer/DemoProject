@@ -8,6 +8,8 @@
     },
 
     methods: {
-        
+        Apply() {
+            window.location.href = '/Home/Apply?postid=' + this.PostId
+        }
     }
 })

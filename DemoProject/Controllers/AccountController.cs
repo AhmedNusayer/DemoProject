@@ -12,6 +12,7 @@ using System.Net.Mail;
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Concurrent;
+using System.Text.RegularExpressions;
 
 namespace WebProject.Controllers
 {
@@ -37,6 +38,10 @@ namespace WebProject.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -47,7 +52,7 @@ namespace WebProject.Controllers
             if (ModelState.IsValid && VerificationCode.verificationCode == model.VerificationCode)
             {
                 /*.Substring(0, model.Email.IndexOf("@"))*/
-                var user = new ApplicationUser {UserName = model.Email, Email = model.Email, Name = model.FirstName.Trim() + " " + model.LastName.Trim(), EmailConfirmed = true };
+                var user = new ApplicationUser {UserName = model.UserName, Email = model.Email, Name = model.FirstName.Trim() + " " + model.LastName.Trim(), EmailConfirmed = true };
                 var result = await userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -59,16 +64,24 @@ namespace WebProject.Controllers
                 
                 foreach(var error in result.Errors)
                 {
-                    ModelState.AddModelError("", error.Description);
+                    ModelState.AddModelError("Error", error.Description);
                 }
+            }
+            else
+            {
+                ModelState.AddModelError("Error", "Verification Error. Please try again");
             }
             return View(model);
         }
 
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string ReturnUrl = null)
         {
+            if (ReturnUrl != null)
+            {
+                ViewBag.Error = "Opps... Something went wrong. Please log in to continue";
+            }
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Home");
@@ -90,11 +103,7 @@ namespace WebProject.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
-                ModelState.AddModelError("", "Invalid Login Attempt");
-            }
-            else
-            {
-                return RedirectToAction("Update", "Profile");
+                ModelState.AddModelError("Error", "Invalid Login Attempt");
             }
             return View(model);
         }
@@ -112,6 +121,10 @@ namespace WebProject.Controllers
         {
             var company = await _repository.GetAll();
             ViewBag.data = company;
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -123,7 +136,7 @@ namespace WebProject.Controllers
 
             if (ModelState.IsValid && VerificationCode.verificationCode == model.VerificationCode && VerificationCode.verificationCodeEmployer == model.CompanyVerificationCode)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.FirstName.Trim() + " " + model.LastName.Trim(), EmailConfirmed = true };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, Name = model.FirstName.Trim() + " " + model.LastName.Trim(), EmailConfirmed = true };
                 var result = await userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -141,9 +154,14 @@ namespace WebProject.Controllers
 
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError("", error.Description);
+                    ModelState.AddModelError("Error", error.Description);
                 }
             }
+            else
+            {
+                ModelState.AddModelError("Error", "Verification Error. Please try again");
+            }
+
             return View(model);
         }
 
@@ -170,6 +188,11 @@ namespace WebProject.Controllers
                 await _repository.Add(company);
 
                 return RedirectToAction("RegisterEmployer", "Account");
+            }
+
+            else
+            {
+                ModelState.AddModelError("Error", "Verification Error. Please try again");
             }
 
             return View();
@@ -209,5 +232,38 @@ namespace WebProject.Controllers
 
             return null;
         }
+        [HttpGet]
+        public async Task<ActionResult> IsUserExists(string username)
+        {
+            if(username == null)
+            {
+                return Json("false");
+            }
+            if (!Regex.IsMatch(username, "^[a-zA-Z0-9@_.]*$"))
+            {
+                return Json("false");
+            }
+            List<string> BlackList = new List<string>() {
+                 "home", "account", "profile"
+            };
+            var bl = BlackList.FirstOrDefault(x => x == username.ToLower());
+            if (bl != null) 
+            {
+                return Json("false");
+            }
+            ApplicationUser a = await userManager.FindByNameAsync(username);
+            return Json(!(a == null));
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied(string ReturnUrl = null)
+        {
+            if (ReturnUrl != null)
+            {
+                ViewBag.Error = "Sorry... You are not authorized to visit this page";
+            }
+            return View();
+        }
+
     }
 }

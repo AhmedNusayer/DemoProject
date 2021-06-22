@@ -8,7 +8,14 @@
     <form role="form" action="RegisterEmployer" method="post">
         <div class="container">
             <div class="row d-flex justify-content-center">
+                <div class="col-lg-6 mt-lg-5" style="font-family:monospace">
+                    <h3 style="margin-top:150px; font-size:40px">Register As an Employer</h3>
+                    <h4>Register as an employer to be able to post jobs, view employers CV</h4>
+                </div>
                 <div class="col-lg-6">
+                    <p class="card-text text-secondary text-danger lead float-left" style="font-weight:600">
+                        @Html.ValidationMessage("Error")
+                    </p>
                     <div class="card text-center shadow-lg mt-lg-5" v-show='toggle'>
                         <div class="card-header">
                             Job Portal
@@ -29,6 +36,13 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <input type="text" name="UserName" onkeypress="return event.charCode!=32" v-model="UserName" id="username" class="form-control input-sm" placeholder="User Name" required>
+                            </div>
+                            <p class="card-text text-secondary text-danger float-left">
+                                {{Error}}
+                            </p>
 
                             <div class="form-group">
                                 @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.data, "Id", "CompanyName"), "Select Company", htmlAttributes: new { @class = "form-control", @id = "company", @v_model = "CompanyId", @name = "CompanyId", required = "required" })

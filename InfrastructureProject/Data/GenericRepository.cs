@@ -45,16 +45,6 @@ namespace InfrastructureProject.Data
             return _context.Set<T>().Where(expression);
         }
 
-        public IQueryable<T> Find(Expression<Func<T, bool>> expression, string[] include)
-        {
-            var query = _context.Set<T>().Include(include[0]);
-            for (int i = 1; i < include.Length; i++)
-            {
-                query = query.Include(include[i]);
-            }
-            return query.Where(expression);
-        }
-
         public async Task Remove(T entity)
         {
             _context.Set<T>().Remove(entity);
@@ -73,16 +63,6 @@ namespace InfrastructureProject.Data
         public async Task<List<T>> GetAll()
         {
             return await _context.Set<T>().ToListAsync();
-        }
-
-        public Task<List<T>> GetAll(string[] include)
-        {
-            var query = _context.Set<T>().Include(include[0]);
-            for (int i = 1; i < include.Length; i++)
-            {
-                query = query.Include(include[i]);
-            }
-            return query.ToListAsync();
         }
 
         public async Task<T> Get(int id)
